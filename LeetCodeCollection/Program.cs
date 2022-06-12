@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NUnit.Framework;
+using System;
 
 namespace LeetCodeCollection
 {
@@ -6,9 +7,11 @@ namespace LeetCodeCollection
     {
         static void Main(string[] args)
         {
-            var array = new[] { 3, 2, 20, 1, 1, 3 };
-            var task = new BigInput.Solution();
-            Console.WriteLine(task.MinOperations(array,10));
+            var dailyTask = new DailyTask.Solution();
+            Assert.IsTrue(dailyTask.MaximumUniqueSubarray(
+                new[] { 4, 2, 4, 5, 6 }) == 17);
+            Assert.IsTrue(dailyTask.MaximumUniqueSubarray(
+                new[] { 5, 2, 1, 2, 5, 2, 1, 2, 5 }) == 8);
             Console.ReadKey();
         }
     }
