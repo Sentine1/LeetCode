@@ -10,29 +10,23 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public int MaximumUniqueSubarray(int[] nums)
+            public int MinimumTotal(IList<IList<int>> triangle)
             {
-                var summ = 0;
-                var temp = 0;
-                var position = 0;
-                var hash = new HashSet<int>();
-                for (int i = 0; i < nums.Length;)
+                for (int i = triangle.Count() - 2; i >= 0; i--)
                 {
-                    if (hash.Contains(nums[i]))
+                    for (int j = 0; j < i + 1; j++)
                     {
-                        hash.Remove(nums[position]);
-                        temp -= nums[position];
-                        position++;
-                    }
-                    else
-                    {
-                        hash.Add(nums[i]);
-                        temp += nums[i];
-                        summ = Math.Max(temp, summ);
-                        i++;
+                        if (triangle[i + 1][j] > triangle[i + 1][j + 1])
+                        {
+                            triangle[i][j] = triangle[i + 1][j + 1] + triangle[i][j];
+                        }
+                        else
+                        {
+                            triangle[i][j] = triangle[i + 1][j] + triangle[i][j];
+                        }
                     }
                 }
-                return summ;
+                return triangle[0][0];
             }
         }
     }
