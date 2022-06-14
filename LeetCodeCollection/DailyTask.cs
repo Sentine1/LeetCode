@@ -10,23 +10,50 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public int MinimumTotal(IList<IList<int>> triangle)
+            public int MinDistance(string input, string target)
             {
-                for (int i = triangle.Count() - 2; i >= 0; i--)
+                //int m = input.Length;
+                //int n = target.Length;
+
+                //int[,] dp = new int[m, n];
+                //for (int i = 0; i < m; i++)
+                //{
+                //    for (int j = 0; j < n; j++)
+                //    {
+                //        dp[i, j] = -1;
+                //    }
+                //}
+                return bottomUpDp(input, target);
+            }
+
+            int bottomUpDp(String A, String B)
+            {
+                int m = A.Length, n = B.Length;
+                int[] prev = new int[n + 1];
+
+                for (int j = 1; j <= n; j++)
                 {
-                    for (int j = 0; j < i + 1; j++)
+                    prev[j] = j;
+                }
+
+                for (int i = 1; i <= m; i++)
+                {
+                    int[] curr = new int[n + 1];
+                    curr[0] = i;
+                    for (int j = 1; j <= n; j++)
                     {
-                        if (triangle[i + 1][j] > triangle[i + 1][j + 1])
+                        if (A[i - 1] == B[j - 1])
                         {
-                            triangle[i][j] = triangle[i + 1][j + 1] + triangle[i][j];
+                            curr[j] = prev[j - 1];
                         }
                         else
                         {
-                            triangle[i][j] = triangle[i + 1][j] + triangle[i][j];
+                            curr[j] = 1 + Math.Min(prev[j], curr[j - 1]);
                         }
                     }
+                    prev = curr;
                 }
-                return triangle[0][0];
+                return prev[n];
             }
         }
     }

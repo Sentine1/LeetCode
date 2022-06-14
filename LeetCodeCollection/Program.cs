@@ -8,13 +8,13 @@ namespace LeetCodeCollection
     {
         static void Main(string[] args)
         {
-            IList<IList<int>> a = new [] { new List<int>{2}, new List<int> { 3, 4}, new List<int> { 6, 5, 7}, new List<int> { 4, 1, 8, 3} };
-            IList<IList<int>> b = new [] { new List<int>{ -10 } };
+            var a =("sea","eat");
+            var b = ("leetcode", "etco");
             var dailyTask = new DailyTask.Solution();
-            Assert.IsTrue(dailyTask.MinimumTotal(
-                a) == 11);
-            Assert.IsTrue(dailyTask.MinimumTotal(
-                b) == -10);
+            Assert.IsTrue(dailyTask.MinDistance(
+                a.Item1,a.Item2) == 2);
+            Assert.IsTrue(dailyTask.MinDistance(
+                b.Item1,b.Item2) == 4);
             Console.ReadKey();
         }
     }
