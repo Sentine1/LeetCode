@@ -10,50 +10,44 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public int MinDistance(string input, string target)
+            public bool check(String a, String b)
             {
-                //int m = input.Length;
-                //int n = target.Length;
-
-                //int[,] dp = new int[m, n];
-                //for (int i = 0; i < m; i++)
-                //{
-                //    for (int j = 0; j < n; j++)
-                //    {
-                //        dp[i, j] = -1;
-                //    }
-                //}
-                return bottomUpDp(input, target);
+                if (a.Length + 1 != b.Length) return false;
+                int i = 0, j = 0, count = 0;
+                while (i < a.Length && j < b.Length)
+                {
+                    if (a[i] == b[j])
+                    {
+                        i++;
+                        j++;
+                    }
+                    else
+                    {
+                        if (++count > 1) return false;
+                        j++;
+                    }
+                }
+                return true;
             }
 
-            int bottomUpDp(String A, String B)
+            public int LongestStrChain(string[] words)
             {
-                int m = A.Length, n = B.Length;
-                int[] prev = new int[n + 1];
-
-                for (int j = 1; j <= n; j++)
                 {
-                    prev[j] = j;
-                }
-
-                for (int i = 1; i <= m; i++)
-                {
-                    int[] curr = new int[n + 1];
-                    curr[0] = i;
-                    for (int j = 1; j <= n; j++)
+                    int n = words.Length;
+                    int[] dp = new int[n];
+                    Array.Fill(dp, 1);
+                    int result = 0;
+                    Array.Sort(words, (a, b) => a.Length - b.Length);
+                    for (int i = 0; i < n; i++)
                     {
-                        if (A[i - 1] == B[j - 1])
-                        {
-                            curr[j] = prev[j - 1];
-                        }
-                        else
-                        {
-                            curr[j] = 1 + Math.Min(prev[j], curr[j - 1]);
-                        }
+                        for (int j = 0; j < i; j++)
+                            if (check(words[j], words[i]) &&
+                                dp[i] < dp[j] + 1)
+                                dp[i] = dp[j] + 1;
+                        result = Math.Max(result, dp[i]);
                     }
-                    prev = curr;
+                    return result;
                 }
-                return prev[n];
             }
         }
     }

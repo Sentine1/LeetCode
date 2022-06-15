@@ -8,13 +8,17 @@ namespace LeetCodeCollection
     {
         static void Main(string[] args)
         {
-            var a =("sea","eat");
-            var b = ("leetcode", "etco");
+            var a = new[] { "a", "b", "ba", "bca", "bda", "bdca" };
+            var b = new[] { "xbc", "pcxbcf", "xb", "cxbc", "pcxbc" };
+            var c = new[] { "abcd", "dbqca" };
             var dailyTask = new DailyTask.Solution();
-            Assert.IsTrue(dailyTask.MinDistance(
-                a.Item1,a.Item2) == 2);
-            Assert.IsTrue(dailyTask.MinDistance(
-                b.Item1,b.Item2) == 4);
+            Assert.IsTrue(dailyTask.LongestStrChain(
+                a) == 4);
+            Assert.IsTrue(dailyTask.LongestStrChain(
+                b) == 5);
+            Assert.IsTrue(dailyTask.LongestStrChain(
+                c) == 1);
+            Console.WriteLine("Test complite");
             Console.ReadKey();
         }
     }
