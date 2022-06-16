@@ -10,44 +10,43 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public bool check(String a, String b)
+            public string LongestPalindrome(string s)
             {
-                if (a.Length + 1 != b.Length) return false;
-                int i = 0, j = 0, count = 0;
-                while (i < a.Length && j < b.Length)
+            var ans = "";
+            int maximum = 0;
+            int n = s.Length;
+            int left, right;
+            for (int i = 0; i < n; i++)
+            {
+                left = right = i;
+                while( left >=0 && right < n && s[left] == s[right])
                 {
-                    if (a[i] == b[j])
+                    var currentLenght = right - left + 1;
+                    if (currentLenght > maximum)
                     {
-                        i++;
-                        j++;
+                        ans = s.Substring(left, currentLenght);
+                        maximum = currentLenght;
                     }
-                    else
-                    {
-                        if (++count > 1) return false;
-                        j++;
-                    }
+                    left--;
+                    right++;
                 }
-                return true;
-            }
 
-            public int LongestStrChain(string[] words)
-            {
+                left = i;
+                right = i + 1;
+
+                while(left >= 0 && right < n && s[left] == s[right])
                 {
-                    int n = words.Length;
-                    int[] dp = new int[n];
-                    Array.Fill(dp, 1);
-                    int result = 0;
-                    Array.Sort(words, (a, b) => a.Length - b.Length);
-                    for (int i = 0; i < n; i++)
+                    var currentLenght = right - left + 1;
+                    if (currentLenght > maximum)
                     {
-                        for (int j = 0; j < i; j++)
-                            if (check(words[j], words[i]) &&
-                                dp[i] < dp[j] + 1)
-                                dp[i] = dp[j] + 1;
-                        result = Math.Max(result, dp[i]);
+                        ans = s.Substring(left, currentLenght);
+                        maximum = currentLenght;
                     }
-                    return result;
+                    left --;
+                    right ++;
                 }
+            }
+            return ans;
             }
         }
     }

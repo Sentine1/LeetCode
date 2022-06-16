@@ -8,16 +8,15 @@ namespace LeetCodeCollection
     {
         static void Main(string[] args)
         {
-            var a = new[] { "a", "b", "ba", "bca", "bda", "bdca" };
-            var b = new[] { "xbc", "pcxbcf", "xb", "cxbc", "pcxbc" };
-            var c = new[] { "abcd", "dbqca" };
+            var a = "babad";
+            var b = "cbbd";
             var dailyTask = new DailyTask.Solution();
-            Assert.IsTrue(dailyTask.LongestStrChain(
-                a) == 4);
-            Assert.IsTrue(dailyTask.LongestStrChain(
-                b) == 5);
-            Assert.IsTrue(dailyTask.LongestStrChain(
-                c) == 1);
+            Assert.IsTrue(dailyTask.LongestPalindrome(
+                a) == "bab" || dailyTask.LongestPalindrome(
+                a) == "aba");
+            Assert.IsTrue(dailyTask.LongestPalindrome(
+                b) == "bb");
+
             Console.WriteLine("Test complite");
             Console.ReadKey();
         }
