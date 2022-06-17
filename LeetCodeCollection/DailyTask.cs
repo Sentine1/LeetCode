@@ -8,47 +8,42 @@ namespace LeetCodeCollection
 {
     public class DailyTask
     {
+
+        public class TreeNode
+        {
+            public int val;
+            public TreeNode left;
+            public TreeNode right;
+            public TreeNode(int val = 0, TreeNode left = null, TreeNode right = null)
+            {
+                this.val = val;
+                this.left = left;
+                this.right = right;
+            }
+        }
+
         public class Solution
         {
-            public string LongestPalindrome(string s)
+            int res;
+            public int MinCameraCover(TreeNode root)
             {
-                var ans = "";
-                int maximum = 0;
-                int n = s.Length;
-                int left, right;
+                res = 0;
+                return (dfs(root) < 1 ? 1 : 0) + res;
+            }
 
-                for (int i = 0; i < n; i++)
+            public int dfs(TreeNode root)
+            {
+                if (root == null)
                 {
-                    left = right = i;
-
-                    while (left >= 0 && right < n && s[left] == s[right])
-                    {
-                        var currentLenght = right - left + 1;
-                        if (currentLenght > maximum)
-                        {
-                            ans = s.Substring(left, currentLenght);
-                            maximum = currentLenght;
-                        }
-                        left--;
-                        right++;
-                    }
-
-                    left = i;
-                    right = i + 1;
-
-                    while (left >= 0 && right < n && s[left] == s[right])
-                    {
-                        var currentLenght = right - left + 1;
-                        if (currentLenght > maximum)
-                        {
-                            ans = s.Substring(left, currentLenght);
-                            maximum = currentLenght;
-                        }
-                        left--;
-                        right++;
-                    }
+                    return 2;
                 }
-                return ans;
+                int left = dfs(root.left), right = dfs(root.right);
+                if (left == 0 || right == 0)
+                {
+                    res++;
+                    return 1;
+                }
+                return left == 1 || right == 1 ? 2 : 0;
             }
         }
     }

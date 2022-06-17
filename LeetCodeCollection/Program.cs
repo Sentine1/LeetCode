@@ -8,15 +8,13 @@ namespace LeetCodeCollection
     {
         static void Main(string[] args)
         {
-            var a = "babad";
-            var b = "cbbd";
-            var dailyTask = new DailyTask.Solution();
-            Assert.IsTrue(dailyTask.LongestPalindrome(
-                a) == "bab" || dailyTask.LongestPalindrome(
-                a) == "aba");
-            Assert.IsTrue(dailyTask.LongestPalindrome(
-                b) == "bb");
-
+            var daily = new DailyTask.Solution();
+            var a = new DailyTask.TreeNode
+                (0, new DailyTask.TreeNode(0, new DailyTask.TreeNode(0), new DailyTask.TreeNode(0)));
+            var b = new DailyTask.TreeNode
+               (0, new DailyTask.TreeNode(0, new DailyTask.TreeNode(0, new DailyTask.TreeNode(0, new DailyTask.TreeNode(0)))));
+            Assert.True(daily.MinCameraCover(a) == 1, $"{daily.MinCameraCover(a)} is not {1}");
+            Assert.True(daily.MinCameraCover(b) == 2, $"{daily.MinCameraCover(b)} is not {2}");
             Console.WriteLine("Test complite");
             Console.ReadKey();
         }
