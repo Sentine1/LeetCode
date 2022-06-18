@@ -8,42 +8,75 @@ namespace LeetCodeCollection
 {
     public class DailyTask
     {
-
-        public class TreeNode
+        public class WordFilter
         {
-            public int val;
-            public TreeNode left;
-            public TreeNode right;
-            public TreeNode(int val = 0, TreeNode left = null, TreeNode right = null)
-            {
-                this.val = val;
-                this.left = left;
-                this.right = right;
-            }
-        }
 
-        public class Solution
-        {
-            int res;
-            public int MinCameraCover(TreeNode root)
+            public class TrieNode
             {
-                res = 0;
-                return (dfs(root) < 1 ? 1 : 0) + res;
+                public TrieNode[] links = new TrieNode[27];
+                public int index;
             }
 
-            public int dfs(TreeNode root)
+            public class Trie
             {
-                if (root == null)
+                internal TrieNode root;
+
+                public Trie()
                 {
-                    return 2;
+                    root = new TrieNode();
                 }
-                int left = dfs(root.left), right = dfs(root.right);
-                if (left == 0 || right == 0)
+
+                internal void insert(string word, int id)
                 {
-                    res++;
-                    return 1;
+                    TrieNode node = root;
+
+                    foreach(char ch in word)
+                    {
+                        if (node.links[ch - 'a'] == null)
+                            node.links[ch - 'a'] = new TrieNode();
+
+                        node = node.links[ch - 'a'];
+                        node.index = id;
+                    }
                 }
-                return left == 1 || right == 1 ? 2 : 0;
+
+                internal int index(string word)
+                {
+                    TrieNode node = root;
+                    foreach (char ch in word)
+                    {
+                        if (node.links[ch - 'a'] == null)
+                            return -1;
+
+                        node = node.links[ch - 'a'];
+                    }
+                    return node.index;
+                }
+            }
+
+            Trie trie = new Trie();
+
+            public WordFilter(string[] words)
+            {
+                int index = 0;
+                foreach(var w in words.Select(x=>x.ToLower()))
+                {
+                    string st = "";
+                    for (int i = w.Length - 1; i >= 0; i--)
+                    {
+                        st = w[i] + st;
+                        string inp = st + "{" + w;
+                        trie.insert(inp, index);
+                    }
+
+                    index++;
+                }
+            }
+
+            public int f(string prefix, string suffix)
+            {
+                string st = suffix + "{" + prefix;
+                return trie.index(st);
             }
         }
     }
