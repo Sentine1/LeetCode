@@ -10,25 +10,23 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public IList<IList<string>> SuggestedProducts(string[] products, string searchWord)
+            public int FurthestBuilding(int[] heights, int bricks, int ladders)
             {
-                var prod = products.OrderBy(x => x);
-                var result = new List<IList<string>>();
-                var searchTemp = 0;
-                foreach (var ch in searchWord)
+                int sum = 0;
+                var queue = new SortedSet<(int Height, int Index)>();
+                for (int i = 1; i < heights.Length; i++)
                 {
-                    var find = new List<string>();
-                    searchTemp++;
-                    foreach (var word in prod)
+                    if (heights[i] <= heights[i - 1]) continue;
+                    queue.Add((heights[i] - heights[i - 1], i));
+                    if (queue.Count > ladders)
                     {
-                        if (word.StartsWith(searchWord.Substring(0,searchTemp)))
-                            find.Add(word);
-                        if (find.Count >= 3)
-                            break;
+                        sum += queue.Min.Height;
+                        queue.Remove(queue.Min);
                     }
-                    result.Add(find);
+                    if (sum > bricks)
+                        return i - 1;
                 }
-                return result;
+                return heights.Length - 1;
             }
         }
     }
