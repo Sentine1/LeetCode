@@ -9,6 +9,7 @@ namespace LeetCodeCollection
         static void Main(string[] args)
         {
             var daily = new DailyTask.Solution();
+<<<<<<< HEAD
             var inputA = new[] { 4, 2, 7, 6, 9, 14, 12 };
             var inputB = new[] { 4, 12, 2, 7, 3, 18, 20, 3, 19 };
             var inputC = new[] { 14, 3, 19, 3 };
@@ -26,6 +27,12 @@ namespace LeetCodeCollection
             Assert.True(outputC == 3, $"{outputC} is not 3");
             Assert.True(outputD == 5, $"{outputD} is not 5");
             Assert.True(outputE == 589, $"{outputE} is not 589");
+=======
+            var inputA = new[] { "time", "me", "bell" };
+            var inputB = new[] { "t" };
+            Assert.True(daily.MinimumLengthEncoding(inputA) == 10, $"{daily.MinimumLengthEncoding(inputA)} is not 10");
+            Assert.True(daily.MinimumLengthEncoding(inputB) == 2, $"{daily.MinimumLengthEncoding(inputB)} is not 2");
+>>>>>>> 6ba4456 (Daily 20.6.22)
             Console.WriteLine("Test complite");
             Console.ReadKey();
         }

@@ -10,6 +10,7 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
+<<<<<<< HEAD
             public int FurthestBuilding(int[] heights, int bricks, int ladders)
             {
                 int sum = 0;
@@ -27,6 +28,20 @@ namespace LeetCodeCollection
                         return i - 1;
                 }
                 return heights.Length - 1;
+=======
+            public int MinimumLengthEncoding(string[] words)
+            {
+                ISet<string> hashSet = words.ToHashSet();
+                foreach (var word in words)
+                {
+                    for (int i = 1; i < word.Length; i++)
+                    {
+                        var postfix = word.Substring(i, word.Length - i);
+                        hashSet.Remove(postfix);
+                    }
+                }
+                return hashSet.Any() ? hashSet.Sum(w => w.Length + 1) : 0;
+>>>>>>> 6ba4456 (Daily 20.6.22)
             }
         }
     }
