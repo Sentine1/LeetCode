@@ -8,15 +8,15 @@ namespace LeetCodeCollection
     {
         static void Main(string[] args)
         {
-            var daily = new DailyTask.Solution();
-            var inputA = new[] { 3, 2, 1, 5, 6, 4 };
-            var inputB = new[] { 3, 2, 3, 1, 2, 4, 5, 5, 6 };
-            
-            var outputA = daily.FindKthLargest(inputA, 2);
-            var outputB = daily.FindKthLargest(inputB, 4);
+            var task = new Tasks21_30.Task23_Same_Tree.Solution();
+            var treeP = new Tasks21_30.Task23_Same_Tree.TreeNode(
+                1,new  Tasks21_30.Task23_Same_Tree.TreeNode(2)
+                );
+            var treeQ = new Tasks21_30.Task23_Same_Tree.TreeNode(
+                1, null, new Tasks21_30.Task23_Same_Tree.TreeNode(2)
+                );
 
-            Assert.True(outputA == 5, $"{outputA} is not 5");
-            Assert.True(outputB == 4, $"{outputB} is not 4");
+            Assert.True(task.IsSameTree(treeP,treeQ), "wrong answer");
 
             Console.WriteLine("Test complite");
             Console.ReadKey();
