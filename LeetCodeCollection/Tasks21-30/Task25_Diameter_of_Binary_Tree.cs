@@ -13,7 +13,7 @@ namespace LeetCodeCollection.Tasks21_30
             public int DiameterOfBinaryTree(TreeNode root)
             {
                 int d = 0;
-                DiametrLongestPatch(root, d);
+                DiametrLongestPatch(root, ref d);
                 return d;
             }
 
