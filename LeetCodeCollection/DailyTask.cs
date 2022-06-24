@@ -10,28 +10,48 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public int FindKthLargest(int[] nums, int k)
+            public bool IsPossible(int[] target)
             {
-                var sorted = new SortedList<int, int>();
-
-                foreach (var numer in nums)
+                var sl = new SortedList<int, int>(Comparer<int>.Create((x, y) => y.CompareTo(x)));
+                long sum = 0;
+                foreach (var t in target)
                 {
-                    if (sorted.ContainsKey(numer))
-                        sorted[numer]++;
-                    else sorted.Add(numer, 0);
+                    Add(sl, t);
+                    sum += t;
                 }
 
-                var elementK = 0;
-
-                for (int i = 0; i < k; i++)
+                while (true)
                 {
-                    elementK = sorted.Keys.Last();
-                    if (sorted[elementK] < 1)
-                        sorted.Remove(sorted.Keys.Last());
+                    int max = sl.First().Key;
+                    Remove(sl, max);
+                    sum -= max;
+                    if (max == 1 || sum == 1)
+                        return true;
+                    if (max < sum || sum == 0 || max % sum == 0)
+                        return false;
+                    max = (int)(max % sum);
+                    sum += max;
+                    Add(sl, max);
+                }
+            }
+
+            public void Add(SortedList<int, int> lst, int num)
+            {
+                if (lst.ContainsKey(num))
+                    lst[num]++;
+                else
+                    lst.Add(num, 1);
+            }
+
+            public void Remove(SortedList<int, int> lst, int num)
+            {
+                if (lst.ContainsKey(num))
+                {
+                    if (lst[num] == 1)
+                        lst.Remove(num);
                     else
-                        sorted[elementK]--;
+                        lst[num]--;
                 }
-                return elementK;
             }
         }
     }

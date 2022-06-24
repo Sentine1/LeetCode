@@ -8,15 +8,14 @@ namespace LeetCodeCollection
     {
         static void Main(string[] args)
         {
-            var task = new Tasks21_30.Task23_Same_Tree.Solution();
-            var treeP = new Tasks21_30.Task23_Same_Tree.TreeNode(
-                1,new  Tasks21_30.Task23_Same_Tree.TreeNode(2)
-                );
-            var treeQ = new Tasks21_30.Task23_Same_Tree.TreeNode(
-                1, null, new Tasks21_30.Task23_Same_Tree.TreeNode(2)
-                );
-
-            Assert.True(task.IsSameTree(treeP,treeQ), "wrong answer");
+            var task = new DailyTask.Solution();
+            var inputA = new[] { 9, 3, 5 };
+            var inputB = new[] { 1, 1, 1, 2 };
+            var inputC = new[] { 8, 5 };
+            
+            Assert.True(task.IsPossible(inputA), "wrong answer");
+            Assert.True(task.IsPossible(inputB) == false, "wrong answer");
+            Assert.True(task.IsPossible(inputC), "wrong answer");
 
             Console.WriteLine("Test complite");
             Console.ReadKey();
