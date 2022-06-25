@@ -10,48 +10,38 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public bool IsPossible(int[] target)
+            public bool CheckPossibility(int[] nums)
             {
-                var sl = new SortedList<int, int>(Comparer<int>.Create((x, y) => y.CompareTo(x)));
-                long sum = 0;
-                foreach (var t in target)
+                int? decreaseIDx = null;
+                for (int i = 0; i < nums.Length - 1; i++)
                 {
-                    Add(sl, t);
-                    sum += t;
+                    if (nums[i + 1] < nums[i])
+                    {
+                        if (decreaseIDx.HasValue)
+                        {
+                            return false;
+                        }
+
+                        decreaseIDx = i;
+                    }
                 }
 
-                while (true)
+                if (!decreaseIDx.HasValue)
                 {
-                    int max = sl.First().Key;
-                    Remove(sl, max);
-                    sum -= max;
-                    if (max == 1 || sum == 1)
-                        return true;
-                    if (max < sum || sum == 0 || max % sum == 0)
-                        return false;
-                    max = (int)(max % sum);
-                    sum += max;
-                    Add(sl, max);
+                    return true;
                 }
-            }
 
-            public void Add(SortedList<int, int> lst, int num)
-            {
-                if (lst.ContainsKey(num))
-                    lst[num]++;
-                else
-                    lst.Add(num, 1);
-            }
-
-            public void Remove(SortedList<int, int> lst, int num)
-            {
-                if (lst.ContainsKey(num))
+                if (decreaseIDx.Value + 1 == nums.Length - 1 || nums[decreaseIDx.Value] <= nums[decreaseIDx.Value + 2])
                 {
-                    if (lst[num] == 1)
-                        lst.Remove(num);
-                    else
-                        lst[num]--;
+                    return true;
                 }
+
+                if (decreaseIDx.Value == 0 || nums[decreaseIDx.Value + 1] >= nums[decreaseIDx.Value - 1])
+                {
+                    return true;
+                }
+
+                return false;
             }
         }
     }

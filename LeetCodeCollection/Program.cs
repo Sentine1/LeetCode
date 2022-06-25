@@ -9,13 +9,15 @@ namespace LeetCodeCollection
         static void Main(string[] args)
         {
             var task = new DailyTask.Solution();
-            var inputA = new[] { 9, 3, 5 };
-            var inputB = new[] { 1, 1, 1, 2 };
-            var inputC = new[] { 8, 5 };
+            var inputA = new[] { 4, 2, 3 };
+            var inputB = new[] { 4, 2, 1 };
+            var inputC = new[] { 3, 4, 2, 3 };
+            var inputD = new[] { -1, 4, 2, 3 };
             
-            Assert.True(task.IsPossible(inputA), "wrong answer");
-            Assert.True(task.IsPossible(inputB) == false, "wrong answer");
-            Assert.True(task.IsPossible(inputC), "wrong answer");
+            Assert.True(task.CheckPossibility(inputA), "wrong answer");
+            Assert.True(task.CheckPossibility(inputB) == false, "wrong answer");
+            Assert.True(task.CheckPossibility(inputC) == false, "wrong answer");
+            Assert.True(task.CheckPossibility(inputD), "wrong answer");
 
             Console.WriteLine("Test complite");
             Console.ReadKey()
