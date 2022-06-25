@@ -8,15 +8,14 @@ namespace LeetCodeCollection
     {
         static void Main(string[] args)
         {
-            var task = new Tasks21_30.Task24_Path_Sum.Solution();
-            var treeA = new TreeNode(5, new TreeNode(4, new TreeNode(11, new TreeNode(7), new TreeNode(2))),
-                new TreeNode(8, new TreeNode(13), new TreeNode(4,null, new TreeNode(1))));
-            var treeB = new TreeNode(1, new TreeNode(2), new TreeNode(3));
-            var treeC = treeB.left.left;
-
-            Assert.True(task.HasPathSum(treeA, 22), "wrong answer");
-            Assert.True(task.HasPathSum(treeB, 5) == false, "wrong answer");
-            Assert.True(task.HasPathSum(treeC, 0) == false, "wrong answer");
+            var task = new DailyTask.Solution();
+            var inputA = new[] { 9, 3, 5 };
+            var inputB = new[] { 1, 1, 1, 2 };
+            var inputC = new[] { 8, 5 };
+            
+            Assert.True(task.IsPossible(inputA), "wrong answer");
+            Assert.True(task.IsPossible(inputB) == false, "wrong answer");
+            Assert.True(task.IsPossible(inputC), "wrong answer");
 
             Console.WriteLine("Test complite");
             Console.ReadKey()
