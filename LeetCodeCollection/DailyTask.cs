@@ -10,38 +10,36 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public bool CheckPossibility(int[] nums)
+            public int MaxScore(int[] cardPoints, int k)
             {
-                int? decreaseIDx = null;
-                for (int i = 0; i < nums.Length - 1; i++)
+                long sum = 0;
+                foreach (var e in cardPoints)
                 {
-                    if (nums[i + 1] < nums[i])
-                    {
-                        if (decreaseIDx.HasValue)
-                        {
-                            return false;
-                        }
+                    sum += e;
+                }
 
-                        decreaseIDx = i;
+                int ans = 0;
+                int n = cardPoints.Length;
+                int windowSize = n - k;
+                int l = 0;
+                int r = 0;
+                long windowSum = 0;
+
+                while (r < n)
+                {
+                    int right = cardPoints[r++];
+                    windowSum += right;
+                    while (r - l > windowSize)
+                    {
+                        int left = cardPoints[l++];
+                        windowSum -= left;
+                    }
+                    if (r - l == windowSize)
+                    {
+                        ans = Math.Max(ans, (int)(sum - windowSum));
                     }
                 }
-
-                if (!decreaseIDx.HasValue)
-                {
-                    return true;
-                }
-
-                if (decreaseIDx.Value + 1 == nums.Length - 1 || nums[decreaseIDx.Value] <= nums[decreaseIDx.Value + 2])
-                {
-                    return true;
-                }
-
-                if (decreaseIDx.Value == 0 || nums[decreaseIDx.Value + 1] >= nums[decreaseIDx.Value - 1])
-                {
-                    return true;
-                }
-
-                return false;
+                return ans;
             }
         }
     }
