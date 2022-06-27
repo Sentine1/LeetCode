@@ -10,36 +10,19 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public int MaxScore(int[] cardPoints, int k)
+            public int MinPartitions(string n)
             {
-                long sum = 0;
-                foreach (var e in cardPoints)
+                if (n == null || n == "")
+                    return 0;
+
+                int max = 0;
+                foreach (char c in n)
                 {
-                    sum += e;
+                    int val = c - '0';
+                    max = Math.Max(max, val);
                 }
 
-                int ans = 0;
-                int n = cardPoints.Length;
-                int windowSize = n - k;
-                int l = 0;
-                int r = 0;
-                long windowSum = 0;
-
-                while (r < n)
-                {
-                    int right = cardPoints[r++];
-                    windowSum += right;
-                    while (r - l > windowSize)
-                    {
-                        int left = cardPoints[l++];
-                        windowSum -= left;
-                    }
-                    if (r - l == windowSize)
-                    {
-                        ans = Math.Max(ans, (int)(sum - windowSum));
-                    }
-                }
-                return ans;
+                return max;
             }
         }
     }
