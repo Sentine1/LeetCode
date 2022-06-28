@@ -9,13 +9,13 @@ namespace LeetCodeCollection
         static void Main(string[] args)
         {
             var task = new DailyTask.Solution();
-            var inputA = "32";
-            var inputB = "82734";
-            var inputC = "27346209830709182346";
+            var inputA = "aab";
+            var inputB = "aaabbbcc";
+            var inputC = "ceabaacb";
 
-            Assert.True(task.MinPartitions(inputA) == 3, "wrong answer");
-            Assert.True(task.MinPartitions(inputB) == 8, "wrong answer");
-            Assert.True(task.MinPartitions(inputC) == 9, "wrong answer");
+            Assert.True(task.MinDeletions(inputA) == 0, "wrong answer");
+            Assert.True(task.MinDeletions(inputB) == 2, "wrong answer");
+            Assert.True(task.MinDeletions(inputC) == 2, "wrong answer");
 
             Console.WriteLine("Test complite");
             Console.ReadKey();

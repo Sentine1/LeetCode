@@ -10,19 +10,35 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public int MinPartitions(string n)
+            public int MinDeletions(string s)
             {
-                if (n == null || n == "")
+                if (s == null || s == string.Empty)
                     return 0;
 
-                int max = 0;
-                foreach (char c in n)
+                var res = 0;
+                var curFreq = Int32.MaxValue;
+                Dictionary<char, int> dict = new Dictionary<char, int>();
+
+                foreach (var c in s)
                 {
-                    int val = c - '0';
-                    max = Math.Max(max, val);
+                    if (!dict.ContainsKey(c))
+                        dict.Add(c, 0);
+                    dict[c] ++;
                 }
 
-                return max;
+                foreach (var item in dict
+                         .OrderByDescending(x => x.Value)
+                         .Select(x => x.Value)
+                         .ToList())
+                    if (curFreq <= item)
+                    {
+                        res += curFreq == 0 ? item : item - curFreq + 1;
+                        curFreq = curFreq == 0 ? 0 : curFreq - 1;
+                    }
+                    else
+                        curFreq = item;
+
+                return res;
             }
         }
     }
