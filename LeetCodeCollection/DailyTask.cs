@@ -7,38 +7,18 @@ using System.Threading.Tasks;
 namespace LeetCodeCollection
 {
     public class DailyTask
-    {
-        public class Solution
+    {        public class Solution
         {
-            public int MinDeletions(string s)
+            public int[][] ReconstructQueue(int[][] people)
             {
-                if (s == null || s == string.Empty)
-                    return 0;
+                var output = new List<int[]>();
+                var sortedPeople = people
+                    .OrderByDescending(x => x[0])
+                    .ThenBy(x => x[1]);
+                foreach (var p in sortedPeople)
+                    output.Insert(p[1], p);
 
-                var res = 0;
-                var curFreq = Int32.MaxValue;
-                Dictionary<char, int> dict = new Dictionary<char, int>();
-
-                foreach (var c in s)
-                {
-                    if (!dict.ContainsKey(c))
-                        dict.Add(c, 0);
-                    dict[c] ++;
-                }
-
-                foreach (var item in dict
-                         .OrderByDescending(x => x.Value)
-                         .Select(x => x.Value)
-                         .ToList())
-                    if (curFreq <= item)
-                    {
-                        res += curFreq == 0 ? item : item - curFreq + 1;
-                        curFreq = curFreq == 0 ? 0 : curFreq - 1;
-                    }
-                    else
-                        curFreq = item;
-
-                return res;
+                return output.ToArray();
             }
         }
     }
