@@ -7,18 +7,21 @@ using System.Threading.Tasks;
 namespace LeetCodeCollection
 {
     public class DailyTask
-    {        public class Solution
+    {
+        public class Solution
         {
-            public int[][] ReconstructQueue(int[][] people)
+            public int MinMoves2(int[] nums)
             {
-                var output = new List<int[]>();
-                var sortedPeople = people
-                    .OrderByDescending(x => x[0])
-                    .ThenBy(x => x[1]);
-                foreach (var p in sortedPeople)
-                    output.Insert(p[1], p);
+                Array.Sort(nums);
+                var n = nums.Length - 1;
+                var i = 0;
+                var answer = 0;
 
-                return output.ToArray();
+                for(;i<n;i++,n--)
+                {
+                    answer += nums[n] - nums[i];
+                }
+                return answer;
             }
         }
     }
