@@ -10,18 +10,19 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public int MinMoves2(int[] nums)
+            public int MaximumUnits(int[][] boxTypes, int truckSize)
             {
-                Array.Sort(nums);
-                var n = nums.Length - 1;
-                var i = 0;
-                var answer = 0;
+                boxTypes = boxTypes.OrderByDescending(x => x[1]).ToArray();
+                int ans = 0;
+                var n = boxTypes.Length;
 
-                for(;i<n;i++,n--)
+                for (int i = 0; i < n && truckSize > 0; i++)
                 {
-                    answer += nums[n] - nums[i];
+                    int maxi = Math.Min((int)boxTypes[i][0], truckSize);
+                    ans += maxi * boxTypes[i][1];
+                    truckSize -= maxi;
                 }
-                return answer;
+                return ans;
             }
         }
     }
