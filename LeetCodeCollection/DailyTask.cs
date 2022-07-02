@@ -10,19 +10,29 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public int MaximumUnits(int[][] boxTypes, int truckSize)
+            public int MaxArea(int h, int w, int[] horizontalCuts, int[] verticalCuts)
             {
-                boxTypes = boxTypes.OrderByDescending(x => x[1]).ToArray();
-                int ans = 0;
-                var n = boxTypes.Length;
-
-                for (int i = 0; i < n && truckSize > 0; i++)
+                long mod = 1000000007;
+                var maxHorizontal = 0;
+                var maxVertical = 0;
+                var previous = 0;
+                foreach (var item in horizontalCuts.OrderBy(x=>x))
                 {
-                    int maxi = Math.Min((int)boxTypes[i][0], truckSize);
-                    ans += maxi * boxTypes[i][1];
-                    truckSize -= maxi;
+                    maxHorizontal = Math.Max(item - previous, maxHorizontal);
+                    previous = item;
                 }
-                return ans;
+
+                maxHorizontal = Math.Max(h - previous, maxHorizontal);
+                previous = 0;
+
+                foreach (var item in verticalCuts.OrderBy(x=>x))
+                {
+                    maxVertical = Math.Max(item - previous, maxVertical);
+                    previous = item;
+                }
+                maxVertical = Math.Max(w - previous, maxVertical);
+
+                return (int)(maxVertical%mod * maxHorizontal%mod);
             }
         }
     }
