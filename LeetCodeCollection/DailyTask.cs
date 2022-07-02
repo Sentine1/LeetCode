@@ -16,7 +16,7 @@ namespace LeetCodeCollection
                 var maxHorizontal = 0;
                 var maxVertical = 0;
                 var previous = 0;
-                foreach (var item in horizontalCuts.OrderBy(x=>x))
+                foreach (var item in horizontalCuts.OrderBy(x => x))
                 {
                     maxHorizontal = Math.Max(item - previous, maxHorizontal);
                     previous = item;
@@ -25,14 +25,14 @@ namespace LeetCodeCollection
                 maxHorizontal = Math.Max(h - previous, maxHorizontal);
                 previous = 0;
 
-                foreach (var item in verticalCuts.OrderBy(x=>x))
+                foreach (var item in verticalCuts.OrderBy(x => x))
                 {
                     maxVertical = Math.Max(item - previous, maxVertical);
                     previous = item;
                 }
                 maxVertical = Math.Max(w - previous, maxVertical);
 
-                return (int)(maxVertical%mod * maxHorizontal%mod);
+                return (int)(maxVertical % mod * maxHorizontal % mod);
             }
         }
     }
