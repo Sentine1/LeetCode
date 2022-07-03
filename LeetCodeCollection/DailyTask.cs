@@ -10,29 +10,31 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public int MaxArea(int h, int w, int[] horizontalCuts, int[] verticalCuts)
+            public int WiggleMaxLength(int[] nums)
             {
-                long mod = 1000000007;
-                var maxHorizontal = 0;
-                var maxVertical = 0;
-                var previous = 0;
-                foreach (var item in horizontalCuts.OrderBy(x => x))
+                var n = nums.Length;
+                if (n == 1) 
+                    return 1;
+                int i = 0;
+                while ((i + 1 < n) && nums[i] == nums[i + 1]) ++i;
+                if (i == n - 1) 
+                    return 1;
+                bool increasing = nums[i + 1] > nums[i];
+                int ans = 2;
+                for (; i + 1 < n; ++i)
                 {
-                    maxHorizontal = Math.Max(item - previous, maxHorizontal);
-                    previous = item;
+                    if (increasing && nums[i + 1] < nums[i])
+                    {
+                        increasing = false;
+                        ++ans;
+                    }
+                    if (!increasing && nums[i + 1] > nums[i])
+                    {
+                        increasing = true;
+                        ++ans;
+                    }
                 }
-
-                maxHorizontal = Math.Max(h - previous, maxHorizontal);
-                previous = 0;
-
-                foreach (var item in verticalCuts.OrderBy(x => x))
-                {
-                    maxVertical = Math.Max(item - previous, maxVertical);
-                    previous = item;
-                }
-                maxVertical = Math.Max(w - previous, maxVertical);
-
-                return (int)(maxVertical % mod * maxHorizontal % mod);
+                return ans;
             }
         }
     }
