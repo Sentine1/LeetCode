@@ -10,31 +10,28 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public int WiggleMaxLength(int[] nums)
+            public int Candy(int[] ratings)
             {
-                var n = nums.Length;
-                if (n == 1) 
-                    return 1;
-                int i = 0;
-                while ((i + 1 < n) && nums[i] == nums[i + 1]) ++i;
-                if (i == n - 1) 
-                    return 1;
-                bool increasing = nums[i + 1] > nums[i];
-                int ans = 2;
-                for (; i + 1 < n; ++i)
+                var n = ratings.Length;
+                int[] candies = new int[n];
+                Array.Fill(candies, 1);
+
+                for (int i = 1; i <n ; i++)
                 {
-                    if (increasing && nums[i + 1] < nums[i])
-                    {
-                        increasing = false;
-                        ++ans;
-                    }
-                    if (!increasing && nums[i + 1] > nums[i])
-                    {
-                        increasing = true;
-                        ++ans;
-                    }
+                    // higher rated child gets 1 more candy than left lower rated child
+                    if (ratings[i] > ratings[i - 1]) candies[i] = (candies[i - 1] + 1);
                 }
-                return ans;
+
+                for (int i = n - 2; i >= 0; i--)
+                {
+                    // higher rated child gets 1 more candy than right lower rated child
+                    if (ratings[i] > ratings[i + 1]) candies[i] = Math.Max(candies[i], (candies[i + 1] + 1));
+                }
+
+                int sum = 0;
+                foreach (int candy in candies)
+                    sum += candy;
+                return sum;
             }
         }
     }

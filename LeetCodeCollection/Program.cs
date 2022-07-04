@@ -10,13 +10,12 @@ namespace LeetCodeCollection
         {
             var task = new DailyTask.Solution();
 
-            var inputA = new[] { 1, 7, 4, 9, 2, 5};
-            var inputB = new[] { 1, 17, 5, 10, 13, 15, 10, 5, 16, 8 };
-            var inputC = new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+            var inputA = new[] { 1, 0, 2};
+            var inputB = new[] { 1, 2, 2 };
+            var inputC = new[] { 1, 2, 3, 4, 5 };
 
-            Assert.AreEqual(6, task.WiggleMaxLength(inputA), "wrong answer");
-            Assert.AreEqual(7, task.WiggleMaxLength(inputB), "wrong answer");
-            Assert.AreEqual(2, task.WiggleMaxLength(inputC), "wrong answer");
+            Assert.AreEqual(5, task.Candy(inputA), "wrong answer");
+            Assert.AreEqual(4, task.Candy(inputB), "wrong answer");
 
             Console.WriteLine("Test complite");
             Console.ReadKey();
