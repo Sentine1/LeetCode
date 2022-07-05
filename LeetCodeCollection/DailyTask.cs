@@ -10,28 +10,25 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public int Candy(int[] ratings)
+            public int LongestConsecutive(int[] nums)
             {
-                var n = ratings.Length;
-                int[] candies = new int[n];
-                Array.Fill(candies, 1);
+                Array.Sort(nums);
+                var result = 1;
+                var currentSeq = 1;
 
-                for (int i = 1; i <n ; i++)
+                if (nums.Length < 1)
+                    return 0;
+
+                for (int i = 1; i < nums.Length; i++)
                 {
-                    // higher rated child gets 1 more candy than left lower rated child
-                    if (ratings[i] > ratings[i - 1]) candies[i] = (candies[i - 1] + 1);
+                    if (nums[i - 1] == nums[i] - 1)
+                        currentSeq++;
+                    if (nums[i - 1] != nums[i] - 1 && nums[i - 1] != nums[i])
+                        currentSeq = 1;
+                    result = Math.Max(currentSeq, result);
                 }
 
-                for (int i = n - 2; i >= 0; i--)
-                {
-                    // higher rated child gets 1 more candy than right lower rated child
-                    if (ratings[i] > ratings[i + 1]) candies[i] = Math.Max(candies[i], (candies[i + 1] + 1));
-                }
-
-                int sum = 0;
-                foreach (int candy in candies)
-                    sum += candy;
-                return sum;
+                return result;
             }
         }
     }
