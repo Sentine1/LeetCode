@@ -10,25 +10,11 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public int LongestConsecutive(int[] nums)
+            public int Fib(int n)
             {
-                Array.Sort(nums);
-                var result = 1;
-                var currentSeq = 1;
-
-                if (nums.Length < 1)
-                    return 0;
-
-                for (int i = 1; i < nums.Length; i++)
-                {
-                    if (nums[i - 1] == nums[i] - 1)
-                        currentSeq++;
-                    if (nums[i - 1] != nums[i] - 1 && nums[i - 1] != nums[i])
-                        currentSeq = 1;
-                    result = Math.Max(currentSeq, result);
-                }
-
-                return result;
+                if (n == 0) return 0;
+                if (n == 1) return 1;
+                return Fib(n - 1) + Fib(n - 2);
             }
         }
     }
