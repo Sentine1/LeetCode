@@ -10,13 +10,13 @@ namespace LeetCodeCollection
         {
             var task = new DailyTask.Solution();
 
-            var inputA = 2;
-            var inputB = 3;
-            var inputC = 4;
+            var inputA = ("aabcc", "dbbca", "aadbbcbcac");
+            var inputB = ("aabcc", "dbbca", "aadbbbaccc");
+            var inputC = ("", "", "");
 
-            Assert.AreEqual(1, task.Fib(inputA), "wrong answer");
-            Assert.AreEqual(2, task.Fib(inputB), "wrong answer");
-            Assert.AreEqual(3, task.Fib(inputC), "wrong answer");
+            Assert.True(task.IsInterleave(inputA.Item1, inputA.Item2, inputA.Item3), "wrong answer");
+            Assert.True(!task.IsInterleave(inputB.Item1, inputB.Item2, inputB.Item3), "wrong answer");
+            Assert.True(task.IsInterleave(inputC.Item1, inputC.Item2, inputC.Item3), "wrong answer");
 
             Console.WriteLine("Test complite");
             Console.ReadKey();
