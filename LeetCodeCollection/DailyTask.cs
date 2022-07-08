@@ -10,35 +10,90 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public bool IsInterleave(string s1, string s2, string s3)
+            public int MinCost(int[] houses, int[][] cost, int m, int n, int target)
             {
-                int m = s1.Length, n = s2.Length;
+                // Last Color, neighborhoods, Cost 
+                Dictionary<int, Dictionary<int, int>> crnt = new Dictionary<int, Dictionary<int, int>>();
+                Dictionary<int, Dictionary<int, int>> prev = new Dictionary<int, Dictionary<int, int>>();
+                Dictionary<int, Dictionary<int, int>> temp;
 
-                if (m + n != s3.Length)
-                    return false;
+                if (houses[houses.Length - 1] == 0)
+                {
+                    for (int c = 1; c <= n; c++)
+                    {
+                        prev[c] = new Dictionary<int, int>();
+                        prev[c][1] = cost[houses.Length - 1][c - 1];
+                    }
+                }
+                else
+                {
+                    prev[houses[houses.Length - 1]] = new Dictionary<int, int>();
+                    prev[houses[houses.Length - 1]][1] = 0;
+                }
 
-                var invalid = new bool[m + 1, n + 1];
 
-                return dfs(0, 0, 0);
-           
+                for (int i = houses.Length - 2; i >= 0; i--)
+                {
+                    if (houses[i] == 0)
+                    {
+                        for (int c = 1; c <= n; c++)
+                        {
+                            crnt[c] = new Dictionary<int, int>();
+                            ProcessColor(prev, crnt[c], c, cost[i][c - 1], target);
+                        }
+                    }
+                    else
+                    {
+                        crnt[houses[i]] = new Dictionary<int, int>();
+                        ProcessColor(prev, crnt[houses[i]], houses[i], 0, target);
+                    }
 
-            bool dfs(int i, int j, int k)
+                    temp = prev;
+                    prev = crnt;
+                    crnt = temp;
+                    crnt.Clear();
+                }
+
+                int min = int.MaxValue;
+
+                foreach (int key in prev.Keys)
+                {
+                    if (prev[key].ContainsKey(target) && prev[key][target] < min)
+                    {
+                        min = prev[key][target];
+                    }
+                }
+
+                return (min == int.MaxValue) ? -1 : min;
+            }
+
+            private void ProcessColor(Dictionary<int, Dictionary<int, int>> prev,
+                                      Dictionary<int, int> crnt, int color, int cost, int target)
             {
-                if (invalid[i,j])
-                    return false;
+                int toAdd = 0;
 
-                if (k == s3.Length)
-                    return true;
+                foreach (int pColor in prev.Keys)
+                {
+                    toAdd = (pColor == color) ? 0 : 1;
 
-                bool valid =
-                    i < s1.Length && s1[i] == s3[k] && dfs(i + 1, j, k + 1) ||
-                    j < s2.Length && s2[j] == s3[k] && dfs(i, j + 1, k + 1);
+                    foreach (int neighborhoods in prev[pColor].Keys)
+                    {
+                        if (neighborhoods + toAdd > target) { continue; }
 
-                if (!valid)
-                    invalid[i,j] = true;
+                        if (crnt.ContainsKey(neighborhoods + toAdd))
+                        {
+                            if (crnt[neighborhoods + toAdd] > prev[pColor][neighborhoods] + cost)
+                            {
+                                crnt[neighborhoods + toAdd] = prev[pColor][neighborhoods] + cost;
+                            }
+                        }
+                        else
+                        {
+                            crnt[neighborhoods + toAdd] = prev[pColor][neighborhoods] + cost;
+                        }
 
-                return valid;
-                } 
+                    }
+                }
             }
         }
     }
