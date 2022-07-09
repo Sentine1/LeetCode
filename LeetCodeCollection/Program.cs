@@ -10,13 +10,13 @@ namespace LeetCodeCollection
         {
             var task = new DailyTask.Solution();
 
-            var inputA = (new int[] { 0, 0, 0, 0, 0 }, new int[][] { new[] { 1, 10 }, new[] { 10, 1 }, new[] { 10, 1 }, new[] { 1, 10 }, new[] { 5, 1 } });
-            var inputB = (new int[] { 0, 2, 1, 2, 0 }, new int[][] { new[] { 1, 10 }, new[] { 10, 1 }, new[] { 10, 1 }, new[] { 1, 10 }, new[] { 5, 1 } }); ;
-            var inputC = (new int[] { 3, 1, 2, 3 }, new int[][] { new[] { 1, 1, 1 }, new[] { 1, 1, 1 }, new[] { 1, 1, 1 }, new[] { 1, 1, 1 }, new[] { 1, 1, 1 } }); ;
+            var inputA = new int[] { 1, -1, -2, 4, -7, 3 };
+            var inputB = new int[] { 10, -5, -2, 4, 0, 3 };
+            var inputC = new int[] { 1, -5, -20, 4, -1, 3, -6, -3 };
 
-            Assert.AreEqual(9, task.MinCost(inputA.Item1, inputA.Item2, 5, 2, 3));
-            Assert.AreEqual(11, task.MinCost(inputB.Item1, inputB.Item2, 5, 2, 3));
-            Assert.AreEqual(-1, task.MinCost(inputC.Item1, inputC.Item2, 4, 3, 3));
+            Assert.AreEqual(7, task.MaxResult(inputA, 2));
+            Assert.AreEqual(17, task.MaxResult(inputB, 3));
+            Assert.AreEqual(0, task.MaxResult(inputC, 2));
 
             Console.WriteLine("Test complite");
             Console.ReadKey();

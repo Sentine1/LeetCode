@@ -8,92 +8,28 @@ namespace LeetCodeCollection
 {
     public class DailyTask
     {
-        public class Solution
-        {
-            public int MinCost(int[] houses, int[][] cost, int m, int n, int target)
+        public class Solution        {
+            public int MaxResult(int[] nums, int k)
             {
-                // Last Color, neighborhoods, Cost 
-                Dictionary<int, Dictionary<int, int>> crnt = new Dictionary<int, Dictionary<int, int>>();
-                Dictionary<int, Dictionary<int, int>> prev = new Dictionary<int, Dictionary<int, int>>();
-                Dictionary<int, Dictionary<int, int>> temp;
 
-                if (houses[houses.Length - 1] == 0)
+                int[] scores = new int[nums.Length];
+                var queue = new LinkedList<int>();
+                scores[0] = nums[0];
+                queue.AddLast(0);
+                for (int i = 1; i < nums.Length; i++)
                 {
-                    for (int c = 1; c <= n; c++)
+                    if (queue.First() < i - k)
                     {
-                        prev[c] = new Dictionary<int, int>();
-                        prev[c][1] = cost[houses.Length - 1][c - 1];
+                        queue.RemoveFirst();
                     }
-                }
-                else
-                {
-                    prev[houses[houses.Length - 1]] = new Dictionary<int, int>();
-                    prev[houses[houses.Length - 1]][1] = 0;
-                }
-
-
-                for (int i = houses.Length - 2; i >= 0; i--)
-                {
-                    if (houses[i] == 0)
+                    scores[i] = scores[queue.First()] + nums[i];
+                    while (queue.Count > 0 && scores[queue.Last()] <= scores[i])
                     {
-                        for (int c = 1; c <= n; c++)
-                        {
-                            crnt[c] = new Dictionary<int, int>();
-                            ProcessColor(prev, crnt[c], c, cost[i][c - 1], target);
-                        }
+                        queue.RemoveLast();
                     }
-                    else
-                    {
-                        crnt[houses[i]] = new Dictionary<int, int>();
-                        ProcessColor(prev, crnt[houses[i]], houses[i], 0, target);
-                    }
-
-                    temp = prev;
-                    prev = crnt;
-                    crnt = temp;
-                    crnt.Clear();
+                    queue.AddLast(i);
                 }
-
-                int min = int.MaxValue;
-
-                foreach (int key in prev.Keys)
-                {
-                    if (prev[key].ContainsKey(target) && prev[key][target] < min)
-                    {
-                        min = prev[key][target];
-                    }
-                }
-
-                return (min == int.MaxValue) ? -1 : min;
-            }
-
-            private void ProcessColor(Dictionary<int, Dictionary<int, int>> prev,
-                                      Dictionary<int, int> crnt, int color, int cost, int target)
-            {
-                int toAdd = 0;
-
-                foreach (int pColor in prev.Keys)
-                {
-                    toAdd = (pColor == color) ? 0 : 1;
-
-                    foreach (int neighborhoods in prev[pColor].Keys)
-                    {
-                        if (neighborhoods + toAdd > target) { continue; }
-
-                        if (crnt.ContainsKey(neighborhoods + toAdd))
-                        {
-                            if (crnt[neighborhoods + toAdd] > prev[pColor][neighborhoods] + cost)
-                            {
-                                crnt[neighborhoods + toAdd] = prev[pColor][neighborhoods] + cost;
-                            }
-                        }
-                        else
-                        {
-                            crnt[neighborhoods + toAdd] = prev[pColor][neighborhoods] + cost;
-                        }
-
-                    }
-                }
+                return scores[nums.Length - 1];
             }
         }
     }
