@@ -10,13 +10,13 @@ namespace LeetCodeCollection
         {
             var task = new DailyTask.Solution();
 
-            var inputA = new int[] { 1, -1, -2, 4, -7, 3 };
-            var inputB = new int[] { 10, -5, -2, 4, 0, 3 };
-            var inputC = new int[] { 1, -5, -20, 4, -1, 3, -6, -3 };
+            var inputA = new int[] { 10, 15, 20 };
+            var inputB = new int[] { 1, 100, 1, 1, 1, 100, 1, 1, 100, 1 };
+            var inputC = new int[] { 1, 5, 20, 4, 1, 3, 6, 3 };
 
-            Assert.AreEqual(7, task.MaxResult(inputA, 2));
-            Assert.AreEqual(17, task.MaxResult(inputB, 3));
-            Assert.AreEqual(0, task.MaxResult(inputC, 2));
+            Assert.AreEqual(15, task.MinCostClimbingStairs(inputA));
+            Assert.AreEqual(6, task.MinCostClimbingStairs(inputB));
+            Assert.AreEqual(15, task.MinCostClimbingStairs(inputC));
 
             Console.WriteLine("Test complite");
             Console.ReadKey();

@@ -8,28 +8,17 @@ namespace LeetCodeCollection
 {
     public class DailyTask
     {
-        public class Solution        {
-            public int MaxResult(int[] nums, int k)
+        public class Solution
+        {
+            public int MinCostClimbingStairs(int[] cost)
             {
-
-                int[] scores = new int[nums.Length];
-                var queue = new LinkedList<int>();
-                scores[0] = nums[0];
-                queue.AddLast(0);
-                for (int i = 1; i < nums.Length; i++)
+                var n = cost.Length;
+                var dp = new int[n + 2];
+                for (int i = 0; i < n; i++)
                 {
-                    if (queue.First() < i - k)
-                    {
-                        queue.RemoveFirst();
-                    }
-                    scores[i] = scores[queue.First()] + nums[i];
-                    while (queue.Count > 0 && scores[queue.Last()] <= scores[i])
-                    {
-                        queue.RemoveLast();
-                    }
-                    queue.AddLast(i);
+                    dp[i + 2] = Math.Min(dp[i], dp[i + 1]) + cost[i];
                 }
-                return scores[nums.Length - 1];
+                return Math.Min(dp[n + 1], dp[n]);
             }
         }
     }
