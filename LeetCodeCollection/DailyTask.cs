@@ -10,15 +10,38 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public int MinCostClimbingStairs(int[] cost)
+            public IList<int> RightSideView(TreeNode root)
             {
-                var n = cost.Length;
-                var dp = new int[n + 2];
-                for (int i = 0; i < n; i++)
+                if (root == null)
+                    return new List<int>();
+
+                List<int> result = new List<int>();
+                Queue<TreeNode> queue = new Queue<TreeNode>();
+
+                queue.Enqueue(root);
+
+                while (queue.Count > 0)
                 {
-                    dp[i + 2] = Math.Min(dp[i], dp[i + 1]) + cost[i];
+                    int count = queue.Count;
+
+                    while (count > 0)
+                    {
+                        TreeNode currentNode = queue.Dequeue();
+
+                        if (count == 1)
+                            result.Add(currentNode.val);
+
+                        if (currentNode.left != null)
+                            queue.Enqueue(currentNode.left);
+
+                        if (currentNode.right != null)
+                            queue.Enqueue(currentNode.right);
+
+                        count--;
+                    }
                 }
-                return Math.Min(dp[n + 1], dp[n]);
+
+                return result;
             }
         }
     }

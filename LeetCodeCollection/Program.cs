@@ -10,13 +10,15 @@ namespace LeetCodeCollection
         {
             var task = new DailyTask.Solution();
 
-            var inputA = new int[] { 10, 15, 20 };
-            var inputB = new int[] { 1, 100, 1, 1, 1, 100, 1, 1, 100, 1 };
-            var inputC = new int[] { 1, 5, 20, 4, 1, 3, 6, 3 };
+            var inputA = new TreeNode(1, new TreeNode(2, new TreeNode(5)), new TreeNode(3, null, new TreeNode(4)));
+            var inputB = new TreeNode(1, null, new TreeNode(3));
+            var inputC = new TreeNode();
+            var inputD = new TreeNode(1, new TreeNode(2));
 
-            Assert.AreEqual(15, task.MinCostClimbingStairs(inputA));
-            Assert.AreEqual(6, task.MinCostClimbingStairs(inputB));
-            Assert.AreEqual(15, task.MinCostClimbingStairs(inputC));
+            Assert.AreEqual(new int[] { 1, 3, 4 }, task.RightSideView(inputA));
+            Assert.AreEqual(new int[] { 1, 3 }, task.RightSideView(inputB));
+            Assert.AreEqual(new List<int>(), task.RightSideView(inputC.right));
+            Assert.AreEqual(new int[] { 1, 2 }, task.RightSideView(inputD));
 
             Console.WriteLine("Test complite");
             Console.ReadKey();
