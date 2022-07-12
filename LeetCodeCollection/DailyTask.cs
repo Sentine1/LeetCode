@@ -10,48 +10,59 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            bool isSquare = false;
-            public bool Makesquare(int[] nums)
+            //the same as https://leetcode.com/problems/partition-to-k-equal-sum-subsets/
+            private bool Helper(int used, long todo, bool?[] memo, int[] nums, long target)
             {
-                isSquare = false;
-                var n = nums.Length;
-                if (n < 4) return false;
-                var sum = nums.Sum();
-                Array.Sort(nums);
-                Array.Reverse(nums);
-                if (sum % 4 != 0)
+                if (memo[used] == null)
+                {
+                    memo[used] = false;
+
+                    long targ = (todo - 1) % target + 1;
+
+                    for (int i = 0; i < nums.Length; i++)
+                    {
+                        if ((((used >> i) & 1) == 0) && nums[i] <= targ)
+                        {
+                            if (Helper(used | (1 << i), todo - nums[i], memo, nums, target))
+                            {
+                                memo[used] = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                return memo[used].Value;
+            }
+
+            private bool CanPartitionKSubsets(int[] nums, int k)
+            {
+                if (nums.Length < k)
                 {
                     return false;
                 }
 
-                var len = sum / 4;
-                if (nums.Any(num => num > len)) return false;
-
-                var current = new int[4] { len, len, len, len };
-
-                DFS(nums, 0, current);
-
-                return isSquare;
-            }
-
-            private void DFS(int[] nums, int start, int[] current)
-            {
-                if (current.All(num => num == 0)) isSquare = true;
-
-                if (isSquare) return;
-
-                var cur = nums[start];
-
-                for (int j = 0; j < 4; j++)
+                checked
                 {
-                    if (current[j] - cur >= 0)
+                    long sum = 0;
+                    for (int i = 0; i < nums.Length; i++)
                     {
-                        current[j] -= cur;
-                        DFS(nums, start + 1, current);
-                        current[j] += cur;
+                        sum += nums[i];
                     }
+
+                    if (sum % k > 0)
+                    {
+                        return false;
+                    }
+
+                    bool?[] memo = new bool?[1 << nums.Length];
+                    memo[(1 << nums.Length) - 1] = true;
+                    return Helper(0, sum, memo, nums, sum / k);
                 }
             }
+
+
+            public bool Makesquare(int[] nums) => CanPartitionKSubsets(nums, 4);
         }
     }
 }
