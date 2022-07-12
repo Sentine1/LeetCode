@@ -10,38 +10,47 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public IList<int> RightSideView(TreeNode root)
+            bool isSquare = false;
+            public bool Makesquare(int[] nums)
             {
-                if (root == null)
-                    return new List<int>();
-
-                List<int> result = new List<int>();
-                Queue<TreeNode> queue = new Queue<TreeNode>();
-
-                queue.Enqueue(root);
-
-                while (queue.Count > 0)
+                isSquare = false;
+                var n = nums.Length;
+                if (n < 4) return false;
+                var sum = nums.Sum();
+                Array.Sort(nums);
+                Array.Reverse(nums);
+                if (sum % 4 != 0)
                 {
-                    int count = queue.Count;
-
-                    while (count > 0)
-                    {
-                        TreeNode currentNode = queue.Dequeue();
-
-                        if (count == 1)
-                            result.Add(currentNode.val);
-
-                        if (currentNode.left != null)
-                            queue.Enqueue(currentNode.left);
-
-                        if (currentNode.right != null)
-                            queue.Enqueue(currentNode.right);
-
-                        count--;
-                    }
+                    return false;
                 }
 
-                return result;
+                var len = sum / 4;
+                if (nums.Any(num => num > len)) return false;
+
+                var current = new int[4] { len, len, len, len };
+
+                DFS(nums, 0, current);
+
+                return isSquare;
+            }
+
+            private void DFS(int[] nums, int start, int[] current)
+            {
+                if (current.All(num => num == 0)) isSquare = true;
+
+                if (isSquare) return;
+
+                var cur = nums[start];
+
+                for (int j = 0; j < 4; j++)
+                {
+                    if (current[j] - cur >= 0)
+                    {
+                        current[j] -= cur;
+                        DFS(nums, start + 1, current);
+                        current[j] += cur;
+                    }
+                }
             }
         }
     }
