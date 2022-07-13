@@ -10,59 +10,34 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            //the same as https://leetcode.com/problems/partition-to-k-equal-sum-subsets/
-            private bool Helper(int used, long todo, bool?[] memo, int[] nums, long target)
+            public IList<IList<int>> LevelOrder(TreeNode root)
             {
-                if (memo[used] == null)
+                var res = new List<List<int>>();
+                if (root == null)
+                    return res.Cast<IList<int>>().ToList();
+                var q = new Queue<Tuple<TreeNode, int>>();
+                q.Enqueue(new(root, 1));
+                var level = 1;
+                res.Add(new());
+                while (q.Count > 0)
                 {
-                    memo[used] = false;
-
-                    long targ = (todo - 1) % target + 1;
-
-                    for (int i = 0; i < nums.Length; i++)
+                    var node = q.Dequeue();
+                    if (level == node.Item2)
                     {
-                        if ((((used >> i) & 1) == 0) && nums[i] <= targ)
-                        {
-                            if (Helper(used | (1 << i), todo - nums[i], memo, nums, target))
-                            {
-                                memo[used] = true;
-                                break;
-                            }
-                        }
+                        res[level - 1].Add(node.Item1.val);
                     }
+                    else
+                    {
+                        level++;
+                        res.Add(new() { node.Item1.val });
+                    }
+                    if (node.Item1.left != null)
+                        q.Enqueue(new(node.Item1.left, node.Item2 + 1));
+                    if (node.Item1.right != null)
+                        q.Enqueue(new(node.Item1.right, node.Item2 + 1));
                 }
-
-                return memo[used].Value;
+                return res.Cast<IList<int>>().ToList();
             }
-
-            private bool CanPartitionKSubsets(int[] nums, int k)
-            {
-                if (nums.Length < k)
-                {
-                    return false;
-                }
-
-                checked
-                {
-                    long sum = 0;
-                    for (int i = 0; i < nums.Length; i++)
-                    {
-                        sum += nums[i];
-                    }
-
-                    if (sum % k > 0)
-                    {
-                        return false;
-                    }
-
-                    bool?[] memo = new bool?[1 << nums.Length];
-                    memo[(1 << nums.Length) - 1] = true;
-                    return Helper(0, sum, memo, nums, sum / k);
-                }
-            }
-
-
-            public bool Makesquare(int[] nums) => CanPartitionKSubsets(nums, 4);
         }
     }
 }

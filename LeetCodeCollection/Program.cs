@@ -10,11 +10,16 @@ namespace LeetCodeCollection
         {
             var task = new DailyTask.Solution();
 
-            var inputA = new int[] { 1, 1, 2, 2, 2 };
-            var inputB = new int[] { 3, 3, 3, 3, 4 };
+            var inputA = new TreeNode(3, new TreeNode(9), new TreeNode(20, new TreeNode(15), new TreeNode(7)));
+            var inputB = new TreeNode(1);
+            var inputC = new TreeNode().left;
+            var outputA = new List<List<int>> { new List<int> { 3 }, new List<int> { 9, 20 }, new List<int> { 15, 7 } };
+            var outputB = new List<List<int>> { new List<int> { 1 }};
+            var outputC = new List<List<int>> { };
 
-            Assert.True(task.Makesquare(inputA));
-            Assert.False(task.Makesquare(inputB));
+            Assert.AreEqual(outputA,task.LevelOrder(inputA));
+            Assert.AreEqual(outputB, task.LevelOrder(inputB));
+            Assert.AreEqual(outputC, task.LevelOrder(inputC));
 
             Console.WriteLine("Test complite");
             Console.ReadKey();
