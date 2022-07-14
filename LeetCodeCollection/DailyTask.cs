@@ -10,33 +10,34 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public IList<IList<int>> LevelOrder(TreeNode root)
+            public TreeNode BuildTree(int[] preorder, int[] inorder)
             {
-                var res = new List<List<int>>();
-                if (root == null)
-                    return res.Cast<IList<int>>().ToList();
-                var q = new Queue<Tuple<TreeNode, int>>();
-                q.Enqueue(new(root, 1));
-                var level = 1;
-                res.Add(new());
-                while (q.Count > 0)
+                if (preorder == null || preorder.Length == 0 || inorder == null || inorder.Length == 0)
+                    return null;
+
+                return BuildTree(preorder, 0, preorder.Length - 1, inorder, 0, inorder.Length - 1);
+            }
+
+            private TreeNode BuildTree(int[] preorder, int i, int j, int[] inorder, int k, int l)
+            {
+                if (i > j || k > l)
+                    return null;
+
+                TreeNode node = new TreeNode(preorder[i]);
+
+                if (i != j)
                 {
-                    var node = q.Dequeue();
-                    if (level == node.Item2)
-                    {
-                        res[level - 1].Add(node.Item1.val);
-                    }
-                    else
-                    {
-                        level++;
-                        res.Add(new() { node.Item1.val });
-                    }
-                    if (node.Item1.left != null)
-                        q.Enqueue(new(node.Item1.left, node.Item2 + 1));
-                    if (node.Item1.right != null)
-                        q.Enqueue(new(node.Item1.right, node.Item2 + 1));
+                    int m = k;
+
+                    for (; m < inorder.Length; m++)
+                        if (inorder[m] == preorder[i])
+                            break;
+
+                    node.left = BuildTree(preorder, i + 1, i + m - k, inorder, k, m - 1);
+                    node.right = BuildTree(preorder, i + 1 + m - k, j, inorder, m + 1, l);
                 }
-                return res.Cast<IList<int>>().ToList();
+
+                return node;
             }
         }
     }
