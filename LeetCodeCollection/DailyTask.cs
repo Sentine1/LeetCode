@@ -10,34 +10,48 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public TreeNode BuildTree(int[] preorder, int[] inorder)
+            public int MaxAreaOfIsland(int[][] grid)
             {
-                if (preorder == null || preorder.Length == 0 || inorder == null || inorder.Length == 0)
-                    return null;
+                if (grid == null || grid.Length == 0)
+                    return 0;
 
-                return BuildTree(preorder, 0, preorder.Length - 1, inorder, 0, inorder.Length - 1);
-            }
+                int res = 0;
+                int[] dx = new int[] { 0, 0, 1, -1 },
+                      dy = new int[] { 1, -1, 0, 0 };
 
-            private TreeNode BuildTree(int[] preorder, int i, int j, int[] inorder, int k, int l)
-            {
-                if (i > j || k > l)
-                    return null;
+                for (int i = 0; i < grid.Length; i++)
+                    for (int j = 0; j < grid[0].Length; j++)
+                        if (grid[i][j] == 1)
+                        {
+                            int area = 1;
+                            Queue<int[]> q = new Queue<int[]>();
 
-                TreeNode node = new TreeNode(preorder[i]);
+                            q.Enqueue(new int[] { i, j });
+                            grid[i][j] = -1;
 
-                if (i != j)
-                {
-                    int m = k;
+                            while (q.Count > 0)
+                            {
+                                int[] cur = q.Dequeue();
 
-                    for (; m < inorder.Length; m++)
-                        if (inorder[m] == preorder[i])
-                            break;
+                                for (int k = 0; k < 4; k++)
+                                {
+                                    int newX = cur[0] + dx[k],
+                                        newY = cur[1] + dy[k];
 
-                    node.left = BuildTree(preorder, i + 1, i + m - k, inorder, k, m - 1);
-                    node.right = BuildTree(preorder, i + 1 + m - k, j, inorder, m + 1, l);
-                }
+                                    if (newX > -1 && newX < grid.Length && newY > -1 &&
+                                        newY < grid[0].Length && grid[newX][newY] == 1)
+                                    {
+                                        area++;
+                                        grid[newX][newY] = -1;
+                                        q.Enqueue(new int[] { newX, newY });
+                                    }
+                                }
+                            }
 
-                return node;
+                            res = Math.Max(res, area);
+                        }
+
+                return res;
             }
         }
     }
