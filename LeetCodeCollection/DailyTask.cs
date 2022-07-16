@@ -10,48 +10,55 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public int MaxAreaOfIsland(int[][] grid)
+            const int mod = 1000000007;
+            private static (int, int)[] dirs = { (1, 0), (0, 1), (-1, 0), (0, -1) };
+            private int Helper(int?[,,] dp, int x, int y, int limit)
             {
-                if (grid == null || grid.Length == 0)
+                if (dp[x, y, limit].HasValue)
+                {
+                    return dp[x, y, limit].Value;
+                }
+
+                if (limit == 0)
+                {
+                    dp[x, y, limit] = 0;
                     return 0;
+                }
 
                 int res = 0;
-                int[] dx = new int[] { 0, 0, 1, -1 },
-                      dy = new int[] { 1, -1, 0, 0 };
+                int nextLimit = limit - 1;
 
-                for (int i = 0; i < grid.Length; i++)
-                    for (int j = 0; j < grid[0].Length; j++)
-                        if (grid[i][j] == 1)
-                        {
-                            int area = 1;
-                            Queue<int[]> q = new Queue<int[]>();
+                foreach (var dir in dirs)
+                {
+                    int nextX = x + dir.Item1;
+                    int nextY = y + dir.Item2;
 
-                            q.Enqueue(new int[] { i, j });
-                            grid[i][j] = -1;
+                    if (nextX >= 0 && nextX < dp.GetLength(0) && nextY >= 0 && nextY < dp.GetLength(1))
+                    {
+                        int inner = Helper(dp, nextX, nextY, nextLimit);
+                        res = res + inner;
+                        res = res % mod;
+                    }
+                    else
+                    {
+                        res++;
+                        res = res % mod;
+                    }
+                }
 
-                            while (q.Count > 0)
-                            {
-                                int[] cur = q.Dequeue();
-
-                                for (int k = 0; k < 4; k++)
-                                {
-                                    int newX = cur[0] + dx[k],
-                                        newY = cur[1] + dy[k];
-
-                                    if (newX > -1 && newX < grid.Length && newY > -1 &&
-                                        newY < grid[0].Length && grid[newX][newY] == 1)
-                                    {
-                                        area++;
-                                        grid[newX][newY] = -1;
-                                        q.Enqueue(new int[] { newX, newY });
-                                    }
-                                }
-                            }
-
-                            res = Math.Max(res, area);
-                        }
-
+                dp[x, y, limit] = res;
                 return res;
+            }
+
+            public int FindPaths(int m, int n, int limit, int startX, int startY)
+            {
+                if (m == 0 || n == 0 || limit == 0)
+                {
+                    return 0;
+                }
+
+                int?[,,] dp = new int?[m, n, limit + 1];
+                return Helper(dp, startX, startY, limit);
             }
         }
     }
