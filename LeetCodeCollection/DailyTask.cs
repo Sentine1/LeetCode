@@ -10,55 +10,52 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            const int mod = 1000000007;
-            private static (int, int)[] dirs = { (1, 0), (0, 1), (-1, 0), (0, -1) };
-            private int Helper(int?[,,] dp, int x, int y, int limit)
+            public int NumSubmatrixSumTarget(int[][] matrix, int target)
             {
-                if (dp[x, y, limit].HasValue)
+                var rows = matrix.Length;
+                var columns = matrix[0].Length;
+                var sum = new int[columns];
+
+                int answer = 0;
+                for (int row = 0; row < rows; row++)
                 {
-                    return dp[x, y, limit].Value;
-                }
-
-                if (limit == 0)
-                {
-                    dp[x, y, limit] = 0;
-                    return 0;
-                }
-
-                int res = 0;
-                int nextLimit = limit - 1;
-
-                foreach (var dir in dirs)
-                {
-                    int nextX = x + dir.Item1;
-                    int nextY = y + dir.Item2;
-
-                    if (nextX >= 0 && nextX < dp.GetLength(0) && nextY >= 0 && nextY < dp.GetLength(1))
+                    for (int col = 0; col < columns; col++)
                     {
-                        int inner = Helper(dp, nextX, nextY, nextLimit);
-                        res = res + inner;
-                        res = res % mod;
+                        sum[col] = 0;
                     }
-                    else
+
+                    for (int subRow = row; subRow < rows; subRow++)
                     {
-                        res++;
-                        res = res % mod;
+                        for (int col = 0; col < columns; col++)
+                        {
+                            sum[col] += matrix[subRow][col];
+                        }
+
+                        var preSet = new Dictionary<int, int>();
+
+                        int preSum = 0;
+                        preSet.Add(preSum, 1);
+
+                        for (int col = 0; col < columns; col++)
+                        {
+                            preSum += sum[col];
+
+                            int search = preSum - target;
+
+                            if (preSet.ContainsKey(search))
+                            {
+                                answer += preSet[search];
+                            }
+
+                            if (!preSet.ContainsKey(preSum))
+                                preSet.Add(preSum, 0);
+
+                            preSet[preSum]++;
+                        }
                     }
                 }
 
-                dp[x, y, limit] = res;
-                return res;
-            }
-
-            public int FindPaths(int m, int n, int limit, int startX, int startY)
-            {
-                if (m == 0 || n == 0 || limit == 0)
-                {
-                    return 0;
-                }
-
-                int?[,,] dp = new int?[m, n, limit + 1];
-                return Helper(dp, startX, startY, limit);
+                return answer;
             }
         }
     }
