@@ -10,13 +10,12 @@ namespace LeetCodeCollection
         {
             var task = new DailyTask.Solution();
 
-            var inputA = new int[][] { new int[] { 0, 1, 0 }, new int[] { 1, 1, 1 }, new int[] { 0, 1, 0 } };
-            var inputB = new int[][] { new int[] { 1, -1 }, new int[] { -1, 1 } };
-            var inputC = new int[][] { new int[] { 904 } };
+            var outputA = new int[][] { new int[] { 1 }, new int[] { 1, 1}, new int[] { 1, 2, 1}
+            , new int[] { 1, 3, 3, 1}, new int[] { 1, 4, 6, 4, 1}};
+            var outputB = new int[][] { new int[] { 1 } };
 
-            Assert.AreEqual(4, task.NumSubmatrixSumTarget(inputA, 0));
-            Assert.AreEqual(5, task.NumSubmatrixSumTarget(inputB, 0));
-            Assert.AreEqual(0, task.NumSubmatrixSumTarget(inputC, 0));
+            Assert.AreEqual(outputA, task.Generate(5));
+            Assert.AreEqual(outputB, task.Generate(1));
 
             Console.WriteLine("Test complite");
             Console.ReadKey();
