@@ -10,12 +10,11 @@ namespace LeetCodeCollection
         {
             var task = new DailyTask.Solution();
 
-            var outputA = new int[][] { new int[] { 1 }, new int[] { 1, 1}, new int[] { 1, 2, 1}
-            , new int[] { 1, 3, 3, 1}, new int[] { 1, 4, 6, 4, 1}};
-            var outputB = new int[][] { new int[] { 1 } };
+            var outputA = ("abcde", new string[] { "a", "bb", "acd", "ace" });
+            var outputB = ("dsahjpjauf", new string[] { "ahjpjau", "ja", "ahbwzgqnuk", "tnmlanowax" });
 
-            Assert.AreEqual(outputA, task.Generate(5));
-            Assert.AreEqual(outputB, task.Generate(1));
+            Assert.AreEqual(3, task.NumMatchingSubseq(outputA.Item1, outputA.Item2));
+            Assert.AreEqual(2, task.NumMatchingSubseq(outputB.Item1, outputB.Item2));
 
             Console.WriteLine("Test complite");
             Console.ReadKey();

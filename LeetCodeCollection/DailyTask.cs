@@ -10,22 +10,65 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public IList<IList<int>> Generate(int numRows)
+            private bool IsSubsequence(string s, ref string t)
             {
-                IList<IList<int>> answer = new List<IList<int>>() { new List<int>() { 1 } };
-
-                for (int i = 2; i <= numRows; i++)
+                if (s.Length > t.Length)
                 {
-                    List<int> line = new List<int>() { 1 };
-
-                    for (int j = 1; j < i - 1; j++)
-                        line.Add(answer[i - 2][j - 1] + answer[i - 2][j]);
-
-                    line.Add(1);
-
-                    answer.Add(line);
+                    return false;
                 }
 
+                if (s.Length == 0)
+                {
+                    return true;
+                }
+
+                int i = 0;
+                int j = 0;
+
+                while (true)
+                {
+                    if (i == s.Length)
+                    {
+                        return true;
+                    }
+
+                    if (j == t.Length)
+                    {
+                        return false;
+                    }
+
+                    if (s[i] == t[j])
+                    {
+                        i++;
+                        j++;
+                        continue;
+                    }
+
+                    j++;
+                }
+            }
+
+            public int NumMatchingSubseq(string s, string[] words)
+            {
+                int answer = 0;
+                IDictionary<string, int> wordDict = new Dictionary<string, int>();
+                foreach (var word in words)
+                {
+                    if (!wordDict.ContainsKey(word))
+                    {
+                        wordDict[word] = 0;
+                    }
+
+                    wordDict[word]++;
+                }
+
+                foreach (var word in wordDict)
+                {
+                    if (IsSubsequence(word.Key, ref s))
+                    {
+                        answer += word.Value;
+                    }
+                }
                 return answer;
             }
         }
