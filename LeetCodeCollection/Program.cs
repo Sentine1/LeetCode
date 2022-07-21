@@ -10,11 +10,13 @@ namespace LeetCodeCollection
         {
             var task = new DailyTask.Solution();
 
-            var outputA = ("abcde", new string[] { "a", "bb", "acd", "ace" });
-            var outputB = ("dsahjpjauf", new string[] { "ahjpjau", "ja", "ahbwzgqnuk", "tnmlanowax" });
+            var inputA = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5)))));
+            var inputB = new ListNode(5);
+            var outputA = new ListNode(1, new ListNode(4, new ListNode(3, new ListNode(2, new ListNode(5)))));
+            var outputB = new ListNode(5);
 
-            Assert.AreEqual(3, task.NumMatchingSubseq(outputA.Item1, outputA.Item2));
-            Assert.AreEqual(2, task.NumMatchingSubseq(outputB.Item1, outputB.Item2));
+            Assert.AreEqual(outputA, task.ReverseBetween(inputA, 2, 4));
+            Assert.AreEqual(outputB, task.ReverseBetween(inputB, 1, 1));
 
             Console.WriteLine("Test complite");
             Console.ReadKey();

@@ -10,66 +10,55 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            private bool IsSubsequence(string s, ref string t)
+            public ListNode ReverseBetween(ListNode head, int left, int right)
             {
-                if (s.Length > t.Length)
+                if (head == null || head.next == null)
+                    return head;
+
+                ListNode d = new ListNode(),
+                         cur = d,
+                         n1 = head,
+                         n2 = null,
+                         n3 = null,
+                         n4 = null;
+                int i = 1;
+
+                d.next = head;
+
+                while (i < left)
                 {
-                    return false;
+                    cur = cur.next;
+                    n1 = n1.next;
+
+                    i++;
                 }
 
-                if (s.Length == 0)
+                cur.next = null;
+                n4 = n1;
+
+                i = 0;
+
+                n2 = n1.next;
+                if (n2 != null)
+                    n3 = n2.next;
+
+                while (i < (right - left) && n2 != null)
                 {
-                    return true;
+                    n2.next = n1;
+
+                    n1 = n2;
+                    n2 = n3;
+
+                    if (n2 != null)
+                        n3 = n2.next;
+
+                    i++;
                 }
 
-                int i = 0;
-                int j = 0;
+                cur.next = n1;
+                n4.next = n2;
 
-                while (true)
-                {
-                    if (i == s.Length)
-                    {
-                        return true;
-                    }
-
-                    if (j == t.Length)
-                    {
-                        return false;
-                    }
-
-                    if (s[i] == t[j])
-                    {
-                        i++;
-                        j++;
-                        continue;
-                    }
-
-                    j++;
-                }
-            }
-
-            public int NumMatchingSubseq(string s, string[] words)
-            {
-                int answer = 0;
-                IDictionary<string, int> wordDict = new Dictionary<string, int>();
-                foreach (var word in words)
-                {
-                    if (!wordDict.ContainsKey(word))
-                    {
-                        wordDict[word] = 0;
-                    }
-
-                    wordDict[word]++;
-                }
-
-                foreach (var word in wordDict)
-                {
-                    if (IsSubsequence(word.Key, ref s))
-                    {
-                        answer += word.Value;
-                    }
-                }
-                return answer;
+                return d.next;
             }
         }
     }
