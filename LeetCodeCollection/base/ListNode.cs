@@ -17,13 +17,13 @@ namespace LeetCodeCollection
         }
         public ListNode(params int[] input)
         {
-            ListNode listNode = new ListNode();
-            ListNode progress = listNode.next;
+            ListNode listNode;
+            ListNode progres = new ListNode();
+            listNode = progres;
             foreach (var element in input)
             {
-                var current = progress;
-                current.next = new ListNode(element);
-                progress = current.next;
+                progres.next = new ListNode(element);
+                progres = progres.next;
             }
             this.val = listNode.next.val;
             this.next = listNode.next.next;
