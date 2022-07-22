@@ -10,55 +10,70 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public ListNode ReverseBetween(ListNode head, int left, int right)
+
+            ListNode before, after, i, j;
+
+            public ListNode Partition(ListNode head, int x)
             {
-                if (head == null || head.next == null)
-                    return head;
+                if (head == null) return head;
+                ListNode temp = head;
 
-                ListNode d = new ListNode(),
-                         cur = d,
-                         n1 = head,
-                         n2 = null,
-                         n3 = null,
-                         n4 = null;
-                int i = 1;
-
-                d.next = head;
-
-                while (i < left)
+                // Traversing all the nodes to make two separate lists
+                while (temp != null)
                 {
-                    cur = cur.next;
-                    n1 = n1.next;
-
-                    i++;
+                    addNode(temp.val, temp.val < x);
+                    temp = temp.next;
                 }
 
-                cur.next = null;
-                n4 = n1;
+                // Case if the list with smaller values has no items
+                if (i == null) return after;
 
-                i = 0;
+                // Else merge the lists
+                else i.next = after;
 
-                n2 = n1.next;
-                if (n2 != null)
-                    n3 = n2.next;
+                return before;
+            }
 
-                while (i < (right - left) && n2 != null)
+            private void addNode(int val, bool isLess)
+            {
+
+                // Add node in smaller list (`before`)
+                if (isLess)
                 {
-                    n2.next = n1;
 
-                    n1 = n2;
-                    n2 = n3;
+                    // Initialize the head of smaller list
+                    if (before == null)
+                    {
+                        before = new ListNode(val);
+                        i = before;
+                    }
 
-                    if (n2 != null)
-                        n3 = n2.next;
-
-                    i++;
+                    // Add node at the end of list and move pointer `i` to the last node
+                    else
+                    {
+                        i.next = new ListNode(val);
+                        i = i.next;
+                    }
                 }
 
-                cur.next = n1;
-                n4.next = n2;
+                // Add node in greater list (`after`)
+                else
+                {
 
-                return d.next;
+                    // Initialize the head of greater list
+                    if (after == null)
+                    {
+                        after = new ListNode(val);
+                        j = after;
+                    }
+
+                    // Add node at the end of list and move pointer `j` to the last node
+                    else
+                    {
+                        j.next = new ListNode(val);
+                        j = j.next;
+                    }
+                }
             }
         }
     }
