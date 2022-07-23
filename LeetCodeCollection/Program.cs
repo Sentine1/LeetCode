@@ -19,6 +19,7 @@ namespace LeetCodeCollection
 
             Assert.AreEqual(outputA, task.CountSmaller(inputA));
             Assert.AreEqual(outputB, task.CountSmaller(inputB));
+            Assert.AreEqual(outputC, task.CountSmaller(inputC));
 
             Console.WriteLine("Test complite");
             Console.ReadKey();
