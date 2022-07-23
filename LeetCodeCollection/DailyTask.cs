@@ -10,70 +10,28 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-
-            ListNode before, after, i, j;
-
-            public ListNode Partition(ListNode head, int x)
+            public IList<int> CountSmaller(int[] nums)
             {
-                if (head == null) return head;
-                ListNode temp = head;
+                var sortedNums = new List<int>();
+                var result = new int[nums.Length];
 
-                // Traversing all the nodes to make two separate lists
-                while (temp != null)
+                for (int i = nums.Length - 1; i >= 0; i--)
                 {
-                    addNode(temp.val, temp.val < x);
-                    temp = temp.next;
+                    int left = 0;
+                    int right = sortedNums.Count;
+
+                    while (left < right)
+                    {
+                        var mid = left + (right - left) / 2;
+                        if (sortedNums[mid] >= nums[i]) right = mid;
+                        else left = mid + 1;
+                    }
+
+                    result[i] = left;
+                    sortedNums.Insert(left, nums[i]);
                 }
 
-                // Case if the list with smaller values has no items
-                if (i == null) return after;
-
-                // Else merge the lists
-                else i.next = after;
-
-                return before;
-            }
-
-            private void addNode(int val, bool isLess)
-            {
-
-                // Add node in smaller list (`before`)
-                if (isLess)
-                {
-
-                    // Initialize the head of smaller list
-                    if (before == null)
-                    {
-                        before = new ListNode(val);
-                        i = before;
-                    }
-
-                    // Add node at the end of list and move pointer `i` to the last node
-                    else
-                    {
-                        i.next = new ListNode(val);
-                        i = i.next;
-                    }
-                }
-
-                // Add node in greater list (`after`)
-                else
-                {
-
-                    // Initialize the head of greater list
-                    if (after == null)
-                    {
-                        after = new ListNode(val);
-                        j = after;
-                    }
-
-                    // Add node at the end of list and move pointer `j` to the last node
-                    else
-                    {
-                        j.next = new ListNode(val);
-                        j = j.next;
-                    }
-                }
+                return result;
             }
         }
     }
