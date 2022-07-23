@@ -34,5 +34,17 @@ namespace LeetCodeCollection
 
             return this.val == ((ListNode)obj).val;
         }
+
+        public override int GetHashCode()
+        {
+            int hash = val;
+            ListNode next = this.next;
+            while(next != null)
+            {
+                hash += next.val;
+                next = next.next;
+            }
+            return hash % 1303;
+        }
     }
 }
