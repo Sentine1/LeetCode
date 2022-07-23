@@ -24,29 +24,28 @@ namespace LeetCodeCollection
             foreach (var element in input)
             {
                 
-                if (queue is null)
+                if (queue is null && element is not null)
                 {
-                    new TreeNode(element);
-                    queue.Enqueue(left);
-                    queue.Enqueue(right);
-                    continue;
-                }
-                var node = queue.Dequeue();
-                if (node.left is null)
-                {
-                    new TreeNode(element);
-                    queue.Enqueue(left);
-                    queue.Enqueue(right);
-                    continue;
-                }
-                if (node.right is null)
-                {
-                    new TreeNode(element);
-                    queue.Enqueue(left);
-                    queue.Enqueue(right);
+                    this.val = element.Value;
+                    queue.Enqueue(null);
+                    queue.Enqueue(null);
                     continue;
                 }
 
+                var node = queue.Dequeue();
+                if (node.left is null)
+                {
+                    this.left = new TreeNode(element);
+                    continue;
+                }
+
+                if (node.right is null)
+                {
+                    this.right = new TreeNode(element);
+                    continue;
+                }
+
+                throw new Exception($"Element {element} not using");
             }
         }
     }
