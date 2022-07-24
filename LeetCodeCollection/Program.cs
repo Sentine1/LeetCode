@@ -10,16 +10,17 @@ namespace LeetCodeCollection
         {
             var task = new DailyTask.Solution();
 
-            var inputA = new int[] { 5, 2, 6, 1 };
-            var inputB = new int[] { -1 };
-            var inputC = new int[] { -1, -1 };
-            var outputA = new int[] { 2, 1, 1, 0 };
-            var outputB = new int[] { 0 };
-            var outputC = new int[] { 0, 0 };
+            var inputA = new int[][] {
+                new int[] {1,4,7,11,15 },
+                new int[] {2, 5, 8, 12, 19},
+                new int[]{3, 6, 9, 16, 22},
+                new int[]{10, 13, 14, 17, 24},
+                new int[]{18, 21, 23, 26, 30}
+            };
+            var inputB = inputA;
 
-            Assert.AreEqual(outputA, task.CountSmaller(inputA));
-            Assert.AreEqual(outputB, task.CountSmaller(inputB));
-            Assert.AreEqual(outputC, task.CountSmaller(inputC));
+            Assert.True(task.SearchMatrix(inputA, 5));
+            Assert.False(task.SearchMatrix(inputB, 20));
 
             Console.WriteLine("Test complite");
             Console.ReadKey();

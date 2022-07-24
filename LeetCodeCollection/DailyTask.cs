@@ -10,28 +10,19 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public IList<int> CountSmaller(int[] nums)
+            public bool SearchMatrix(int[][] matrix, int target)
             {
-                var sortedNums = new List<int>();
-                var result = new int[nums.Length];
+                int currentRow = 0, currentCol = matrix[0].Length - 1;
 
-                for (int i = nums.Length - 1; i >= 0; i--)
-                {
-                    int left = 0;
-                    int right = sortedNums.Count;
+                while (currentRow <= matrix.GetLength(0) - 1 && currentCol >= 0)
+                    if (matrix[currentRow][currentCol] == target)
+                        return true;
+                    else if (matrix[currentRow][currentCol] < target)
+                        currentRow++;
+                    else if (matrix[currentRow][currentCol] > target)
+                        currentCol--;
 
-                    while (left < right)
-                    {
-                        var mid = left + (right - left) / 2;
-                        if (sortedNums[mid] >= nums[i]) right = mid;
-                        else left = mid + 1;
-                    }
-
-                    result[i] = left;
-                    sortedNums.Insert(left, nums[i]);
-                }
-
-                return result;
+                return false;
             }
         }
     }
