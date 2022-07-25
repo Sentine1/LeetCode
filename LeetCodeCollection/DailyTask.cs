@@ -10,19 +10,40 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public bool SearchMatrix(int[][] matrix, int target)
+            public int[] SearchRange(int[] nums, int target)
             {
-                int currentRow = 0, currentCol = matrix[0].Length - 1;
+                return new int[] { FindFirstIndex(nums, target), FindLastIndex(nums, target) };
+            }
 
-                while (currentRow <= matrix.GetLength(0) - 1 && currentCol >= 0)
-                    if (matrix[currentRow][currentCol] == target)
-                        return true;
-                    else if (matrix[currentRow][currentCol] < target)
-                        currentRow++;
-                    else if (matrix[currentRow][currentCol] > target)
-                        currentCol--;
+            private int FindFirstIndex(int[] nums, int target)
+            {
+                if (nums.Length == 0) return -1;
+                int start = 0, end = nums.Length - 1;
+                while (start < end)
+                {
+                    var mid = start + (end - start) / 2;
+                    if (nums[mid] < target)
+                        start = mid + 1;
+                    else
+                        end = mid;
+                }
+                return nums[start] == target ? start : -1;
+            }
 
-                return false;
+            private int FindLastIndex(int[] nums, int target)
+            {
+                if (nums.Length == 0) return -1;
+                int start = 0, end = nums.Length - 1;
+                while (start < end)
+                {
+                    var mid = start + (end - start + 1) / 2;
+                    if (nums[mid] > target)
+                        end = mid - 1;
+                    else
+                        start = mid;
+                }
+
+                return nums[start] == target ? start : -1;
             }
         }
     }
