@@ -21,32 +21,37 @@ namespace LeetCodeCollection
         public TreeNode(params int?[] input) // In progress;
         {
             var queue = new Queue<TreeNode>();
-            foreach (var element in input)
+            for (int i = 0; i < input.Length; i++)
             {
-                
-                if (queue is null && element is not null)
-                {
-                    this.val = element.Value;
-                    queue.Enqueue(null);
-                    queue.Enqueue(null);
-                    continue;
-                }
-
-                var node = queue.Dequeue();
-                if (node.left is null)
-                {
-                    this.left = new TreeNode(element);
-                    continue;
-                }
-
-                if (node.right is null)
-                {
-                    this.right = new TreeNode(element);
-                    continue;
-                }
-
-                throw new Exception($"Element {element} not using");
+                queue.Enqueue(new TreeNode(input[i].Value));
             }
+            var full = new TreeNode();
+            if (queue.Count != 0)
+            {
+                full = addValues(queue);
+                this.val = full.val;
+            }
+            if (queue.Count > 1)
+                this.left = full.left;
+            if (queue.Count > 2)
+                this.right = full.right;
+        }
+
+        public TreeNode addValues (Queue<TreeNode> input)
+        {
+            var queue = input;
+            if (queue.Count == 0)
+                return null;
+            var node = new TreeNode(); 
+            while (queue.Count > 0)
+            {
+                node = queue.Dequeue();
+                if (queue.Count > 1)
+                    node.left = addValues(queue);
+                if (queue.Count > 1)
+                    node.right = addValues(queue);
+            }
+            return node;
         }
     }
 }

@@ -10,16 +10,13 @@ namespace LeetCodeCollection
         {
             var task = new DailyTask.Solution();
 
-            var inputA = new int[] { 5, 7, 7, 8, 8, 10 };
+            var inputA = new TreeNode(3, 5, 1, 6, 2, 0, 8, null, null, 7, 4);
             var inputB = inputA;
-            var inputC = new int[] { };
-            var outputA = new int[] { 3, 4 };
-            var outputB = new int[] { -1, -1 };
-            var outputC = outputB;
+            var inputC = new TreeNode(1,2);
 
-            Assert.AreEqual(outputA, task.SearchRange(inputA, 8));
-            Assert.AreEqual(outputB, task.SearchRange(inputB, 6));
-            Assert.AreEqual(outputC, task.SearchRange(inputC, 0));
+            Assert.AreEqual(3, task.LowestCommonAncestor(inputA, new TreeNode (5),new TreeNode(1)));
+            Assert.AreEqual(5, task.LowestCommonAncestor(inputB, new TreeNode(5), new TreeNode(4)));
+            Assert.AreEqual(1, task.LowestCommonAncestor(inputC, new TreeNode(1), new TreeNode(2)));
 
             Console.WriteLine("Test complite");
             Console.ReadKey();

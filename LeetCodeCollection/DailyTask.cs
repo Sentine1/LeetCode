@@ -10,40 +10,19 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public int[] SearchRange(int[] nums, int target)
+            public TreeNode LowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q)
             {
-                return new int[] { FindFirstIndex(nums, target), FindLastIndex(nums, target) };
-            }
+                if (root == null) return null;
+                if (root == p || root == q) return root;
 
-            private int FindFirstIndex(int[] nums, int target)
-            {
-                if (nums.Length == 0) return -1;
-                int start = 0, end = nums.Length - 1;
-                while (start < end)
-                {
-                    var mid = start + (end - start) / 2;
-                    if (nums[mid] < target)
-                        start = mid + 1;
-                    else
-                        end = mid;
-                }
-                return nums[start] == target ? start : -1;
-            }
+                var left = LowestCommonAncestor(root.left, p, q);
+                var right = LowestCommonAncestor(root.right, p, q);
 
-            private int FindLastIndex(int[] nums, int target)
-            {
-                if (nums.Length == 0) return -1;
-                int start = 0, end = nums.Length - 1;
-                while (start < end)
-                {
-                    var mid = start + (end - start + 1) / 2;
-                    if (nums[mid] > target)
-                        end = mid - 1;
-                    else
-                        start = mid;
-                }
+                if (left != null && right != null) return root;
 
-                return nums[start] == target ? start : -1;
+                if (left != null) return left;
+                if (right != null) return right;
+                return null;
             }
         }
     }
