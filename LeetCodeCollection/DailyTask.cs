@@ -10,19 +10,39 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public TreeNode LowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q)
+            public void Flatten(TreeNode root)
             {
-                if (root == null) return null;
-                if (root == p || root == q) return root;
+                if (root == null)
+                    return;
 
-                var left = LowestCommonAncestor(root.left, p, q);
-                var right = LowestCommonAncestor(root.right, p, q);
+                DFS(root);
+            }
 
-                if (left != null && right != null) return root;
+            private TreeNode DFS(TreeNode node)
+            {
+                if (node.left == null && node.right == null)
+                    return node;
 
-                if (left != null) return left;
-                if (right != null) return right;
-                return null;
+                TreeNode l = node.left == null ? null : DFS(node.left),
+                         r = node.right == null ? null : DFS(node.right);
+
+                if (l != null && r != null)
+                {
+                    l.right = node.right;
+                    node.right = node.left;
+                    node.left = null;
+
+                    return r;
+                }
+                else if (l != null)
+                {
+                    node.right = node.left;
+                    node.left = null;
+
+                    return l;
+                }
+                else
+                    return r;
             }
         }
     }
