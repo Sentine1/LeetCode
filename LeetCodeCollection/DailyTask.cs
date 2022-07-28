@@ -10,39 +10,29 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public void Flatten(TreeNode root)
+            public bool IsAnagram(string s, string t)
             {
-                if (root == null)
-                    return;
+                var dict = new Dictionary<char,int> ();
 
-                DFS(root);
-            }
-
-            private TreeNode DFS(TreeNode node)
-            {
-                if (node.left == null && node.right == null)
-                    return node;
-
-                TreeNode l = node.left == null ? null : DFS(node.left),
-                         r = node.right == null ? null : DFS(node.right);
-
-                if (l != null && r != null)
+                foreach (var chr in s)
                 {
-                    l.right = node.right;
-                    node.right = node.left;
-                    node.left = null;
-
-                    return r;
+                    if (dict.ContainsKey(chr))
+                        dict[chr]++;
+                    else dict.Add(chr, 1);
                 }
-                else if (l != null)
+                foreach (var chr in t)
                 {
-                    node.right = node.left;
-                    node.left = null;
-
-                    return l;
+                    if (dict.ContainsKey(chr) && dict[chr] > 0)
+                    {
+                        dict[chr]--;
+                        if (dict[chr] == 0)
+                            dict.Remove(chr);
+                    }
+                    else return false;
                 }
-                else
-                    return r;
+                if (dict.Count == 0)
+                    return true;
+                else return false;
             }
         }
     }
