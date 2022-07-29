@@ -10,16 +10,13 @@ namespace LeetCodeCollection
         {
             var task = new DailyTask.Solution();
 
-            var wordA = "anagram";
-            var wordB = "rat";
-            var wordC = "ab";
-            var annagramA = "nagaram";
-            var annagramB = "car";
-            var annagramC = "a";
+            var inputA = new[] { "abc", "deq", "mee", "aqq", "dkd", "ccc" };
+            var inputB = new[] { "a", "b", "c" };
+            var outputA = new[] { "mee","aqq" };
+            var outputB = new[] { "a", "b", "c" };
 
-            Assert.True(task.IsAnagram(wordA, annagramA));
-            Assert.False(task.IsAnagram(wordB, annagramB));
-            Assert.False(task.IsAnagram(wordC, annagramC));
+            Assert.AreEqual(outputA,task.FindAndReplacePattern(inputA, "abb"));
+            Assert.AreEqual(outputB,task.FindAndReplacePattern(inputB, "a"));
 
             Console.WriteLine("Test complite");
             Console.ReadKey();

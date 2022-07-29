@@ -10,29 +10,38 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public bool IsAnagram(string s, string t)
+            public IList<string> FindAndReplacePattern(string[] words, string pattern)
             {
-                var dict = new Dictionary<char,int> ();
-
-                foreach (var chr in s)
+                var patternSeq = Helper(pattern);
+                var ans = new List<string>();
+                foreach (var word in words)
                 {
-                    if (dict.ContainsKey(chr))
-                        dict[chr]++;
-                    else dict.Add(chr, 1);
-                }
-                foreach (var chr in t)
-                {
-                    if (dict.ContainsKey(chr) && dict[chr] > 0)
+                    if (patternSeq == Helper(word))
                     {
-                        dict[chr]--;
-                        if (dict[chr] == 0)
-                            dict.Remove(chr);
+                        ans.Add(word);
                     }
-                    else return false;
                 }
-                if (dict.Count == 0)
-                    return true;
-                else return false;
+                return ans;
+            }
+
+            private string Helper(string s)
+            {
+                IDictionary<char, char> old2New = new Dictionary<char, char>();
+                StringBuilder sb = new StringBuilder(s);
+
+                char curr = 'a';
+
+                for (int i = 0; i < s.Length; i++)
+                {
+                    if (!old2New.ContainsKey(sb[i]))
+                    {
+                        old2New[sb[i]] = curr++;
+                    }
+
+                    sb[i] = old2New[sb[i]];
+                }
+
+                return sb.ToString();
             }
         }
     }
