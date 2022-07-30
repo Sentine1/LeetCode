@@ -10,38 +10,61 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public IList<string> FindAndReplacePattern(string[] words, string pattern)
+            public IList<string> WordSubsets(string[] inputWords, string[] dictionary)
             {
-                var patternSeq = Helper(pattern);
-                var ans = new List<string>();
-                foreach (var word in words)
+                if (inputWords == null || dictionary == null || inputWords.Length == 0 || dictionary.Length == 0)
+                    return new List<string>();
+
+                var maxCountOfB = getMaximumCount(dictionary);
+                var wordsFound = new List<string>();
+
+                foreach (var word in inputWords)
                 {
-                    if (patternSeq == Helper(word))
+                    var current = new int[26];
+                    foreach (var item in word)
                     {
-                        ans.Add(word);
+                        current[item - 'a']++;
                     }
+
+                    var findException = false;
+                    for (int i = 0; i < 26; i++)
+                    {
+                        if (current[i] < maxCountOfB[i])
+                        {
+                            findException = true;
+                            break;
+                        }
+                    }
+
+                    if (findException)
+                        continue;
+
+                    wordsFound.Add(word);
                 }
-                return ans;
+
+                return wordsFound;
             }
 
-            private string Helper(string s)
+            private static int[] getMaximumCount(string[] words)
             {
-                IDictionary<char, char> old2New = new Dictionary<char, char>();
-                StringBuilder sb = new StringBuilder(s);
+                var maxCount = new int[26];
 
-                char curr = 'a';
-
-                for (int i = 0; i < s.Length; i++)
+                foreach (var word in words)
                 {
-                    if (!old2New.ContainsKey(sb[i]))
+                    var current = new int[26];
+                    foreach (var item in word)
                     {
-                        old2New[sb[i]] = curr++;
+                        current[item - 'a']++;
                     }
 
-                    sb[i] = old2New[sb[i]];
+                    for (int i = 0; i < 26; i++)
+                    {
+                        if (current[i] > maxCount[i])
+                            maxCount[i] = current[i];
+                    }
                 }
 
-                return sb.ToString();
+                return maxCount;
             }
         }
     }
