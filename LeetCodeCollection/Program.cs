@@ -8,18 +8,13 @@ namespace LeetCodeCollection
     {
         static void Main(string[] args)
         {
-            var task = new DailyTask.Solution();
+            var task = new DailyTask.Solution.NumArray(new[] { 1, 3, 5 });
 
-            var inputA = new[] { "amazon", "apple", "facebook", "google", "leetcode" };
-            var inputB = inputA;
-            var inputC = new[] { "amazon", "apple", "facebook", "google", "leetcode"};
-            var outputA = new[] { "facebook", "google", "leetcode" };
-            var outputB = new[] { "apple", "google", "leetcode" };
-            var outputC = new[] { "google", "leetcode"};
 
-            Assert.AreEqual(outputA, task.WordSubsets(inputA, new[] { "e", "o" }));
-            Assert.AreEqual(outputB, task.WordSubsets(inputB, new[] { "l", "e" }));
-            Assert.AreEqual(outputC, task.WordSubsets(inputC, new[] { "lo", "eo" }));
+            task.SumRange( 0, 2 );
+            task.Update(1, 2);
+            task.SumRange(0, 2);
+            var output = new int?[] { null, 9, null, 8 };
 
             Console.WriteLine("Test complite");
             Console.ReadKey();

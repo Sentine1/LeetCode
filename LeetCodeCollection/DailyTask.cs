@@ -10,62 +10,99 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public IList<string> WordSubsets(string[] inputWords, string[] dictionary)
+            public class NumArray
             {
-                if (inputWords == null || dictionary == null || inputWords.Length == 0 || dictionary.Length == 0)
-                    return new List<string>();
+                private int len = 0;
+                private int[] segmentTree = null;
 
-                var maxCountOfB = getMaximumCount(dictionary);
-                var wordsFound = new List<string>();
-
-                foreach (var word in inputWords)
+                public NumArray(int[] nums)
                 {
-                    var current = new int[26];
-                    foreach (var item in word)
-                    {
-                        current[item - 'a']++;
-                    }
-
-                    var findException = false;
-                    for (int i = 0; i < 26; i++)
-                    {
-                        if (current[i] < maxCountOfB[i])
-                        {
-                            findException = true;
-                            break;
-                        }
-                    }
-
-                    if (findException)
-                        continue;
-
-                    wordsFound.Add(word);
+                    len = nums.Length;
+                    segmentTree = BuildSegmentTree(new int[GetNextPowerOfTwo(len) * 2 - 1], nums, 0, len - 1, 0);
                 }
 
-                return wordsFound;
-            }
-
-            private static int[] getMaximumCount(string[] words)
-            {
-                var maxCount = new int[26];
-
-                foreach (var word in words)
+                public void Update(int index, int val)
                 {
-                    var current = new int[26];
-                    foreach (var item in word)
-                    {
-                        current[item - 'a']++;
-                    }
-
-                    for (int i = 0; i < 26; i++)
-                    {
-                        if (current[i] > maxCount[i])
-                            maxCount[i] = current[i];
-                    }
+                    UpdateSegmentTree(segmentTree, index, val, 0, len - 1, 0);
                 }
 
-                return maxCount;
+                public int SumRange(int left, int right)
+                {
+                    return QuerySumRange(0, len - 1, left, right, 0);
+                }
+
+                private int GetNextPowerOfTwo(int n)
+                {
+                    int m = n,
+                        cnt = 0;
+
+                    if (n > 0 && (n & (n - 1)) == 0)
+                        return n;
+
+                    while (m != 0)
+                    {
+                        m = m >> 1;
+                        cnt++;
+                    }
+
+                    return 1 << cnt;
+                }
+
+                private int[] BuildSegmentTree(int[] segmentTree, int[] input, int l, int r, int pos)
+                {
+                    if (l == r)
+                        segmentTree[pos] = input[l];
+                    else
+                    {
+                        int mid = l + (r - l) / 2;
+
+                        BuildSegmentTree(segmentTree, input, l, mid, pos * 2 + 1);
+                        BuildSegmentTree(segmentTree, input, mid + 1, r, pos * 2 + 2);
+
+                        segmentTree[pos] = segmentTree[pos * 2 + 1] + segmentTree[pos * 2 + 2];
+                    }
+
+                    return segmentTree;
+                }
+
+                private int[] UpdateSegmentTree(int[] segmentTree, int i, int val, int l, int r, int pos)
+                {
+                    if (i < l || r < i)
+                        return segmentTree;
+                    else if (l == r)
+                        segmentTree[pos] = val;
+                    else
+                    {
+                        int mid = l + (r - l) / 2;
+
+                        UpdateSegmentTree(segmentTree, i, val, l, mid, pos * 2 + 1);
+                        UpdateSegmentTree(segmentTree, i, val, mid + 1, r, pos * 2 + 2);
+
+                        segmentTree[pos] = segmentTree[pos * 2 + 1] + segmentTree[pos * 2 + 2];
+                    }
+
+                    return segmentTree;
+                }
+
+                private int QuerySumRange(int l, int r, int queryL, int queryR, int pos)
+                {
+                    if (queryL <= l && r <= queryR)
+                        return segmentTree[pos];
+                    else if (queryL > r || queryR < l)
+                        return 0;
+
+                    int mid = l + (r - l) / 2;
+
+                    return QuerySumRange(l, mid, queryL, queryR, pos * 2 + 1) + QuerySumRange(mid + 1, r, queryL, queryR, pos * 2 + 2);
+                }
             }
+
+            /**
+             * Your NumArray object will be instantiated and called as such:
+             * NumArray obj = new NumArray(nums);
+             * obj.Update(index,val);
+             * int param_2 = obj.SumRange(left,right);
+             */
         }
     }
 }
