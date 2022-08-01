@@ -10,99 +10,26 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public class NumArray
+            public int UniquePaths(int m, int n)
             {
-                private int len = 0;
-                private int[] segmentTree = null;
+                int[,] DP = new int[m, n];
 
-                public NumArray(int[] nums)
-                {
-                    len = nums.Length;
-                    segmentTree = BuildSegmentTree(new int[GetNextPowerOfTwo(len) * 2 - 1], nums, 0, len - 1, 0);
-                }
+                DP[0, 0] = 1;
 
-                public void Update(int index, int val)
-                {
-                    UpdateSegmentTree(segmentTree, index, val, 0, len - 1, 0);
-                }
+                if (m > 1)
+                    for (int i = 1; i <= DP.GetLength(0) - 1; i++)
+                        DP[i, 0] = 1;
 
-                public int SumRange(int left, int right)
-                {
-                    return QuerySumRange(0, len - 1, left, right, 0);
-                }
+                if (n > 1)
+                    for (int i = 1; i <= DP.GetLength(1) - 1; i++)
+                        DP[0, i] = 1;
 
-                private int GetNextPowerOfTwo(int n)
-                {
-                    int m = n,
-                        cnt = 0;
+                for (int i = 1; i <= DP.GetLength(0) - 1; i++)
+                    for (int j = 1; j <= DP.GetLength(1) - 1; j++)
+                        DP[i, j] = DP[i - 1, j] + DP[i, j - 1];
 
-                    if (n > 0 && (n & (n - 1)) == 0)
-                        return n;
-
-                    while (m != 0)
-                    {
-                        m = m >> 1;
-                        cnt++;
-                    }
-
-                    return 1 << cnt;
-                }
-
-                private int[] BuildSegmentTree(int[] segmentTree, int[] input, int l, int r, int pos)
-                {
-                    if (l == r)
-                        segmentTree[pos] = input[l];
-                    else
-                    {
-                        int mid = l + (r - l) / 2;
-
-                        BuildSegmentTree(segmentTree, input, l, mid, pos * 2 + 1);
-                        BuildSegmentTree(segmentTree, input, mid + 1, r, pos * 2 + 2);
-
-                        segmentTree[pos] = segmentTree[pos * 2 + 1] + segmentTree[pos * 2 + 2];
-                    }
-
-                    return segmentTree;
-                }
-
-                private int[] UpdateSegmentTree(int[] segmentTree, int i, int val, int l, int r, int pos)
-                {
-                    if (i < l || r < i)
-                        return segmentTree;
-                    else if (l == r)
-                        segmentTree[pos] = val;
-                    else
-                    {
-                        int mid = l + (r - l) / 2;
-
-                        UpdateSegmentTree(segmentTree, i, val, l, mid, pos * 2 + 1);
-                        UpdateSegmentTree(segmentTree, i, val, mid + 1, r, pos * 2 + 2);
-
-                        segmentTree[pos] = segmentTree[pos * 2 + 1] + segmentTree[pos * 2 + 2];
-                    }
-
-                    return segmentTree;
-                }
-
-                private int QuerySumRange(int l, int r, int queryL, int queryR, int pos)
-                {
-                    if (queryL <= l && r <= queryR)
-                        return segmentTree[pos];
-                    else if (queryL > r || queryR < l)
-                        return 0;
-
-                    int mid = l + (r - l) / 2;
-
-                    return QuerySumRange(l, mid, queryL, queryR, pos * 2 + 1) + QuerySumRange(mid + 1, r, queryL, queryR, pos * 2 + 2);
-                }
+                return DP[m - 1, n - 1];
             }
-
-            /**
-             * Your NumArray object will be instantiated and called as such:
-             * NumArray obj = new NumArray(nums);
-             * obj.Update(index,val);
-             * int param_2 = obj.SumRange(left,right);
-             */
         }
     }
 }
