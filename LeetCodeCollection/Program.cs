@@ -8,12 +8,12 @@ namespace LeetCodeCollection
     {
         static void Main(string[] args)
         {
-            var task = new DailyTask.Solution();
-            var inputA = new int[][] { new[] { 1, 5, 9 }, new[] { 10, 11, 13 }, new[] { 12, 13, 15 } };
-            var inputB = new int[][] { new int[] { -5 } };
+            var task = new DailyTask.MyCalendar();
 
-            Assert.AreEqual(13, task.KthSmallest(inputA, 8));
-            Assert.AreEqual(-5, task.KthSmallest(inputB, 1));
+            Assert.Null(task.Book());
+            Assert.True(task.Book(10, 20));
+            Assert.False(task.Book(15, 25));
+            Assert.True(task.Book(20, 30));
 
             Console.WriteLine("Test complite");
             Console.ReadKey();

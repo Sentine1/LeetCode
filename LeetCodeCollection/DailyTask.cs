@@ -8,13 +8,26 @@ namespace LeetCodeCollection
 {
     public class DailyTask
     {
-        public class Solution
+        public class MyCalendar
         {
-            public int KthSmallest(int[][] matrix, int k)
+            List<int[]> calendar;
+
+            public MyCalendar()
             {
-                return matrix.SelectMany(x => x)
-                    .OrderBy(x => x)
-                    .ElementAt(k - 1);
+                calendar = new();
+            }
+
+            public bool Book(int start, int end)
+            {
+                foreach (var book in calendar)
+                    if (Math.Max(book[0], start) < Math.Min(book[1], end))
+                        return false;
+                calendar.Add(new int[] { start, end });
+                return true;
+            }
+            public string Book()
+            {
+                return null;
             }
         }
     }
