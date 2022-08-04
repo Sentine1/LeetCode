@@ -8,26 +8,19 @@ namespace LeetCodeCollection
 {
     public class DailyTask
     {
-        public class MyCalendar
+        public class Solution
         {
-            List<int[]> calendar;
+            public int MirrorReflection(int p, int q)
+            {
+                if (p == q) return 1;
+                if (q == 0) return 0;
 
-            public MyCalendar()
-            {
-                calendar = new();
-            }
+                int count = 0;
+                while (((count + 1) * q) % p != 0) count++;
 
-            public bool Book(int start, int end)
-            {
-                foreach (var book in calendar)
-                    if (Math.Max(book[0], start) < Math.Min(book[1], end))
-                        return false;
-                calendar.Add(new int[] { start, end });
-                return true;
-            }
-            public string Book()
-            {
-                return null;
+                if (count % 2 != 0) return 2;
+                else if ((((count + 1) * q) / p) % 2 != 0) return 1;
+                else return 0;
             }
         }
     }

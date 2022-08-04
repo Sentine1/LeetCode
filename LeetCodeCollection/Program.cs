@@ -8,12 +8,10 @@ namespace LeetCodeCollection
     {
         static void Main(string[] args)
         {
-            var task = new DailyTask.MyCalendar();
+            var task = new DailyTask.Solution();
 
-            Assert.Null(task.Book());
-            Assert.True(task.Book(10, 20));
-            Assert.False(task.Book(15, 25));
-            Assert.True(task.Book(20, 30));
+            Assert.AreEqual(2, task.MirrorReflection(2, 1));
+            Assert.AreEqual(1, task.MirrorReflection(3, 1));
 
             Console.WriteLine("Test complite");
             Console.ReadKey();
