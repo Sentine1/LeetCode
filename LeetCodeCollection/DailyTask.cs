@@ -10,17 +10,21 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public int MirrorReflection(int p, int q)
+            public int CombinationSum4(int[] nums, int target)
             {
-                if (p == q) return 1;
-                if (q == 0) return 0;
+                int[] dp = new int[target + 1];
+                dp[0] = 1;
 
-                int count = 0;
-                while (((count + 1) * q) % p != 0) count++;
+                for (int i = 1; i < dp.Length; i++)
+                {
+                    foreach (int num in nums)
+                    {
+                        if (i - num >= 0)
+                            dp[i] += dp[i - num];
+                    }
+                }
 
-                if (count % 2 != 0) return 2;
-                else if ((((count + 1) * q) / p) % 2 != 0) return 1;
-                else return 0;
+                return dp[target];
             }
         }
     }
