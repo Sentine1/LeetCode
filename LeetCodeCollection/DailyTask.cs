@@ -10,21 +10,9 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public int CombinationSum4(int[] nums, int target)
+            public int PoorPigs(int buckets, int minutesToDie, int minutesToTest)
             {
-                int[] dp = new int[target + 1];
-                dp[0] = 1;
-
-                for (int i = 1; i < dp.Length; i++)
-                {
-                    foreach (int num in nums)
-                    {
-                        if (i - num >= 0)
-                            dp[i] += dp[i - num];
-                    }
-                }
-
-                return dp[target];
+                return buckets == 1 ? 0 : (int)Math.Ceiling(Math.Log(buckets, (minutesToTest / minutesToDie) + 1));
             }
         }
     }
