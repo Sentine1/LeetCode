@@ -11,9 +11,9 @@ namespace LeetCodeCollection
             var task = new DailyTask.Solution();
 
 
-            Assert.AreEqual(5, task.PoorPigs(1000, 15, 60));
-            Assert.AreEqual(2, task.PoorPigs(4, 15, 15));
-            Assert.AreEqual(2, task.PoorPigs(4, 15, 30));
+            Assert.AreEqual(5, task.CountVowelPermutation(1));
+            Assert.AreEqual(10, task.CountVowelPermutation(2));
+            Assert.AreEqual(68, task.CountVowelPermutation(5));
 
             Console.WriteLine("Test complite");
             Console.ReadKey();
