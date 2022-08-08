@@ -10,22 +10,28 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public int CountVowelPermutation(int n)
+            public int LengthOfLIS(int[] nums)
             {
-                int mod = (int) 1e9+7;
-                var count = new long[5] { 1, 1, 1, 1, 1 };
-                for (int i = 2; i < n + 1; i++)
+                if (nums == null || nums.Length == 0)
+                    return 0;
+                else if (nums.Length == 1)
+                    return 1;
+
+                int currentLength = 1;
+                int[] continousLength = new int[nums.Length];
+
+                for (int i = 0; i <= nums.Length - 1; i++)
                 {
-                    var countTemp = new long[5];
-                    countTemp[0] = count[1];
-                    countTemp[1] = (count[0] + count[2]) % mod;
-                    countTemp[2] = (count[0] + count[1] + count[3] + count[4]) % mod;
-                    countTemp[3] = (count[2] + count[4]) % mod;
-                    countTemp[4] = count[0];
-                    count = countTemp;
+                    continousLength[i] = 1;
+
+                    for (int j = 0; j < i; j++)
+                        if (nums[j] < nums[i])
+                            continousLength[i] = Math.Max(continousLength[j] + 1, continousLength[i]);
+
+                    currentLength = Math.Max(continousLength[i], currentLength);
                 }
 
-                return (int)(count.Sum() % mod);
+                return currentLength;
             }
         }
     }
