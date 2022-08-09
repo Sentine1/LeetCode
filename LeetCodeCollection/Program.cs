@@ -9,13 +9,11 @@ namespace LeetCodeCollection
         static void Main(string[] args)
         {
             var task = new DailyTask.Solution();
-            var inputA = new[] { 10, 9, 2, 5, 3, 7, 101, 18 };
-            var inputB = new[] { 0, 1, 0, 3, 2, 3 };
-            var inputC = new[] { 7, 7, 7, 7, 7, 7, 7 };
+            var inputA = new[] { 2, 4 };
+            var inputB = new[] { 2, 4, 5, 10 };
 
-            Assert.AreEqual(4, task.LengthOfLIS(inputA));
-            Assert.AreEqual(4, task.LengthOfLIS(inputB));
-            Assert.AreEqual(1, task.LengthOfLIS(inputC));
+            Assert.AreEqual(2, task.NumFactoredBinaryTrees(inputA));
+            Assert.AreEqual(7, task.NumFactoredBinaryTrees(inputB));
 
             Console.WriteLine("Test complite");
             Console.ReadKey();

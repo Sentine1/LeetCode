@@ -10,28 +10,49 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public int LengthOfLIS(int[] nums)
+            public int NumFactoredBinaryTrees(int[] arr)
             {
-                if (nums == null || nums.Length == 0)
-                    return 0;
-                else if (nums.Length == 1)
-                    return 1;
-
-                int currentLength = 1;
-                int[] continousLength = new int[nums.Length];
-
-                for (int i = 0; i <= nums.Length - 1; i++)
+                var mod = (int)(1e9 + 7);
+                checked
                 {
-                    continousLength[i] = 1;
 
-                    for (int j = 0; j < i; j++)
-                        if (nums[j] < nums[i])
-                            continousLength[i] = Math.Max(continousLength[j] + 1, continousLength[i]);
+                    Array.Sort(arr);
+                    int[] dp = new int[arr.Length];
 
-                    currentLength = Math.Max(continousLength[i], currentLength);
-                }
+                    IDictionary<int, int> val2Idx = new Dictionary<int, int>();
+                    for (int i = 0; i < arr.Length; i++)
+                    {
+                        val2Idx[arr[i]] = i;
+                    }
 
-                return currentLength;
+                    for (int i = 0; i < arr.Length; i++)
+                    {
+                        dp[i] = 1;
+
+                        for (int j = 0; j < i; j++)
+                        {
+                            if (arr[i] % arr[j] == 0)
+                            {
+                                int right = arr[i] / arr[j];
+                                if (val2Idx.ContainsKey(right))
+                                {
+                                    var mult = (int)
+                                        (((long)dp[j] * dp[val2Idx[right]]) % MODULO);
+                                    dp[i] += mult;
+                                    dp[i] %= mod;
+                                }
+                            }
+                        }
+                    }
+
+                    int res = 0;
+                    foreach (var d in dp)
+                    {
+                        res += d;
+                        res %= mod;
+                    }
+
+                    return res;
             }
         }
     }
