@@ -9,11 +9,16 @@ namespace LeetCodeCollection
         static void Main(string[] args)
         {
             var task = new DailyTask.Solution();
-            var inputA = new[] { 2, 4 };
-            var inputB = new[] { 2, 4, 5, 10 };
+            var inputA = new int[] { -10, -3, 0, 5, 9 };
+            var outputA = new TreeNode().BuildTree(0,0,new int?[] { 0, -3, 9, -10, null, 5 });
+            var inputB = new int[] { 1, 3 };
+            var outputB = new TreeNode().BuildTree(0,0,new int?[] { 3, 1 });
 
-            Assert.AreEqual(3, task.NumFactoredBinaryTrees(inputA));
-            Assert.AreEqual(7, task.NumFactoredBinaryTrees(inputB));
+            var test = task.SortedArrayToBST(inputA);
+            Console.WriteLine($"{outputA.GetHashCode()} A, {test.GetHashCode()} test");
+
+            Assert.AreEqual(outputA, task.SortedArrayToBST(inputA));
+            Assert.AreEqual(outputB, task.SortedArrayToBST(inputB));
 
             Console.WriteLine("Test complite");
             Console.ReadKey();

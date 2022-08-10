@@ -10,50 +10,26 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public int NumFactoredBinaryTrees(int[] arr)
+            public TreeNode SortedArrayToBST(int[] nums)
             {
-                var mod = (int)(1e9 + 7);
-                checked
-                {
+                if (nums == null || nums.Length == 0)
+                    return null;
 
-                    Array.Sort(arr);
-                    int[] dp = new int[arr.Length];
+                return BuildTree(nums, 0, nums.Length - 1);
+            }
 
-                    IDictionary<int, int> val2Idx = new Dictionary<int, int>();
-                    for (int i = 0; i < arr.Length; i++)
-                    {
-                        val2Idx[arr[i]] = i;
-                    }
+            private TreeNode BuildTree(int[] nums, int i, int j)
+            {
+                if (j < i)
+                    return null;
 
-                    for (int i = 0; i < arr.Length; i++)
-                    {
-                        dp[i] = 1;
+                int mid = j + (i - j) / 2;
+                TreeNode node = new TreeNode(nums[mid]);
 
-                        for (int j = 0; j < i; j++)
-                        {
-                            if (arr[i] % arr[j] == 0)
-                            {
-                                int right = arr[i] / arr[j];
-                                if (val2Idx.ContainsKey(right))
-                                {
-                                    var mult = (int)
-                                        (((long)dp[j] * dp[val2Idx[right]]) % mod);
-                                    dp[i] += mult;
-                                    dp[i] %= mod;
-                                }
-                            }
-                        }
-                    }
+                node.left = BuildTree(nums, i, mid - 1);
+                node.right = BuildTree(nums, mid + 1, j);
 
-                    int res = 0;
-                    foreach (var d in dp)
-                    {
-                        res += d;
-                        res %= mod;
-                    }
-
-                    return res;
-                }
+                return node;
             }
         }
     }

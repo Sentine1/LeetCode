@@ -18,30 +18,46 @@ namespace LeetCodeCollection
             this.right = right;
         }
 
-        public TreeNode(params int?[] input) // In progress;
+
+        public TreeNode BuildTree(int i, int j, params int?[] nums)
         {
-            foreach (var element in input)
-            {
-                Add(element);
-            }
+            var n = nums.Length;
+            if (i > n - 1 || !nums[i].HasValue)
+                return null;
+
+            TreeNode node = new TreeNode(nums[i].Value);
+
+            node.left = BuildTree(2*i+1, j, nums);
+            node.right = BuildTree(2*i+2, j, nums);
+
+            return node;
         }
 
-        public void Add(int? newValue)
+        public override int GetHashCode()
         {
-            if (newValue.HasValue) 
-                val = newValue.Value;
-            
-            else if (newValue.Value > 0)
+            int hash = 5381;
+            var queue = new Queue<TreeNode>();
+            queue.Enqueue(left);
+            queue.Enqueue(right);
+            while (queue.Count > 0)
             {
-                if (right == null) right = new TreeNode ( newValue );
-                else right.Add(newValue);
+                var node = queue.Dequeue();
+                if (node is null)
+                    continue;
+                
+                hash = 33 * hash + node.GetHashCode() % (int)1e9+7;
+                
+                    if (node.left is not null)
+                        queue.Enqueue(node.left);
+                    else if (node.right is not null)
+                        queue.Enqueue(node.right);
             }
+            return hash;
+        }
 
-            else
-            {
-                if (left == null) left = new TreeNode(newValue);
-                else left.Add(newValue);
-            };
+        public override bool Equals(object obj)
+        {
+            return GetHashCode() == obj.GetHashCode();
         }
     }
 }
