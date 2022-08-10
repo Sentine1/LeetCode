@@ -12,7 +12,7 @@ namespace LeetCodeCollection
             var inputA = new[] { 2, 4 };
             var inputB = new[] { 2, 4, 5, 10 };
 
-            Assert.AreEqual(2, task.NumFactoredBinaryTrees(inputA));
+            Assert.AreEqual(3, task.NumFactoredBinaryTrees(inputA));
             Assert.AreEqual(7, task.NumFactoredBinaryTrees(inputB));
 
             Console.WriteLine("Test complite");

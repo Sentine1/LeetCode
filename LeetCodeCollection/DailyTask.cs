@@ -37,7 +37,7 @@ namespace LeetCodeCollection
                                 if (val2Idx.ContainsKey(right))
                                 {
                                     var mult = (int)
-                                        (((long)dp[j] * dp[val2Idx[right]]) % MODULO);
+                                        (((long)dp[j] * dp[val2Idx[right]]) % mod);
                                     dp[i] += mult;
                                     dp[i] %= mod;
                                 }
@@ -53,6 +53,7 @@ namespace LeetCodeCollection
                     }
 
                     return res;
+                }
             }
         }
     }
