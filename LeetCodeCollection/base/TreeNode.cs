@@ -39,13 +39,15 @@ namespace LeetCodeCollection
             var queue = new Queue<TreeNode>();
             queue.Enqueue(left);
             queue.Enqueue(right);
+            int n = 0;
             while (queue.Count > 0)
             {
+                n++;
                 var node = queue.Dequeue();
                 if (node is null)
                     continue;
                 
-                hash = 33 * hash + node.GetHashCode() % (int)1e9+7;
+                hash = 33 * hash + node.GetHashCode() + n % (int)1e9+7;
                 
                     if (node.left is not null)
                         queue.Enqueue(node.left);
