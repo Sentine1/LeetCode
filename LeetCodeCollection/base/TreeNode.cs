@@ -27,32 +27,34 @@ namespace LeetCodeCollection
 
             TreeNode node = new TreeNode(nums[i].Value);
 
-            node.left = BuildTree(2*i+1, j, nums);
-            node.right = BuildTree(2*i+2, j, nums);
+            node.left = BuildTree(2 * i + 1, j, nums);
+            node.right = BuildTree(2 * i + 2, j, nums);
 
             return node;
         }
 
         public override int GetHashCode()
         {
-            int hash = 5381;
-            var queue = new Queue<TreeNode>();
-            queue.Enqueue(left);
-            queue.Enqueue(right);
+            int hash = 1117;
             int n = 0;
+            var queue = new Queue<(TreeNode, int)>();
+            queue.Enqueue((left, n + 1));
+            queue.Enqueue((right, n + 1));
+
             while (queue.Count > 0)
             {
-                n++;
-                var node = queue.Dequeue();
+                var tuple = queue.Dequeue();
+                var node = tuple.Item1;
+                n = tuple.Item2;
                 if (node is null)
                     continue;
-                
-                hash = 33 * hash + node.GetHashCode() + n % (int)1e9+7;
-                
-                    if (node.left is not null)
-                        queue.Enqueue(node.left);
-                    else if (node.right is not null)
-                        queue.Enqueue(node.right);
+
+                hash = (33  * hash + node.GetHashCode() * n) % (int)1e9 + 7;
+
+                if (node.left is not null)
+                    queue.Enqueue((node.left, n + 1));
+                else if (node.right is not null)
+                    queue.Enqueue((node.right, n + 1));
             }
             return hash;
         }
