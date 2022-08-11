@@ -9,16 +9,14 @@ namespace LeetCodeCollection
         static void Main(string[] args)
         {
             var task = new DailyTask.Solution();
-            var inputA = new int[] { -10, -3, 0, 5, 9 };
-            var outputA = new TreeNode().BuildTree(new int?[] { 0, -3, 9, -10, null, 5 });
-            var inputB = new int[] { 1, 3 };
-            var outputB = new TreeNode().BuildTree(new int?[] { 3, 1 });
-
-            var test = task.SortedArrayToBST(inputA);
-            Console.WriteLine($"{outputA.GetHashCode()} A, {test.GetHashCode()} test");
-
-            Assert.AreEqual(outputA, task.SortedArrayToBST(inputA));
-            Assert.AreEqual(outputB, task.SortedArrayToBST(inputB));
+            var inputA = new TreeNode().BuildTree(new int?[] { 2, 1, 3 });
+            var inputB = new TreeNode().BuildTree(new int?[] { 5, 1, 4, null, null, 3, 6 });
+            var inputC = new TreeNode().BuildTree(new int?[] { 2, 2, 2 });
+            var inputD = new TreeNode().BuildTree(new int?[] {2147483647});
+            Assert.True(task.IsValidBST(inputA));
+            Assert.False(task.IsValidBST(inputB));
+            Assert.False(task.IsValidBST(inputC));
+            Assert.True(task.IsValidBST(inputD));
 
             Console.WriteLine("Test complite");
             Console.ReadKey();

@@ -10,26 +10,36 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public TreeNode SortedArrayToBST(int[] nums)
+            public bool IsValidBST(TreeNode root)
             {
-                if (nums == null || nums.Length == 0)
-                    return null;
+                var queue = new Queue<(TreeNode, long, long)>();
+                queue.Enqueue((root,long.MinValue, long.MaxValue));
 
-                return BuildTree(nums, 0, nums.Length - 1);
-            }
+                while(queue.Count > 0)
+                {
+                    var tuple = queue.Dequeue();
+                    var node = tuple.Item1;
 
-            private TreeNode BuildTree(int[] nums, int i, int j)
-            {
-                if (j < i)
-                    return null;
+                    if (node == null)
+                        continue;
 
-                int mid = j + (i - j) / 2;
-                TreeNode node = new TreeNode(nums[mid]);
+                    var min = tuple.Item2;
+                    var max = tuple.Item3;
 
-                node.left = BuildTree(nums, i, mid - 1);
-                node.right = BuildTree(nums, mid + 1, j);
+                    if (node.val <= min || node.val >= max)
+                        return false;
 
-                return node;
+                    if (node.left is not null)
+                    {
+                        queue.Enqueue((node.left,min,node.val));
+                    }
+                    if (node.right is not null)
+                    {
+                        queue.Enqueue((node.right,node.val,max));
+                    }
+                }
+
+                return true;
             }
         }
     }
