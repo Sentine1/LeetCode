@@ -19,7 +19,7 @@ namespace LeetCodeCollection
         }
 
 
-        public TreeNode BuildTree(int i, int j, params int?[] nums)
+        public TreeNode BuildTree(int?[] nums, int i = 0, int j = 0)
         {
             var n = nums.Length;
             if (i > n - 1 || !nums[i].HasValue)
@@ -27,8 +27,8 @@ namespace LeetCodeCollection
 
             TreeNode node = new TreeNode(nums[i].Value);
 
-            node.left = BuildTree(2 * i + 1, j, nums);
-            node.right = BuildTree(2 * i + 2, j, nums);
+            node.left = BuildTree(nums, 2 * i + 1, j );
+            node.right = BuildTree(nums, 2 * i + 2, j);
 
             return node;
         }
