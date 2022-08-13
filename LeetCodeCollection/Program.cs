@@ -9,15 +9,15 @@ namespace LeetCodeCollection
         static void Main(string[] args)
         {
             var task = new DailyTask.Solution();
-            var inputA = new TreeNode().BuildTree(new int?[] { 6, 2, 8, 0, 4, 7, 9, null, null, 3, 5 });
-            var inputB = new TreeNode().BuildTree(new int?[] { 6, 2, 8, 0, 4, 7, 9, null, null, 3, 5 });
-            var inputC = new TreeNode().BuildTree(new int?[] { 2, 1 });
-            var inputD = new TreeNode().BuildTree(new int?[] { 2, 1, 3 });
-
-            Assert.AreEqual(inputA, task.LowestCommonAncestor(inputA, inputA.left, inputA.right));
-            Assert.AreEqual(inputA.left, task.LowestCommonAncestor(inputB, inputB.left, inputB.left.right));
-            Assert.AreEqual(inputC, task.LowestCommonAncestor(inputC, inputC, inputC.left));
-            Assert.AreEqual(inputD, task.LowestCommonAncestor(inputD, inputD.right, inputD.left));
+            var inputA = "barfoothefoobarman";
+            var inputB = "wordgoodgoodgoodbestword";
+            var inputC = "barfoofoobarthefoobarman";
+            var InputAA = new string[] { "foo", "bar" };
+            var InputBB = new string[] { "word", "good", "best", "word" };
+            var inputCC = new string[] { "bar", "foo", "the" };
+            Assert.AreEqual(new int[] { 0, 9 }, task.FindSubstring(inputA, InputAA));
+            Assert.AreEqual(new int[] { }, task.FindSubstring(inputB, InputBB));
+            Assert.AreEqual(new int[] { 6, 9, 12 }, task.FindSubstring(inputC, inputCC));
 
             Console.WriteLine("Test complite");
             Console.ReadKey();

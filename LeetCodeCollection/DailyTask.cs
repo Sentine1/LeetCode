@@ -10,29 +10,56 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public TreeNode LowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q)
+            public IList<int> FindSubstring(string s, string[] words)
             {
-                var answer = root;
-                var min = p;
-                var max = q;
-                if (min.val > max.val)
+
+                List<int> ans = new List<int>();
+
+                if (words.Length == 0)
+                    return ans;
+
+                int n = words.Length, len = words[0].Length;
+                Dictionary<string, int> expect = new Dictionary<string, int>();
+
+                foreach (string word in words)
                 {
-                    var temp = max;
-                    max = min;
-                    min = temp;
+                    if (expect.ContainsKey(word))
+                        expect[word]++;
+                    else
+                        expect.Add(word, 1);
                 }
-                while(true)
+
+                Dictionary<string, int> seen = new Dictionary<string, int>();
+
+                for (int i = 0; i < s.Length - n * len + 1; i++)
                 {
-                    var node = answer;
-                    if (min.val <= node.val && max.val >= node.val || min == answer || max == answer)
-                        break;
-                    if (max.val < node.val && node.left is not null)
-                    answer = node.left;
-                    else if (min.val > node.val && node.right is not null)
-                    answer = node.right;
-                    else return answer;
+                    seen.Clear();
+                    int count = 0;
+                    while (count < n)
+                    {
+                        string curr = s.Substring(i + count * len, len);
+
+                        if (expect.ContainsKey(curr))
+                        {
+                            if (seen.ContainsKey(curr))
+                                seen[curr]++;
+                            else
+                                seen.Add(curr, 1);
+
+                            if (seen[curr] > expect[curr])
+                                break;
+                        }
+                        else
+                            break;
+
+                        count++;
+                    }
+
+                    if (count == n)
+                        ans.Add(i);
                 }
-                return answer;
+
+                return ans;
             }
         }
     }
