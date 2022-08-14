@@ -9,15 +9,18 @@ namespace LeetCodeCollection
         static void Main(string[] args)
         {
             var task = new DailyTask.Solution();
-            var inputA = "barfoothefoobarman";
-            var inputB = "wordgoodgoodgoodbestword";
-            var inputC = "barfoofoobarthefoobarman";
-            var InputAA = new string[] { "foo", "bar" };
-            var InputBB = new string[] { "word", "good", "best", "word" };
-            var inputCC = new string[] { "bar", "foo", "the" };
-            Assert.AreEqual(new int[] { 0, 9 }, task.FindSubstring(inputA, InputAA));
-            Assert.AreEqual(new int[] { }, task.FindSubstring(inputB, InputBB));
-            Assert.AreEqual(new int[] { 6, 9, 12 }, task.FindSubstring(inputC, inputCC));
+            var inputA = new string[] { "hot", "dot", "dog", "lot", "log", "cog" };
+            var inputB = new string[] { "hot", "dot", "dog", "lot", "log" };
+            var outputA = new List<IList<string>>
+                {
+                new [] { "hit", "hot", "dot", "dog", "cog" } ,
+                new []{ "hit", "hot", "lot", "log", "cog" }
+                };
+
+            var outputB = new string[] { };
+            var tesst = task.FindLadders("hit", "cog", inputA);
+            Assert.AreEqual(outputA, task.FindLadders("hit", "cog", inputA));
+            Assert.AreEqual(outputB, task.FindLadders("hit", "cog", inputB));
 
             Console.WriteLine("Test complite");
             Console.ReadKey();
