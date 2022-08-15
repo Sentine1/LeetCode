@@ -28,7 +28,6 @@ namespace LeetCodeCollection
                 
                 var dict = new Dictionary<char, int>()
                 {
-                    { ' ', 0 }, 
                     { 'I', 1 },
                     { 'V', 5 },
                     { 'X', 10 },
@@ -37,16 +36,12 @@ namespace LeetCodeCollection
                     { 'D', 500 },
                     { 'M', 1000 }
                 };
-                var prev = ' ';
-                foreach (var ch in s)
+
+                for (var i = 0; i < s.Length ; i++)
                 {
-                    if (dict.ContainsKey(ch))
-                        if (dict[prev] >= dict[ch])
-                            ans += dict[ch];
-                        else
-                            ans += -(dict[prev] * 2) + dict[ch];
-                    else return -1;
-                    prev = ch;
+                    if (i < s.Length - 1 && dict[s[i]] < dict[s[i + 1]])
+                        ans -= dict[s[i]]; 
+                    else ans += dict[s[i]];
                 }
                 return ans;
             }
