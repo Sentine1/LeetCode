@@ -12,36 +12,29 @@ namespace LeetCodeCollection
         public class Solution
         {
             /// <summary>
-            /// I       1
-            /// V       5
-            /// X       10
-            /// L       50
-            /// C       100
-            /// D       500
-            /// M       1000
+            /// Find position non repeat char
             /// </summary>
             /// <param name="s"></param>
-            /// <returns>Romanian number to int</returns>
-            public int RomanToInt(string s)
-            {
-                var ans = 0;
-                
-                var dict = new Dictionary<char, int>()
-                {
-                    { 'I', 1 },
-                    { 'V', 5 },
-                    { 'X', 10 },
-                    { 'L', 50 },
-                    { 'C', 100 },
-                    { 'D', 500 },
-                    { 'M', 1000 }
-                };
+            /// <returns>position in string</returns>
 
-                for (var i = 0; i < s.Length ; i++)
+            public int FirstUniqChar(string s)
+            {
+                var ans = -1;
+                if (s.Length == 0)
+                    return ans;
+
+                var dict = new Dictionary<char, (int, int)>();
+                for (int i = 0; i < s.Length; i++)
                 {
-                    if (i < s.Length - 1 && dict[s[i]] < dict[s[i + 1]])
-                        ans -= dict[s[i]]; 
-                    else ans += dict[s[i]];
+                    if (dict.ContainsKey(s[i]))
+                        dict[s[i]] = (dict[s[i]].Item1 + 1, dict[s[i]].Item2);
+                    else dict.Add(s[i], (1, i));
+                }
+
+                foreach (var element in dict)
+                {
+                    if (element.Value.Item1 == 1)
+                        return element.Value.Item2;
                 }
                 return ans;
             }
