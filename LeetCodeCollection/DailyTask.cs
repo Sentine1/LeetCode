@@ -19,24 +19,17 @@ namespace LeetCodeCollection
 
             public int FirstUniqChar(string s)
             {
-                var ans = -1;
-                if (s.Length == 0)
-                    return ans;
-
-                var dict = new Dictionary<char, (int, int)>();
+                int[] h =  new int[26];
                 for (int i = 0; i < s.Length; i++)
                 {
-                    if (dict.ContainsKey(s[i]))
-                        dict[s[i]] = (dict[s[i]].Item1 + 1, dict[s[i]].Item2);
-                    else dict.Add(s[i], (1, i));
+                    h[s[i] - 97]++;
                 }
-
-                foreach (var element in dict)
+                for (int i = 0; i < s.Length; i++)
                 {
-                    if (element.Value.Item1 == 1)
-                        return element.Value.Item2;
+                    if (h[s[i] - 97] == 1)
+                        return i;
                 }
-                return ans;
+                return -1;
             }
         }
     }
