@@ -30,7 +30,7 @@ namespace LeetCodeCollection
                     var morzecode = "";
                     foreach (var ch in word)
                     {
-                        morzecode += Morze[ch.ToString()];
+                        morzecode += Morze[ch - 'a'];
                     }
                     if (hash.Contains(morzecode))
                         continue;
@@ -40,17 +40,13 @@ namespace LeetCodeCollection
                 return hash.Count;
             }
 
-            public static readonly Dictionary<string, string> Morze =
-                new Dictionary<string, string>()
+            public static readonly string[] Morze =
+                new string[]
                 {
-                    {"a",".-" },{"b","-..." },{"c","-.-." },{"d","-.." },
-                    {"e","." },{"f","..-." },{"g","--." },{"h","...." },
-                    {"i",".." },{"j",".---" },{"k","-.-" },{"l",".-.." },
-                    {"m","--" },{"n","-." },{"o","---" },{"p",".--." },
-                    {"q","--.-" },{"r",".-." },{"s","..." },{"t","-" },
-                    {"u","..-" },{"v","...-" },{"w",".--" },{"x","-..-" },
-                    {"y","-.--" },{"z","--.."}
-            
+                    ".-","-...","-.-.","-..",".","..-.",
+                    "--.","....","..",".---","-.-",".-..",
+                    "--","-.","---",".--.","--.-",".-.","...",
+                    "-","..-","...-",".--","-..-","-.--","--.."
                 };
         }
     }
