@@ -12,25 +12,46 @@ namespace LeetCodeCollection
         public class Solution
         {
             /// <summary>
-            /// Find position non repeat char
+            /// abc in morze =
+            /// ".-","-...","-.-.","-..",".",
+            /// "..-.","--.","....","..",".---",
+            /// "-.-",".-..","--","-.","---",
+            /// ".--.","--.-",".-.","...","-",
+            /// "..-","...-",".--","-..-","-.--","--.."
             /// </summary>
             /// <param name="s"></param>
-            /// <returns>position in string</returns>
+            /// <returns>string to morze code</returns>
 
-            public int FirstUniqChar(string s)
+            public int UniqueMorseRepresentations(string[] words)
             {
-                int[] h =  new int[26];
-                for (int i = 0; i < s.Length; i++)
+                var hash = new HashSet<string>();
+                foreach (var word in words)
                 {
-                    h[s[i] - 97]++;
+                    var morzecode = "";
+                    foreach (var ch in word)
+                    {
+                        morzecode += Morze[ch.ToString()];
+                    }
+                    if (hash.Contains(morzecode))
+                        continue;
+                    else hash.Add(morzecode);
                 }
-                for (int i = 0; i < s.Length; i++)
-                {
-                    if (h[s[i] - 97] == 1)
-                        return i;
-                }
-                return -1;
+                
+                return hash.Count;
             }
+
+            public static readonly Dictionary<string, string> Morze =
+                new Dictionary<string, string>()
+                {
+                    {"a",".-" },{"b","-..." },{"c","-.-." },{"d","-.." },
+                    {"e","." },{"f","..-." },{"g","--." },{"h","...." },
+                    {"i",".." },{"j",".---" },{"k","-.-" },{"l",".-.." },
+                    {"m","--" },{"n","-." },{"o","---" },{"p",".--." },
+                    {"q","--.-" },{"r",".-." },{"s","..." },{"t","-" },
+                    {"u","..-" },{"v","...-" },{"w",".--" },{"x","-..-" },
+                    {"y","-.--" },{"z","--.."}
+            
+                };
         }
     }
 }

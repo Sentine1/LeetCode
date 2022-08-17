@@ -9,9 +9,8 @@ namespace LeetCodeCollection
         static void Main(string[] args)
         {
             var task = new DailyTask.Solution();
-            Assert.AreEqual(0, task.FirstUniqChar("leetcode"));
-            Assert.AreEqual(2, task.FirstUniqChar("loveleetcode"));
-            Assert.AreEqual(-1, task.FirstUniqChar("aabb"));
+            Assert.AreEqual(2, task.UniqueMorseRepresentations(new[] { "gin", "zen", "gig", "msg" }));
+            Assert.AreEqual(1, task.UniqueMorseRepresentations(new[] { "a"}));
 
             Console.WriteLine("Test complite");
             Console.ReadKey();
