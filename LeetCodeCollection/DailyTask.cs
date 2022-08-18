@@ -11,43 +11,43 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            /// <summary>
-            /// abc in morze =
-            /// ".-","-...","-.-.","-..",".",
-            /// "..-.","--.","....","..",".---",
-            /// "-.-",".-..","--","-.","---",
-            /// ".--.","--.-",".-.","...","-",
-            /// "..-","...-",".--","-..-","-.--","--.."
-            /// </summary>
-            /// <param name="s"></param>
-            /// <returns>string to morze code</returns>
-
-            public int UniqueMorseRepresentations(string[] words)
+            public int MinSetSize(int[] arr)
             {
-                var hash = new HashSet<string>();
-                foreach (var word in words)
+                List<(int val, int count)> data;
+                var valDict = new Dictionary<int, int>();
+                for (int i = 0; i < arr.Length; i++)
                 {
-                    var morzecode = "";
-                    foreach (var ch in word)
+                    var val = arr[i];
+                    if (!valDict.ContainsKey(val))
                     {
-                        morzecode += Morze[ch - 'a'];
+                        valDict[val] = 0;
                     }
-                    if (hash.Contains(morzecode))
-                        continue;
-                    else hash.Add(morzecode);
+                    valDict[val]++;
                 }
-                
-                return hash.Count;
-            }
 
-            public static readonly string[] Morze =
-                new string[]
+                data = new List<(int val, int count)>(valDict.Count);
+
+                foreach (var p in valDict)
                 {
-                    ".-","-...","-.-.","-..",".","..-.",
-                    "--.","....","..",".---","-.-",".-..",
-                    "--","-.","---",".--.","--.-",".-.","...",
-                    "-","..-","...-",".--","-..-","-.--","--.."
-                };
+                    data.Add((p.Key, p.Value));
+                }
+
+                data.Sort((d1, d2) => d2.count.CompareTo(d1.count));
+                int answer = 0;
+                int currCount = 0;
+
+                foreach (var t in data)
+                {
+                    currCount += t.count;
+                    answer++;
+                    if (currCount >= arr.Length / 2)
+                    {
+                        break;
+                    }
+                }
+
+                return answer;
+            }
         }
     }
 }
