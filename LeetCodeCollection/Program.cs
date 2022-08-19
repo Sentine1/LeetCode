@@ -9,8 +9,9 @@ namespace LeetCodeCollection
         static void Main(string[] args)
         {
             var task = new DailyTask.Solution();
-            Assert.AreEqual(2, task.MinSetSize(new[] { 3, 3, 3, 3, 5, 5, 5, 2, 2, 7 }));
-            Assert.AreEqual(1, task.MinSetSize(new[] { 7, 7, 7, 7, 7, 7 }));
+            Assert.True(task.IsPossible(new[] { 1, 2, 3, 3, 4, 5 }));
+            Assert.True(task.IsPossible(new[] { 1, 2, 3, 3, 4, 4, 5, 5 }));
+            Assert.False(task.IsPossible(new[] { 1, 2, 3, 4, 4, 5 }));
 
             Console.WriteLine("Test complite");
             Console.ReadKey();
