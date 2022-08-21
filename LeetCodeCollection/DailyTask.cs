@@ -11,132 +11,68 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            private class Heap<T>
+            public int[] MovesToStamp(string stamp, string target)
             {
-                private readonly IList<T> _data;
-                private readonly IComparer<T> _comparer;
+                //edge cases
+                if (stamp.Length > target.Length) return new int[] { };
 
-                public int Count => _data.Count;
-                public T Top => _data[0];
-
-                public void Foreach(Action<T> kernel)
+                if (stamp.Length == target.Length)
                 {
-                    foreach (var d in _data)
-                    {
-                        kernel?.Invoke(d);
-                    }
+                    if (stamp == target) return new int[] { 0 };
+                    return new int[] { };
                 }
 
-                public Heap() : this(new List<T>(), null)
+                //seems like we have got to find part of target that matches stamp
+                //then we can replace those with ???? in target
+                //and find a match again - but ?? in target matches anything in stamp
+                //until either we can't do it (not possible), or target is all ??
+
+                //keep track as we go and reverse it for the answer
+                string newTarget = "".PadLeft(target.Length, '?');
+                List<int> substitutions = new List<int>();
+
+                while (target != newTarget)
                 {
+                    int index = FindMatch(stamp, target);
+                    if (index == -1) return new int[] { };
+
+                    target =
+                        (index > 0 ? target.Substring(0, index) : "") +
+                        "".PadLeft(stamp.Length, '?') +
+                        (index < target.Length - stamp.Length ? target.Substring(index + stamp.Length) : "");
+
+                    substitutions.Add(index);
+
+                    //Console.WriteLine("index " + index + ", target " + target);
                 }
 
-                public Heap(IList<T> inputs, IComparer<T> comparer = null)
-                {
-                    _comparer = comparer ?? Comparer<T>.Default;
-                    _data = inputs;
-                    for (int i = Count / 2; i >= 0; i--)
-                    {
-                        SiftDown(i);
-                    }
-                }
-
-                public Heap(IEnumerable<T> inputs, IComparer<T> comparer = null) : this(inputs.ToList(), comparer)
-                {
-                }
-
-                private void Swap(int i, int j)
-                {
-                    var tmp = _data[i];
-                    _data[i] = _data[j];
-                    _data[j] = tmp;
-                }
-
-                private void SiftDown(int i)
-                {
-                    while (2 * i + 1 < _data.Count)
-                    {
-                        int left = 2 * i + 1;
-                        int right = 2 * i + 2;
-                        int j = left;
-
-                        if (right < _data.Count && _comparer.Compare(_data[right], _data[left]) < 0)
-                        {
-                            j = right;
-                        }
-
-                        if (_comparer.Compare(_data[i], _data[j]) <= 0)
-                        {
-                            break;
-                        }
-
-                        Swap(i, j);
-                        i = j;
-                    }
-                }
-
-                private void SiftUp(int i)
-                {
-                    while (_comparer.Compare(_data[i], _data[(i - 1) / 2]) < 0)
-                    {
-                        Swap(i, (i - 1) / 2);
-                        i = (i - 1) / 2;
-                    }
-                }
-
-                public T ExtractTop()
-                {
-                    T top = Top;
-                    _data[0] = _data.Last();
-                    _data.RemoveAt(Count - 1);
-                    SiftDown(0);
-                    return top;
-                }
-
-                public void Add(T value)
-                {
-                    _data.Add(value);
-                    SiftUp(Count - 1);
-                }
+                int[] result = substitutions.ToArray();
+                Array.Reverse(result);
+                return result;
             }
 
-            public bool IsPossible(int[] nums)
+            public int FindMatch(string stamp, string target)
             {
-                IDictionary<int, Heap<int>> val2SequenceLength = new Dictionary<int, Heap<int>>();
-
-                for (int i = 0; i < nums.Length; i++)
+                for (int i = 0; i <= target.Length - stamp.Length; i++)
                 {
-                    var curr = nums[i];
-                    var prev = curr - 1;
-                    int currentCount = 1;
+                    if (target.Substring(i, stamp.Length) == "".PadLeft(stamp.Length, '?')) continue;
 
-                    if (val2SequenceLength.ContainsKey(prev))
+                    bool match = true;
+
+                    for (int j = 0; j < stamp.Length; j++)
                     {
-                        var sequences = val2SequenceLength[prev];
-                        int prevCount = sequences.ExtractTop();
-                        currentCount = prevCount + 1;
-
-                        if (sequences.Count == 0)
+                        if (stamp[j] != target[i + j]
+                            && target[i + j] != '?')
                         {
-                            val2SequenceLength.Remove(prev);
+                            match = false;
+                            break;
                         }
                     }
 
-                    if (!val2SequenceLength.ContainsKey(curr))
-                    {
-                        val2SequenceLength[curr] = new Heap<int>();
-                    }
-
-                    val2SequenceLength[curr].Add(currentCount);
+                    if (match) return i;
                 }
 
-                bool valid = true;
-                foreach (var kv in val2SequenceLength)
-                {
-                    kv.Value.Foreach(length => { valid = valid && (length >= 3); });
-                }
-
-                return valid;
+                return -1;
             }
         }
     }
