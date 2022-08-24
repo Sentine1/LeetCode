@@ -10,9 +10,11 @@ namespace LeetCodeCollection
         {
             var task = new DailyTask.Solution();
 
-            Assert.True(task.IsPowerOfFour(16));
-            Assert.False(task.IsPowerOfFour(5));
-            Assert.True(task.IsPowerOfFour(1));
+            Assert.True(task.IsPowerOfThree(27));
+            Assert.False(task.IsPowerOfThree(0));
+            Assert.True(task.IsPowerOfThree(9));
+            Assert.True(task.IsPowerOfThree(243));
+            Assert.False(task.IsPowerOfThree(19682));
 
             Console.WriteLine("Test complite");
             Console.ReadKey();

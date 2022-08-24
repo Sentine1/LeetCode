@@ -11,12 +11,12 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public bool IsPowerOfFour(int n)
+            public bool IsPowerOfThree(int n)
             {
-                var a = Math.Log(n,4);
-
-                var b = (int)a;
-                return a == b;
+                var log = Math.Round(Math.Log(n, 3), 1, MidpointRounding.ToEven);
+                var pow = Math.Pow(3, log);
+                Console.WriteLine($"log - {log}, CallBack = {pow}");
+                return n == pow && !double.IsInfinity(log);
             }
         }
     }
