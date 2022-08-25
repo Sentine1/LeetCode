@@ -11,12 +11,25 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public bool IsPowerOfThree(int n)
+            public bool CanConstruct(string ransomNote, string magazine)
             {
-                var log = Math.Round(Math.Log(n, 3), 1, MidpointRounding.ToEven);
-                var pow = Math.Pow(3, log);
-                Console.WriteLine($"log - {log}, CallBack = {pow}");
-                return n == pow && !double.IsInfinity(log);
+                var CharArray = new int[256];
+                foreach (var c in magazine)
+                {
+                    CharArray[c]++;
+                }
+
+                foreach (var c in ransomNote)
+                {
+                    CharArray[c]--;
+
+                    if (CharArray[c] < 0)
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
             }
         }
     }
