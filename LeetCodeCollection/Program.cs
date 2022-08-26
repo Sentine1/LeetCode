@@ -10,12 +10,8 @@ namespace LeetCodeCollection
         {
             var task = new DailyTask.Solution();
 
-            Assert.True(task.CanConstruct("aaab","baaa"));
-            Assert.False(task.CanConstruct("a","b"));
-            Assert.True(task.CanConstruct("aa","aab"));
-            Assert.False(task.CanConstruct("ba","b"));
-            Assert.False(task.CanConstruct("aa","ab"));
-            Assert.True(task.CanConstruct("bg", "efjbdfbdgfjhhaiigfhbaejahgfbbgbjagbddfgdiaigdadhcfcj"));
+            Assert.True(task.ReorderedPowerOf2(1));
+            Assert.False(task.ReorderedPowerOf2(10));
 
             Console.WriteLine("Test complite");
             Console.ReadKey();

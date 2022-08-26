@@ -11,25 +11,25 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public bool CanConstruct(string ransomNote, string magazine)
+            public bool ReorderedPowerOf2(int n)
             {
-                var CharArray = new int[256];
-                foreach (var c in magazine)
+                int[] target = ToCountMap(n);
+                for (int i = 0; i < 31; i++)
                 {
-                    CharArray[c]++;
+                    int curr = (int)Math.Pow(2, i);
+                    if (target.SequenceEqual(ToCountMap(curr))) return true;
                 }
-
-                foreach (var c in ransomNote)
+                return false;
+            }
+            private int[] ToCountMap(int n)
+            {
+                int[] map = new int[10];
+                while (n != 0)
                 {
-                    CharArray[c]--;
-
-                    if (CharArray[c] < 0)
-                    {
-                        return false;
-                    }
+                    map[n % 10]++;
+                    n /= 10;
                 }
-
-                return true;
+                return map;
             }
         }
     }
