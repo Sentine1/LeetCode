@@ -11,52 +11,23 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public int[][] DiagonalSort(int[][] mat)
+            public int NumIslands(char[][] grid)
             {
-                var rowCount = mat.Length;
-                var columCount = mat[0].Length;
-
-                if (rowCount == 0 || columCount == 0)
+                var ans = 0;
+                if (grid.Length > 0)
+                for (int x = 0; x < grid.Length; x++)
                 {
-                    return null;
-                }
-                int i, j, r, c, ind;
-
-                r = 0;
-                c = columCount - 1;
-                while (r != rowCount)
-                {
-                    List<int> diagArray = new List<int>();
-                    i = r;
-                    j = c;
-                    while (i < rowCount && j < columCount)
+                    for (int y = 0; y < grid[0].Length; y++)
                     {
-                        diagArray.Add(mat[i][j]);
-                        i++;
-                        j++;
-                    }
-                    diagArray.Sort();
-
-                    i = r;
-                    j = c;
-                    ind = 0;
-                    while (i < rowCount && j < columCount)
-                    {
-                        mat[i][j] = diagArray[ind];
-                        i++;
-                        j++;
-                        ind++;
-                    }
-                    if (c > 0)
-                    {
-                        c--;
-                    }
-                    else
-                    {
-                        r++;
+                            if (grid[x][y] == '1')
+                                while ((x + y) % 1 == 0)
+                                {
+                                    if (grid[x][y] == '0')
+                                        ans++;
+                                }
                     }
                 }
-                return mat;
+                return ans;
             }
         }
     }
