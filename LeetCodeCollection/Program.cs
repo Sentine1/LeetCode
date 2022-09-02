@@ -9,24 +9,14 @@ namespace LeetCodeCollection
         static void Main(string[] args)
         {
             var task = new DailyTask.Solution();
+            var tree = new TreeNode();
+            var inputA = tree.BuildTree(new int?[] { 3, 1, 4, 3, null, 1, 5 });
+            var inputB = tree.BuildTree(new int?[] { 3, 3, null, 4, 2 });
+            var inputC = tree.BuildTree(new int?[] { 1 });
 
-            var inputA = new[] {
-                new[] {'1', '1', '1', '1', '0'},
-                new[] { '1', '1', '0', '1', '0'},
-                new[] { '1', '1', '0', '0', '0'},
-                new[]  { '0', '0', '0', '0', '0'}
-            };
-
-            var inputB = new[] {
-                new [] {'1', '1', '0', '0', '0'},
-                new [] {'1', '1', '0', '0', '0'},
-                new [] { '0', '0', '1', '0', '0'},
-                new [] { '0', '0', '0', '1', '1'}
-            };
-
-            Assert.AreEqual(1, task.NumIslands(inputA));
-            Assert.AreEqual(3, task.NumIslands(inputB));
-
+            Assert.AreEqual(4, task.GoodNodes(inputA));
+            Assert.AreEqual(3, task.GoodNodes(inputB));
+            Assert.AreEqual(1, task.GoodNodes(inputC));
 
             Console.WriteLine("Test complite");
             Console.ReadKey();
