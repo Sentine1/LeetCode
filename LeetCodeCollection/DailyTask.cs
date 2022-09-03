@@ -11,22 +11,30 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public int GoodNodes(TreeNode root)
+            public int[] NumsSameConsecDiff(int n, int k)
             {
-                if (root == null) { return 0; }
+                Queue<int> numbers = new(Enumerable.Range(1, 9));
 
-                int goodNodeCount = 0;
-                Traverse(root, root.val, ref goodNodeCount);
-                return goodNodeCount;
-            }
+                for (int length = 1; length < n; ++length)
+                    for (int i = numbers.Count - 1; i >= 0; --i)
+                    {
+                        var node = numbers.Dequeue();
 
-            private void Traverse(TreeNode node, int maxPathValue, ref int goodNodeCount)
-            {
-                if (node == null) { return; }
-                if (maxPathValue <= node.val) { maxPathValue = node.val; goodNodeCount++; }
+                        int last = node % 10;
 
-                Traverse(node.left, maxPathValue, ref goodNodeCount);
-                Traverse(node.right, maxPathValue, ref goodNodeCount);
+                        if (k == 0)
+                            numbers.Enqueue(node * 10 + last);
+                        else
+                        {
+                            if (last - k >= 0)
+                                numbers.Enqueue(node * 10 + last - k);
+
+                            if (last + k <= 9)
+                                numbers.Enqueue(node * 10 + last + k);
+                        }
+                    }
+
+                return numbers.ToArray();
             }
         }
     }

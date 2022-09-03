@@ -9,14 +9,11 @@ namespace LeetCodeCollection
         static void Main(string[] args)
         {
             var task = new DailyTask.Solution();
-            var tree = new TreeNode();
-            var inputA = tree.BuildTree(new int?[] { 3, 1, 4, 3, null, 1, 5 });
-            var inputB = tree.BuildTree(new int?[] { 3, 3, null, 4, 2 });
-            var inputC = tree.BuildTree(new int?[] { 1 });
+            var outputA = new int[] { 181, 292, 707, 818, 929 };
+            var outputB = new int[] { 10, 12, 21, 23, 32, 34, 43, 45, 54, 56, 65, 67, 76, 78, 87, 89, 98 };
 
-            Assert.AreEqual(4, task.GoodNodes(inputA));
-            Assert.AreEqual(3, task.GoodNodes(inputB));
-            Assert.AreEqual(1, task.GoodNodes(inputC));
+            Assert.AreEqual(outputA, task.NumsSameConsecDiff(3, 7));
+            Assert.AreEqual(outputB, task.NumsSameConsecDiff(2, 1));
 
             Console.WriteLine("Test complite");
             Console.ReadKey();
