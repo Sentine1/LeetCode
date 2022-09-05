@@ -9,32 +9,53 @@ namespace LeetCodeCollection
 {
     public class DailyTask
     {
+        // Definition for a Node.
+        public class Node
+        {
+            public int val;
+            public IList<Node> children;
+
+            public Node() { }
+
+            public Node(int _val)
+            {
+                val = _val;
+            }
+
+            public Node(int _val, IList<Node> _children)
+            {
+                val = _val;
+                children = _children;
+            }
+        }
         public class Solution
         {
-            public int[] NumsSameConsecDiff(int n, int k)
+            public IList<IList<int>> LevelOrder(Node root)
             {
-                Queue<int> numbers = new(Enumerable.Range(1, 9));
+                var result = new List<IList<int>>();
+                if (root == null) return result;
 
-                for (int length = 1; length < n; ++length)
-                    for (int i = numbers.Count - 1; i >= 0; --i)
+                var queue = new Queue<Node>();
+                queue.Enqueue(root);
+
+                while (queue.Any())
+                {
+                    var size = queue.Count;
+
+                    var tempList = new List<int>();
+                    for (int s = 0; s < size; s++)
                     {
-                        var node = numbers.Dequeue();
+                        var cur = queue.Dequeue();
+                        tempList.Add(cur.val);
 
-                        int last = node % 10;
-
-                        if (k == 0)
-                            numbers.Enqueue(node * 10 + last);
-                        else
+                        foreach (var child in cur.children)
                         {
-                            if (last - k >= 0)
-                                numbers.Enqueue(node * 10 + last - k);
-
-                            if (last + k <= 9)
-                                numbers.Enqueue(node * 10 + last + k);
+                            queue.Enqueue(child);
                         }
                     }
-
-                return numbers.ToArray();
+                    result.Add(tempList);
+                }
+                return result;
             }
         }
     }
