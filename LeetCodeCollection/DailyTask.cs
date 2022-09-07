@@ -9,53 +9,38 @@ namespace LeetCodeCollection
 {
     public class DailyTask
     {
-        // Definition for a Node.
-        public class Node
-        {
-            public int val;
-            public IList<Node> children;
-
-            public Node() { }
-
-            public Node(int _val)
-            {
-                val = _val;
-            }
-
-            public Node(int _val, IList<Node> _children)
-            {
-                val = _val;
-                children = _children;
-            }
-        }
         public class Solution
         {
-            public IList<IList<int>> LevelOrder(Node root)
+            private StringBuilder res = new StringBuilder();
+
+            public string Tree2str(TreeNode t)
             {
-                var result = new List<IList<int>>();
-                if (root == null) return result;
+                res = new StringBuilder();
+                if (t == null)
+                    return string.Empty;
 
-                var queue = new Queue<Node>();
-                queue.Enqueue(root);
+                DFS(t, true);
 
-                while (queue.Any())
-                {
-                    var size = queue.Count;
+                return res.ToString();
+            }
 
-                    var tempList = new List<int>();
-                    for (int s = 0; s < size; s++)
-                    {
-                        var cur = queue.Dequeue();
-                        tempList.Add(cur.val);
+            private void DFS(TreeNode node, bool isRoot = false)
+            {
+                if (!isRoot)
+                    res.Append("(");
 
-                        foreach (var child in cur.children)
-                        {
-                            queue.Enqueue(child);
-                        }
-                    }
-                    result.Add(tempList);
-                }
-                return result;
+                res.Append(node.val);
+
+                if (node.left == null && node.right != null)
+                    res.Append("()");
+                else if (node.left != null)
+                    DFS(node.left);
+
+                if (node.right != null)
+                    DFS(node.right);
+
+                if (!isRoot)
+                    res.Append(")");
             }
         }
     }
