@@ -11,36 +11,41 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            private StringBuilder res = new StringBuilder();
-
-            public string Tree2str(TreeNode t)
+            public IList<int> InorderTraversal(TreeNode root)
             {
-                res = new StringBuilder();
-                if (t == null)
-                    return string.Empty;
-
-                DFS(t, true);
-
-                return res.ToString();
+                return BST(root);
             }
 
-            private void DFS(TreeNode node, bool isRoot = false)
+            private List<int> BST(TreeNode node)
             {
-                if (!isRoot)
-                    res.Append("(");
+                var result = new List<int>();
+                var stack = new Stack<TreeNode>();
+                var cur = node;
 
-                res.Append(node.val);
+                while (cur != null)
+                {
+                    stack.Push(cur);
+                    cur = cur.left;
+                }
 
-                if (node.left == null && node.right != null)
-                    res.Append("()");
-                else if (node.left != null)
-                    DFS(node.left);
+                while (stack.Any())
+                {
+                    cur = stack.Pop();
+                    result.Add(cur.val);
 
-                if (node.right != null)
-                    DFS(node.right);
+                    if (cur.right != null)
+                    {
+                        cur = cur.right;
 
-                if (!isRoot)
-                    res.Append(")");
+                        while (cur != null)
+                        {
+                            stack.Push(cur);
+                            cur = cur.left;
+                        }
+                    }
+                }
+
+                return result;
             }
         }
     }
