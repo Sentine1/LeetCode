@@ -11,40 +11,18 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public IList<int> InorderTraversal(TreeNode root)
+            public int NumberOfWeakCharacters(int[][] properties)
             {
-                return BST(root);
-            }
+                Array.Sort(properties, (a, b) => a[0] != b[0] ? a[0].CompareTo(b[0]) : b[1].CompareTo(a[1]));
+                int result = 0;
+                int currMax = int.MinValue;
 
-            private List<int> BST(TreeNode node)
-            {
-                var result = new List<int>();
-                var stack = new Stack<TreeNode>();
-                var cur = node;
-
-                while (cur != null)
+                for (int i = properties.Length - 1; i >= 0; i--)
                 {
-                    stack.Push(cur);
-                    cur = cur.left;
+                    if (properties[i][1] < currMax)
+                        result++;
+                    currMax = Math.Max(currMax, properties[i][1]);
                 }
-
-                while (stack.Any())
-                {
-                    cur = stack.Pop();
-                    result.Add(cur.val);
-
-                    if (cur.right != null)
-                    {
-                        cur = cur.right;
-
-                        while (cur != null)
-                        {
-                            stack.Push(cur);
-                            cur = cur.left;
-                        }
-                    }
-                }
-
                 return result;
             }
         }
