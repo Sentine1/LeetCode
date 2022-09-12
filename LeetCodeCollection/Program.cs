@@ -9,13 +9,13 @@ namespace LeetCodeCollection
         static void Main(string[] args)
         {
             var task = new DailyTask.Solution();
-            var inputA = new[] { 2, 4, 1 };
-            var inputB = new[] { 3, 2, 6, 5, 0, 3 };
-            var inputC = new[] { 1, 2, 4 };
+            var inputA = new[] { 100,  };
+            var inputB = new[] { 100, 200 };
+            var inputC = new[] { 100, 200, 300, 400 };
 
-            Assert.AreEqual(2, task.MaxProfit(2, inputA));
-            Assert.AreEqual(7, task.MaxProfit(2, inputB));
-            Assert.AreEqual(3, task.MaxProfit(2, inputC));
+            Assert.AreEqual(0, task.BagOfTokensScore(inputA, 50));
+            Assert.AreEqual(1, task.BagOfTokensScore(inputB, 100));
+            Assert.AreEqual(2, task.BagOfTokensScore(inputC, 200));
 
             Console.WriteLine("Test complite");
             Console.ReadKey();
