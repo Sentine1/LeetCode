@@ -11,66 +11,36 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public int BagOfTokensScore(int[] tokens, int power)
+            int count;
+            public int PseudoPalindromicPaths(TreeNode root)
             {
-                if (power <= 0 || tokens == null || tokens.Length == 0)
-                    return 0;
+                count = 0;
+                HashSet<int> set = new HashSet<int>();
+                DFS(root, set);
+                return count;
 
-                var maxPoints = 0;
-                var currentPoints = 0;
+            }
 
-                Array.Sort(tokens);
-                var length = tokens.Length;
+            private void DFS(TreeNode node, HashSet<int> set)
+            {
 
-                int start = 0;
-                int end = length - 1;
+                if (node == null) return;
 
-                var currentPower = power;
+                if (set.Contains(node.val)) set.Remove(node.val);
+                else set.Add(node.val);
 
-                var available = new HashSet<int>();
-                for (int i = 0; i < length; i++)
-                    available.Add(i);
-
-                while (start <= end)
+                if (node.left == null && node.right == null)
                 {
-                    if (!available.Contains(start))
-                        break;
-
-                    var current = tokens[start];
-
-                    if (currentPower >= current)
-                    {
-                        currentPoints++;
-                        available.Remove(start);
-                        currentPower -= current;
-                        maxPoints = currentPoints > maxPoints ? currentPoints : maxPoints;
-                        start++;
-                    }
-                    else
-                    {
-                        if (currentPoints == 0)
-                        {
-                            return maxPoints;
-                        }
-                        else
-                        {
-                            currentPoints--;
-                            if (available.Contains(end))
-                            {
-                                currentPower += tokens[end];
-                                available.Remove(end);
-
-                                end--;
-                            }
-                            else
-                            {
-                                break;
-                            }
-                        }
-                    }
+                    if (set.Count() <= 1)
+                        count++;
+                    return;
                 }
 
-                return maxPoints;
+                if (node.left != null) DFS(node.left, new HashSet<int>(set));
+
+                if (node.right != null) DFS(node.right, new HashSet<int>(set));
+
+                return;
             }
         }
     }
