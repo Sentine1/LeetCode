@@ -9,14 +9,11 @@ namespace LeetCodeCollection
         static void Main(string[] args)
         {
             var task = new DailyTask.Solution();
-            var defaultTree = new TreeNode();
-            var inputA = defaultTree.BuildTree(new int?[]{ 2, 3, 1, 3, 1, null, 1 });
-            var inputB = defaultTree.BuildTree(new int?[] { 2, 1, 1, 1, 3, null, null, null, null, null, 1 });
-            var inputC = defaultTree.BuildTree(new int?[] { 9 });
+            var inputA = (new[] { 0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1 });
+            var inputB = (new[] { 4, 2, 0, 3, 2, 5 });
 
-            Assert.AreEqual(2, task.PseudoPalindromicPaths(inputA));
-            Assert.AreEqual(1, task.PseudoPalindromicPaths(inputB));
-            Assert.AreEqual(1, task.PseudoPalindromicPaths(inputC));
+            Assert.AreEqual(6, task.Trap(inputA));
+            Assert.AreEqual(9, task.Trap(inputB));
 
             Console.WriteLine("Test complite");
             Console.ReadKey();

@@ -11,36 +11,27 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            int count;
-            public int PseudoPalindromicPaths(TreeNode root)
+            public int Trap(int[] height)
             {
-                count = 0;
-                HashSet<int> set = new HashSet<int>();
-                DFS(root, set);
-                return count;
+                int n = height.Length, ans = 0;
+                var left = new int[n];
 
-            }
+                left[0] = height[0];
 
-            private void DFS(TreeNode node, HashSet<int> set)
-            {
+                for (int i = 1; i < n; i++)
+                    left[i] = Math.Max(left[i - 1], height[i]);
 
-                if (node == null) return;
+                var right = new int[n];
 
-                if (set.Contains(node.val)) set.Remove(node.val);
-                else set.Add(node.val);
+                right[n - 1] = height[n - 1];
 
-                if (node.left == null && node.right == null)
-                {
-                    if (set.Count() <= 1)
-                        count++;
-                    return;
-                }
+                for (int i = n - 2; i >= 0; i--)
+                    right[i] = Math.Max(right[i + 1], height[i]);
 
-                if (node.left != null) DFS(node.left, new HashSet<int>(set));
+                for (int i = 1; i < n - 1; i++)
+                    ans += Math.Min(left[i], right[i]) - height[i];
 
-                if (node.right != null) DFS(node.right, new HashSet<int>(set));
-
-                return;
+                return ans;
             }
         }
     }
