@@ -11,27 +11,37 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public int Trap(int[] height)
+            public int FindLength(int[] nums1, int[] nums2)
             {
-                int n = height.Length, ans = 0;
-                var left = new int[n];
+                checked
+                {
+                    int max = 0;
+                    int[,] dp = new int[nums1.Length, nums2.Length];
 
-                left[0] = height[0];
+                    for (int i = 0; i < nums1.Length; i++)
+                    {
+                        for (int j = 0; j < nums2.Length; j++)
+                        {
+                            if (i == 0 || j == 0)
+                            {
+                                dp[i, j] = (nums1[i] == nums2[j] ? 1 : 0);
+                                max = Math.Max(max, dp[i, j]);
+                                continue;
+                            }
 
-                for (int i = 1; i < n; i++)
-                    left[i] = Math.Max(left[i - 1], height[i]);
+                            if (nums1[i] == nums2[j])
+                            {
+                                dp[i, j] = dp[i - 1, j - 1] + 1;
+                                max = Math.Max(max, dp[i, j]);
+                                continue;
+                            }
 
-                var right = new int[n];
+                            dp[i, j] = 0;
+                        }
+                    }
 
-                right[n - 1] = height[n - 1];
-
-                for (int i = n - 2; i >= 0; i--)
-                    right[i] = Math.Max(right[i + 1], height[i]);
-
-                for (int i = 1; i < n - 1; i++)
-                    ans += Math.Min(left[i], right[i]) - height[i];
-
-                return ans;
+                    return max;
+                }
             }
         }
     }
