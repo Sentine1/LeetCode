@@ -11,37 +11,32 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public int FindLength(int[] nums1, int[] nums2)
+            public int[] SumEvenAfterQueries(int[] nums, int[][] queries)
             {
-                checked
+                var lenght = queries.Length;
+                var answer = new int[lenght];
+                var summCurent = 0;
+                foreach (var num in nums)
                 {
-                    int max = 0;
-                    int[,] dp = new int[nums1.Length, nums2.Length];
-
-                    for (int i = 0; i < nums1.Length; i++)
-                    {
-                        for (int j = 0; j < nums2.Length; j++)
-                        {
-                            if (i == 0 || j == 0)
-                            {
-                                dp[i, j] = (nums1[i] == nums2[j] ? 1 : 0);
-                                max = Math.Max(max, dp[i, j]);
-                                continue;
-                            }
-
-                            if (nums1[i] == nums2[j])
-                            {
-                                dp[i, j] = dp[i - 1, j - 1] + 1;
-                                max = Math.Max(max, dp[i, j]);
-                                continue;
-                            }
-
-                            dp[i, j] = 0;
-                        }
-                    }
-
-                    return max;
+                    if (num % 2 == 0)
+                        summCurent += num;
                 }
+
+                for (int i = 0; i < queries.Length; i++)
+                {
+                    var n = queries[i][1];
+                    var temp = nums[n];
+                    nums[n] += queries[i][0];
+                    if (temp % 2 == 0)
+                        summCurent -= temp;
+
+                    if (nums[n] % 2 == 0)
+                        summCurent += nums[n];
+
+                    answer[i] = summCurent;
+                }
+
+                return answer;
             }
         }
     }
