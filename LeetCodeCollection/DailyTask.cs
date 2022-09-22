@@ -11,32 +11,27 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public int[] SumEvenAfterQueries(int[] nums, int[][] queries)
+            public string ReverseWords(string s)
             {
-                var lenght = queries.Length;
-                var answer = new int[lenght];
-                var summCurent = 0;
-                foreach (var num in nums)
+                var answer = new StringBuilder();
+                var stack = new Stack<char>();
+                for (int i = 0; i < s.Length; i++)
                 {
-                    if (num % 2 == 0)
-                        summCurent += num;
+                    if (s[i] != ' ')
+                        stack.Push(s[i]);
+
+                    if (s[i] == ' ' || i + 1 == s.Length)
+                    {
+                        while (stack.Count > 0)
+                        {
+                            answer.Append(stack.Pop());
+                        }
+                        
+                        if (s[i] == ' ')
+                            answer.Append(s[i]);
+                    }
                 }
-
-                for (int i = 0; i < queries.Length; i++)
-                {
-                    var n = queries[i][1];
-                    var temp = nums[n];
-                    nums[n] += queries[i][0];
-                    if (temp % 2 == 0)
-                        summCurent -= temp;
-
-                    if (nums[n] % 2 == 0)
-                        summCurent += nums[n];
-
-                    answer[i] = summCurent;
-                }
-
-                return answer;
+                return answer.ToString();
             }
         }
     }
