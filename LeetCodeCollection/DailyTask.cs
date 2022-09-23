@@ -11,27 +11,16 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public string ReverseWords(string s)
+            public int ConcatenatedBinary(int n)
             {
-                var answer = new StringBuilder();
-                var stack = new Stack<char>();
-                for (int i = 0; i < s.Length; i++)
+                long m = 1, res = 0, modulo = (long)1e9 + 7;
+                for (int i = 1; i < n + 1; i++)
                 {
-                    if (s[i] != ' ')
-                        stack.Push(s[i]);
-
-                    if (s[i] == ' ' || i + 1 == s.Length)
-                    {
-                        while (stack.Count > 0)
-                        {
-                            answer.Append(stack.Pop());
-                        }
-                        
-                        if (s[i] == ' ')
-                            answer.Append(s[i]);
-                    }
+                    if (i == m)
+                        m <<= 1;
+                    res = (res * m + i) % modulo;
                 }
-                return answer.ToString();
+                return (int)res;
             }
         }
     }

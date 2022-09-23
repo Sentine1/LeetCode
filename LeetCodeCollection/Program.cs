@@ -9,13 +9,16 @@ namespace LeetCodeCollection
         static void Main(string[] args)
         {
             var task = new DailyTask.Solution();
-            var inputA = "Let's take LeetCode contest";
-            var inputB = "God Ding";
-            var outputA = "s'teL ekat edoCteeL tsetnoc";
-            var outputB = "doG gniD";
+            var inputA = 1;
+            var inputB = 3;
+            var inputС = 12;
+            var outputA = 1;
+            var outputB = 27;
+            var outputС = 505379714;
 
-            Assert.AreEqual(outputA, task.ReverseWords(inputA));
-            Assert.AreEqual(outputB, task.ReverseWords(inputB));
+            Assert.AreEqual(outputA, task.ConcatenatedBinary(inputA));
+            Assert.AreEqual(outputB, task.ConcatenatedBinary(inputB));
+            Assert.AreEqual(outputС, task.ConcatenatedBinary(inputС));
 
 
             Console.WriteLine("Test complite");
