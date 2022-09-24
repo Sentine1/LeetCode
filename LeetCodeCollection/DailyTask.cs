@@ -11,16 +11,30 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public int ConcatenatedBinary(int n)
+            public IList<IList<int>> PathSum(TreeNode root, int sum)
             {
-                long m = 1, res = 0, modulo = (long)1e9 + 7;
-                for (int i = 1; i < n + 1; i++)
+                var result = new List<IList<int>>();
+                DFS(root, sum, new List<int>(), result);
+                return result;
+            }
+
+            private void DFS(TreeNode root, int sum, IList<int> oneResult, IList<IList<int>> result)
+            {
+                if (root == null) return;
+                oneResult.Add(root.val);
+                if (root.left == null && root.right == null)
                 {
-                    if (i == m)
-                        m <<= 1;
-                    res = (res * m + i) % modulo;
+                    if (sum == root.val)
+                    {
+                        result.Add(new List<int>(oneResult));
+                    }
                 }
-                return (int)res;
+                else
+                {
+                    DFS(root.left, sum - root.val, oneResult, result);
+                    DFS(root.right, sum - root.val, oneResult, result);
+                }
+                oneResult.RemoveAt(oneResult.Count - 1);
             }
         }
     }
