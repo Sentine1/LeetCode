@@ -10,14 +10,20 @@ namespace LeetCodeCollection
         {
             var task = new DailyTask.Solution();
             var defTree = new TreeNode();
-            var inputA = "RR.L";
-            var inputB = ".L.R...LR..L..";
-            
-            var outputA = "RR.L";
-            var outputB = "LL.RR.LLRRLL..";
+            var inputA = new ListNode(1, 2, 3, 4, 5);
+            var inputB = new ListNode(1);
+            var inputC = new ListNode(1, 2);
+            var inputD = new ListNode(1, 2, 3);
 
-            Assert.AreEqual(outputA, task.PushDominoes(inputA));
-            Assert.AreEqual(outputB, task.PushDominoes(inputB));
+            var outputA = new ListNode(1, 2, 3, 5);
+            var outputB = new ListNode().next;
+            var outputC = new ListNode(1);
+            var outputD = new ListNode(2,3);
+
+            Assert.AreEqual(outputA, task.RemoveNthFromEnd(inputA, 2));
+            Assert.AreEqual(outputB, task.RemoveNthFromEnd(inputB, 1));
+            Assert.AreEqual(outputC, task.RemoveNthFromEnd(inputC, 1));
+            Assert.AreEqual(outputD, task.RemoveNthFromEnd(inputD, 3));
 
 
             Console.WriteLine("Test complite");
