@@ -11,28 +11,40 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public ListNode RemoveNthFromEnd(ListNode head, int n)
+            public bool FindTarget(TreeNode root, int k)
             {
-                if (head == null)
-                    return null;
+                Queue<TreeNode> queue = new Queue<TreeNode>();
 
-                ListNode answer = new ListNode(-1);
-                var tempNode1 = answer;
-                var tempNode2 = answer;
-                tempNode1.next = head;
+                queue.Enqueue(root);
 
-                for (int i = 1; i <= n + 1; i++)
-                    tempNode2 = tempNode2.next;
-
-                while (tempNode2 != null)
+                while (queue.Count != 0)
                 {
-                    tempNode1 = tempNode1.next;
-                    tempNode2 = tempNode2.next;
+                    TreeNode current = queue.Dequeue();
+
+                    if (current.val != k - current.val && Helper(root, k - current.val))
+                        return true;
+
+                    if (current.left != null)
+                        queue.Enqueue(current.left);
+
+                    if (current.right != null)
+                        queue.Enqueue(current.right);
                 }
 
-                tempNode1.next = tempNode1.next.next;
+                return false;
+            }
 
-                return answer.next;
+            private bool Helper(TreeNode root, int target)
+            {
+                if (root == null)
+                    return false;
+
+                if (root.val == target)
+                    return true;
+                if (root.val > target)
+                    return Helper(root.left, target);
+                else
+                    return Helper(root.right, target);
             }
         }
     }
