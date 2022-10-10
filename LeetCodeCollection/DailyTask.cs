@@ -11,40 +11,22 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public bool FindTarget(TreeNode root, int k)
+            public string BreakPalindrome(string palindrome)
             {
-                Queue<TreeNode> queue = new Queue<TreeNode>();
+                if (palindrome.Length < 2) return "";
+                var charArray = palindrome.ToCharArray();
 
-                queue.Enqueue(root);
-
-                while (queue.Count != 0)
+                for (int i = 0; i < charArray.Length / 2; i++)
                 {
-                    TreeNode current = queue.Dequeue();
-
-                    if (current.val != k - current.val && Helper(root, k - current.val))
-                        return true;
-
-                    if (current.left != null)
-                        queue.Enqueue(current.left);
-
-                    if (current.right != null)
-                        queue.Enqueue(current.right);
+                    if (charArray[i] != 'a')
+                    {
+                        charArray[i] = 'a';
+                        return new string(charArray);
+                    }
                 }
 
-                return false;
-            }
-
-            private bool Helper(TreeNode root, int target)
-            {
-                if (root == null)
-                    return false;
-
-                if (root.val == target)
-                    return true;
-                if (root.val > target)
-                    return Helper(root.left, target);
-                else
-                    return Helper(root.right, target);
+                charArray[charArray.Length - 1] = 'b';
+                return new string(charArray);
             }
         }
     }
