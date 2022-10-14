@@ -10,11 +10,16 @@ namespace LeetCodeCollection
         {
             var task = new DailyTask.Solution();
             var defTree = new TreeNode();
-            var inputA = "abccba";
-            var inputB = "a";
+            var inputA = new ListNode(1, 3, 4, 7, 1, 2, 6);
+            var inputB = new ListNode(1, 2, 3, 4);
+            var inputC = new ListNode(2, 1);
+            var outputA = new ListNode(1, 3, 4, 1, 2, 6);
+            var outputB = new ListNode(1, 2, 4);
+            var outputC = new ListNode(2);
 
-            Assert.AreEqual("aaccba", task.BreakPalindrome(inputA));
-            Assert.AreEqual("", task.BreakPalindrome(inputB));
+            Assert.AreEqual(outputA, task.DeleteMiddle(inputA));
+            Assert.AreEqual(outputB, task.DeleteMiddle(inputB));
+            Assert.AreEqual(outputC, task.DeleteMiddle(inputC));
 
             Console.WriteLine("Test complite");
             Console.ReadKey();

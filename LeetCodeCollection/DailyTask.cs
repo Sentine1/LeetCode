@@ -11,22 +11,20 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public string BreakPalindrome(string palindrome)
+            public ListNode DeleteMiddle(ListNode head)
             {
-                if (palindrome.Length < 2) return "";
-                var charArray = palindrome.ToCharArray();
+                if (head == null || head.next == null) return null;
 
-                for (int i = 0; i < charArray.Length / 2; i++)
+                var fast = head.next.next;
+                var slow = head;
+
+                while (fast != null && fast.next != null)
                 {
-                    if (charArray[i] != 'a')
-                    {
-                        charArray[i] = 'a';
-                        return new string(charArray);
-                    }
+                    slow = slow.next;
+                    fast = fast.next.next;
                 }
-
-                charArray[charArray.Length - 1] = 'b';
-                return new string(charArray);
+                slow.next = slow.next.next;
+                return head;
             }
         }
     }
