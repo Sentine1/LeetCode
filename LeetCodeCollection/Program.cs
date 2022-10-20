@@ -10,11 +10,13 @@ namespace LeetCodeCollection
         {
             var task = new DailyTask.Solution();
             var defTree = new TreeNode();
-            var inputA = "thequickbrownfoxjumpsoverthelazydog";
-            var inputB = "leetcode";
+            var outputA = "III";
+            var outputB = "LVIII";
+            var outputC = "MCMXCIV";
 
-            Assert.AreEqual(true, task.CheckIfPangram(inputA));
-            Assert.AreEqual(false, task.CheckIfPangram(inputB));
+            Assert.AreEqual(outputA, task.IntToRoman(3));
+            Assert.AreEqual(outputB, task.IntToRoman(58));
+            Assert.AreEqual(outputC, task.IntToRoman(1994));
 
             Console.WriteLine("Test complite");
             Console.ReadKey();
