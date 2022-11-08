@@ -11,102 +11,25 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public string IntToRoman(int num)
+            public string MakeGood(string s)
             {
-                /*
-                 * I = 1
-                 * V = 5
-                 * X = 10
-                 * L = 50
-                 * C = 100
-                 * D = 500
-                 * M = 1000
-                 */
-                var answer = new StringBuilder();
+                var resultWord = new StringBuilder(s);
 
-                while (num > -1)
+                for (int i = 1; i < resultWord.Length; i++)
                 {
-                    if (num >= 1000)
+                    if (checkWord(resultWord[i - 1], resultWord[i]))
                     {
-                        answer.Append("M");
-                        num -= 1000;
+                        resultWord.Remove(i - 1, 2);
+                        i = 0;
                     }
-
-                    else if (num >= 900)
-                    {
-                        answer.Append("CM");
-                        num -= 900;
-                    }
-
-                    else if (num >= 500)
-                    {
-                        answer.Append("D");
-                        num -= 500;
-                    }
-
-                    else if (num >= 400)
-                    {
-                        answer.Append("CD");
-                        num -= 400;
-                    }
-
-                    else if (num >= 100)
-                    {
-                        answer.Append("C");
-                        num -= 100;
-                    }
-
-                    else if (num >= 90)
-                    {
-                        answer.Append("XC");
-                        num -= 90;
-                    }
-
-                    else if (num >= 50)
-                    {
-                        answer.Append("L");
-                        num -= 50;
-                    }
-
-                    else if (num >= 40)
-                    {
-                        answer.Append("XL");
-                        num -= 40;
-                    }
-
-                    else if (num >= 10)
-                    {
-                        answer.Append("X");
-                        num -= 10;
-                    }
-
-                    else if (num >= 9)
-                    {
-                        answer.Append("IX");
-                        num -= 9;
-                    }
-
-                    else if (num >= 5)
-                    {
-                        answer.Append("V");
-                        num -= 5;
-                    }
-
-                    else if (num >= 4)
-                    {
-                        answer.Append("IV");
-                        num -= 4;
-                    }
-
-                    else if (num >= 1)
-                    {
-                        answer.Append("I");
-                        num -= 1;
-                    }
-                    else num = -1;
                 }
 
-                return answer.ToString();
+                bool checkWord(char a, char b)
+                {
+                    return Math.Abs(a - b) == 32;
+                }
+
+                return resultWord.ToString();
             }
         }
     }
