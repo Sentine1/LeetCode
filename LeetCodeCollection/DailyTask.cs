@@ -22,8 +22,7 @@ namespace LeetCodeCollection
                     if (nums[j] < nums[i])
                     {
                         n++;
-                        j++;
-                        nums[j] = nums[i];
+                        nums[++j] = nums[i];
                     }
                 }
                 return n;
