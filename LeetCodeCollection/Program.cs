@@ -10,13 +10,29 @@ namespace LeetCodeCollection
         {
             var task = new DailyTask.Solution();
             var defTree = new TreeNode();
-            var inputA = new[] { 1, 1, 2 };
-            var inputB = new[] { 0, 0, 1, 1, 1, 2, 2, 3, 3, 4 };
-            var inputC = new[] { 1, 1, 1 };
-
-            Assert.AreEqual(2, task.RemoveDuplicates(inputA));
-            Assert.AreEqual(5, task.RemoveDuplicates(inputB));
-            Assert.AreEqual(1, task.RemoveDuplicates(inputC));
+            var task2 = new DailyTask.MedianFinder();
+            task2.AddNum(6);
+            Assert.AreEqual(6, task2.FindMedian());
+            task2.AddNum(10);
+            Assert.AreEqual(8, task2.FindMedian());
+            task2.AddNum(2);
+            Assert.AreEqual(6, task2.FindMedian());
+            task2.AddNum(6);
+            Assert.AreEqual(6, task2.FindMedian());
+            task2.AddNum(5);
+            Assert.AreEqual(6, task2.FindMedian());
+            task2.AddNum(0);
+            Assert.AreEqual(5.5, task2.FindMedian());
+            task2.AddNum(6);
+            Assert.AreEqual(6, task2.FindMedian());
+            task2.AddNum(3);
+            Assert.AreEqual(5.5, task2.FindMedian());
+            task2.AddNum(1);
+            Assert.AreEqual(5, task2.FindMedian());
+            task2.AddNum(0);
+            Assert.AreEqual(4, task2.FindMedian());
+            task2.AddNum(0);
+            Assert.AreEqual(3, task2.FindMedian());
 
             Console.WriteLine("Test complite");
             Console.ReadKey();
