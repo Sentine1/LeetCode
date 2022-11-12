@@ -25,7 +25,7 @@ namespace LeetCodeCollection
                         nums[++j] = nums[i];
                     }
                 }
-                return data[0][d - 1];
+                return n;
             }
         }
     }
