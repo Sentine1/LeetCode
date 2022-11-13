@@ -13,13 +13,7 @@ namespace LeetCodeCollection
         {
             public string ReverseWords(string s)
             {
-                var answer = new StringBuilder();
-                var words = s.Split(' ',StringSplitOptions.RemoveEmptyEntries).ToList();
-                for (int i = words.Count -1; i > -1; i--)
-                {
-                    answer.Append(words[i] + " ");
-                }
-                return answer.ToString().Trim();
+                return s.Split(' ', StringSplitOptions.RemoveEmptyEntries).Aggregate((x, y) => y + " " + x);
             }
         }
     }
