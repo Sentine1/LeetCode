@@ -11,13 +11,13 @@ namespace LeetCodeCollection
             var task = new DailyTask.Solution();
             var defTree = new TreeNode();
 
-            var inputA = new[] { new[] { 0, 0 }, new[] { 0, 1 }, new[] { 1, 0 }, new[] { 1, 2 }, new[] { 2, 1 }, new[] { 2, 2 } };
-            var inputB = new[] { new[] { 0, 0 }, new[] { 0, 2 },  new[] { 1, 1 }, new[] { 2, 0 }, new[] { 2, 2 } };
-            var inputC = new[] { new[] { 0, 0 } };
+            var inputA = defTree.BuildTree(new int?[]{1, 2, 3, 4, 5, 6});
+            var inputB = defTree.BuildTree(new int?[] { });
+            var inputC = defTree.BuildTree(new int?[] { 1 });
 
-            Assert.AreEqual(5, task.RemoveStones(inputA));
-            Assert.AreEqual(3, task.RemoveStones(inputB));
-            Assert.AreEqual(0, task.RemoveStones(inputC));
+            Assert.AreEqual(6, task.CountNodes(inputA));
+            Assert.AreEqual(0, task.CountNodes(inputB));
+            Assert.AreEqual(1, task.CountNodes(inputC));
 
             Console.WriteLine("Test complite");
             Console.ReadKey();

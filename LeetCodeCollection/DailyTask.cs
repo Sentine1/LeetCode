@@ -11,46 +11,23 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public int RemoveStones(int[][] stones)
+            public int CountNodes(TreeNode root)
             {
-                HashSet<(int, int)> visited = new HashSet<(int, int)>();
-
-                int Island = 0;
-
-
-                foreach (var s in stones)
+                if (root == null)
+                    return 0;
+                var queue = new Queue<TreeNode>();
+                queue.Enqueue(root);
+                var nodeCount = 0;
+                while (queue.Count > 0)
                 {
-                    if (visited.Contains((s[0], s[1])))
-                    {
-                        continue;
-                    }
-                    Queue<(int, int)> queue = new Queue<(int, int)>();
-
-                    queue.Enqueue((s[0], s[1]));
-                    visited.Add((s[0], s[1]));
-
-
-                    while (queue.Count != 0)
-                    {
-                        var cur = queue.Dequeue();
-
-                        foreach (var stone in stones)
-                        {
-                            if (!visited.Contains((stone[0], stone[1])) && (stone[0] == cur.Item1 || stone[1] == cur.Item2))
-                            {
-                                visited.Add((stone[0], stone[1]));
-                                queue.Enqueue((stone[0], stone[1]));
-                            }
-                        }
-                    }
-
-
-                    ++Island;
-
+                    var node = queue.Dequeue();
+                    nodeCount++;
+                    if (node.left != null)
+                        queue.Enqueue(node.left);
+                    if (node.right != null)
+                        queue.Enqueue(node.right);
                 }
-
-                return stones.Length - Island;
-
+                return nodeCount;
             }
         }
     }
