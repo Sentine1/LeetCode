@@ -11,23 +11,28 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public int CountNodes(TreeNode root)
+            public bool IsUgly(int n)
             {
-                if (root == null)
-                    return 0;
-                var queue = new Queue<TreeNode>();
-                queue.Enqueue(root);
-                var nodeCount = 0;
-                while (queue.Count > 0)
+                if (n <= 0)
                 {
-                    var node = queue.Dequeue();
-                    nodeCount++;
-                    if (node.left != null)
-                        queue.Enqueue(node.left);
-                    if (node.right != null)
-                        queue.Enqueue(node.right);
+                    return false;
                 }
-                return nodeCount;
+
+                foreach (int factor in new int[] { 2, 3, 5 })
+                {
+                    n = KeepDividingWhenDivisible(n, factor);
+                }
+
+                return n == 1;
+            }
+
+            int KeepDividingWhenDivisible(int dividend, int divisor)
+            {
+                while (dividend % divisor == 0)
+                {
+                    dividend /= divisor;
+                }
+                return dividend;
             }
         }
     }
