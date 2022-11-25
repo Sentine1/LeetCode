@@ -11,27 +11,26 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public bool IsValidSudoku(char[][] board)
+            public int SumSubarrayMins(int[] arr)
             {
-                bool[,] rows = new bool[9, 10],
-                cols = new bool[9, 10],
-                boxes = new bool[9, 10];
+                int i = 0;
+                long ans = 0;
+                Stack<int> stack = new Stack<int>();
 
-                for (int i = 0; i < 9; i++)
-                    for (int j = 0; j < 9; j++)
-                        if (board[i][j] != '.')
-                        {
-                            if (!rows[i, board[i][j] - 48] && !cols[j, board[i][j] - 48] && !boxes[(i / 3) * 3 + j / 3, board[i][j] - 48])
-                            {
-                                rows[i, board[i][j] - 48] = true;
-                                cols[j, board[i][j] - 48] = true;
-                                boxes[(i / 3) * 3 + j / 3, board[i][j] - 48] = true;
-                            }
-                            else
-                                return false;
-                        }
+                while (i < arr.Length || stack.Count > 0)
+                {
+                    if (stack.Count == 0 || (i < arr.Length && arr[i] > arr[stack.Peek()]))
+                        stack.Push(i++);
+                    else
+                    {
+                        int idx = stack.Pop();
+                        int start = stack.Count == 0 ? -1 : stack.Peek();
+                        int end = i < arr.Length ? i - idx : arr.Length - idx;
+                        ans += (idx - start) * end * (long)arr[idx];
+                    }
+                }
 
-                return true;
+                return (int)(ans % 1000000007);
             }
         }
     }
