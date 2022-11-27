@@ -11,26 +11,50 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public int SumSubarrayMins(int[] arr)
+            public int JobScheduling(int[] startTime, int[] endTime, int[] profit)
             {
-                int i = 0;
-                long ans = 0;
-                Stack<int> stack = new Stack<int>();
-
-                while (i < arr.Length || stack.Count > 0)
+                Job[] jobs = new Job[startTime.Length];
+                for (int i = 0; i < startTime.Length; i++)
                 {
-                    if (stack.Count == 0 || (i < arr.Length && arr[i] > arr[stack.Peek()]))
-                        stack.Push(i++);
-                    else
-                    {
-                        int idx = stack.Pop();
-                        int start = stack.Count == 0 ? -1 : stack.Peek();
-                        int end = i < arr.Length ? i - idx : arr.Length - idx;
-                        ans += (idx - start) * end * (long)arr[idx];
-                    }
+                    jobs[i] = new Job(startTime[i], endTime[i], profit[i]);
+                }
+                Array.Sort(jobs, (a, b) => a.End.CompareTo(b.End));
+
+                int[] dp = new int[jobs.Length + 1];
+                for (int i = 0; i < jobs.Length; i++)
+                {
+                    int pre = BinarySearch(jobs, -1, i - 1, jobs[i].Start);
+                    dp[i + 1] = dp[pre + 1] + jobs[i].Profit;
+                    dp[i + 1] = Math.Max(dp[i + 1], dp[i]);
                 }
 
-                return (int)(ans % 1000000007);
+                return dp[jobs.Length];
+            }
+
+            public int BinarySearch(Job[] jobs, int low, int high, int target)
+            {
+                while (low < high)
+                {
+                    int mid = high - (high - low) / 2;
+                    if (jobs[mid].End > target)
+                        high = mid - 1;
+                    else
+                        low = mid;
+                }
+                return low;
+            }
+        }
+
+        public class Job
+        {
+            public int Start;
+            public int End;
+            public int Profit;
+            public Job(int start, int end, int profit)
+            {
+                Start = start;
+                End = end;
+                Profit = profit;
             }
         }
     }
