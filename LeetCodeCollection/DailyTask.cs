@@ -11,51 +11,48 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public int JobScheduling(int[] startTime, int[] endTime, int[] profit)
+            public class RandomizedSet
             {
-                Job[] jobs = new Job[startTime.Length];
-                for (int i = 0; i < startTime.Length; i++)
-                {
-                    jobs[i] = new Job(startTime[i], endTime[i], profit[i]);
-                }
-                Array.Sort(jobs, (a, b) => a.End.CompareTo(b.End));
 
-                int[] dp = new int[jobs.Length + 1];
-                for (int i = 0; i < jobs.Length; i++)
+                List<int> values;
+
+                public RandomizedSet()
                 {
-                    int pre = BinarySearch(jobs, -1, i - 1, jobs[i].Start);
-                    dp[i + 1] = dp[pre + 1] + jobs[i].Profit;
-                    dp[i + 1] = Math.Max(dp[i + 1], dp[i]);
+                    values = new List<int>();
                 }
 
-                return dp[jobs.Length];
-            }
-
-            public int BinarySearch(Job[] jobs, int low, int high, int target)
-            {
-                while (low < high)
+                public bool Insert(int val)
                 {
-                    int mid = high - (high - low) / 2;
-                    if (jobs[mid].End > target)
-                        high = mid - 1;
-                    else
-                        low = mid;
+                    if (values.Contains(val))
+                        return false;
+                    values.Add(val);
+                    return true;
                 }
-                return low;
-            }
-        }
 
-        public class Job
-        {
-            public int Start;
-            public int End;
-            public int Profit;
-            public Job(int start, int end, int profit)
-            {
-                Start = start;
-                End = end;
-                Profit = profit;
+                public bool Remove(int val)
+                {
+                    if (!values.Contains(val))
+                        return false;
+                    values.Remove(val);
+                    return true;
+                }
+
+                public int GetRandom()
+                {
+                    var n = values.Count;
+                    var rnd = new Random();
+                    var index = rnd.Next(n);
+                    return values[index];
+                }
             }
+
+            /**
+             * Your RandomizedSet object will be instantiated and called as such:
+             * RandomizedSet obj = new RandomizedSet();
+             * bool param_1 = obj.Insert(val);
+             * bool param_2 = obj.Remove(val);
+             * int param_3 = obj.GetRandom();
+             */
         }
     }
 }
