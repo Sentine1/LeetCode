@@ -11,48 +11,18 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public class RandomizedSet
+            public bool UniqueOccurrences(int[] arr)
             {
-
-                List<int> values;
-
-                public RandomizedSet()
+                var group = arr.GroupBy(x => x);
+                var counter = new HashSet<int>();
+                foreach (var element in group)
                 {
-                    values = new List<int>();
-                }
-
-                public bool Insert(int val)
-                {
-                    if (values.Contains(val))
+                    if (counter.Contains(element.Count()))
                         return false;
-                    values.Add(val);
-                    return true;
+                    counter.Add(element.Count());
                 }
-
-                public bool Remove(int val)
-                {
-                    if (!values.Contains(val))
-                        return false;
-                    values.Remove(val);
-                    return true;
-                }
-
-                public int GetRandom()
-                {
-                    var n = values.Count;
-                    var rnd = new Random();
-                    var index = rnd.Next(n);
-                    return values[index];
-                }
+                return true;
             }
-
-            /**
-             * Your RandomizedSet object will be instantiated and called as such:
-             * RandomizedSet obj = new RandomizedSet();
-             * bool param_1 = obj.Insert(val);
-             * bool param_2 = obj.Remove(val);
-             * int param_3 = obj.GetRandom();
-             */
         }
     }
 }
