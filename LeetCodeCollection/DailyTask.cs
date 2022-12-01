@@ -11,17 +11,24 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public bool UniqueOccurrences(int[] arr)
+            HashSet<char> dict =  new HashSet<char>(new[] { 'a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U' });
+            public bool HalvesAreAlike(string s)
             {
-                var group = arr.GroupBy(x => x);
-                var counter = new HashSet<int>();
-                foreach (var element in group)
+                var mid = s.Length / 2;
+                var count = 0;
+                for (int i = 0; i < mid; i++)
                 {
-                    if (counter.Contains(element.Count()))
-                        return false;
-                    counter.Add(element.Count());
+                    if (dict.Contains(s[i]))
+                        count++;
                 }
-                return true;
+
+                for (int i = mid; i < s.Length; i++)
+                {
+                    if (dict.Contains(s[i]))
+                        count--;
+                }
+
+                return count == 0;
             }
         }
     }
