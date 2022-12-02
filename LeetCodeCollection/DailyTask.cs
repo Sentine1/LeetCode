@@ -11,24 +11,23 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            HashSet<char> dict =  new HashSet<char>(new[] { 'a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U' });
-            public bool HalvesAreAlike(string s)
+            public bool CloseStrings(string word1, string word2)
             {
-                var mid = s.Length / 2;
-                var count = 0;
-                for (int i = 0; i < mid; i++)
+                HashSet<char> set = new(word2);
+                int[] freq1 = new int[26], freq2 = new int[26];
+                for (int i = 0; i < word1.Length; i++)
                 {
-                    if (dict.Contains(s[i]))
-                        count++;
+                    freq1[word1[i] - 'a']++;
+                    if (set.Add(word1[i])) 
+                        return false;
                 }
+                for (int i = 0; i < word2.Length; i++)
+                    freq2[word2[i] - 'a']++;
 
-                for (int i = mid; i < s.Length; i++)
-                {
-                    if (dict.Contains(s[i]))
-                        count--;
-                }
+                Array.Sort(freq1);
+                Array.Sort(freq2);
 
-                return count == 0;
+                return freq1.SequenceEqual(freq2);
             }
         }
     }

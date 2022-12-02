@@ -11,13 +11,15 @@ namespace LeetCodeCollection
             var task = new DailyTask.Solution();
             var defTree = new TreeNode();
 
-            var inputA = "book";
-            var inputB = "textbook";
-            var inputC = "brtpds";
+            var inputA = ("abc","bca");
+            var inputB = ("a", "aa");
+            var inputC = ("cabbba", "abbccc");
+            var inputD = ("cabbba", "aabbss");
 
-            Assert.AreEqual(true, task.HalvesAreAlike(inputA));
-            Assert.AreEqual(false, task.HalvesAreAlike(inputB));
-            Assert.AreEqual(true, task.HalvesAreAlike(inputC));
+            Assert.AreEqual(true, task.CloseStrings(inputA.Item1,inputA.Item2));
+            Assert.AreEqual(false, task.CloseStrings(inputB.Item1, inputB.Item2));
+            Assert.AreEqual(true, task.CloseStrings(inputC.Item1, inputC.Item2));
+            Assert.AreEqual(false, task.CloseStrings(inputD.Item1, inputD.Item2));
 
             Console.WriteLine("Test complite");
             Console.ReadKey();
