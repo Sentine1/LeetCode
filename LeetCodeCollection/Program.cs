@@ -11,15 +11,9 @@ namespace LeetCodeCollection
             var task = new DailyTask.Solution();
             var defTree = new TreeNode();
 
-            var inputA = ("abc","bca");
-            var inputB = ("a", "aa");
-            var inputC = ("cabbba", "abbccc");
-            var inputD = ("cabbba", "aabbss");
-
-            Assert.AreEqual(true, task.CloseStrings(inputA.Item1,inputA.Item2));
-            Assert.AreEqual(false, task.CloseStrings(inputB.Item1, inputB.Item2));
-            Assert.AreEqual(true, task.CloseStrings(inputC.Item1, inputC.Item2));
-            Assert.AreEqual(false, task.CloseStrings(inputD.Item1, inputD.Item2));
+            Assert.AreEqual("eert", task.FrequencySort("tree"));
+            Assert.AreEqual("aaaccc", task.FrequencySort("cccaaa"));
+            Assert.AreEqual("bbAa", task.FrequencySort("Aabb"));
 
             Console.WriteLine("Test complite");
             Console.ReadKey();

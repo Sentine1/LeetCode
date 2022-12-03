@@ -11,23 +11,13 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public bool CloseStrings(string word1, string word2)
+            public string FrequencySort(string s)
             {
-                HashSet<char> set = new(word2);
-                int[] freq1 = new int[26], freq2 = new int[26];
-                for (int i = 0; i < word1.Length; i++)
-                {
-                    freq1[word1[i] - 'a']++;
-                    if (set.Add(word1[i])) 
-                        return false;
-                }
-                for (int i = 0; i < word2.Length; i++)
-                    freq2[word2[i] - 'a']++;
-
-                Array.Sort(freq1);
-                Array.Sort(freq2);
-
-                return freq1.SequenceEqual(freq2);
+                return string.Join(string.Empty, s.GroupBy(x => x)
+                    .OrderByDescending(g => g.Count())
+                    .ThenBy(x => x.Key)
+                    .SelectMany(g => g)
+                    .ToList());
             }
         }
     }
