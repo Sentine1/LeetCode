@@ -10,14 +10,15 @@ namespace LeetCodeCollection
         {
             var task = new DailyTask.Solution();
             var defTree = new TreeNode();
-            var InputA = new[] { 2, 5, 3, 9, 5, 3 };
-            var InputB = new[] { 0 };
-            var InputC = new[] { 1, 2, 3, 4, 5 };
+            var InputA = new ListNode(1, 2, 3, 4, 5);
+            var InputB = new ListNode(2, 1, 3, 5, 6, 4, 7);
+            var OutputA = new ListNode(1, 3, 5, 2, 4);
+            var OutputB = new ListNode(2, 3, 6, 7, 1, 5, 4);
 
 
-            Assert.AreEqual(3, task.MinimumAverageDifference(InputA));
-            Assert.AreEqual(0, task.MinimumAverageDifference(InputB));
-            Assert.AreEqual(0, task.MinimumAverageDifference(InputC));
+            Assert.True(OutputA.GetHashCode() == task.OddEvenList(InputA).GetHashCode());
+            Assert.AreEqual(OutputA, task.OddEvenList(InputA));
+            Assert.AreEqual(OutputB, task.OddEvenList(InputB));
 
             Console.WriteLine("Test complite");
             Console.ReadKey();

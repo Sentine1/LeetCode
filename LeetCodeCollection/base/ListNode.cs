@@ -32,7 +32,7 @@ namespace LeetCodeCollection
         public override bool Equals(object obj)
         {
 
-            return this.val == ((ListNode)obj).val;
+            return GetHashCode() == ((ListNode)obj).GetHashCode();
         }
 
         public override int GetHashCode()

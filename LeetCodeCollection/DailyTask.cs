@@ -11,27 +11,34 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public int MinimumAverageDifference(int[] nums)
+            public ListNode OddEvenList(ListNode head)
             {
-                long lSum = 0, rSum = 0, l = 0, r = nums.Length, localMin = long.MaxValue, gMin = long.MaxValue, idx = 0;
-
-                foreach (var v in nums)
-                    rSum += v;
-
-                for (int i = 0; i < nums.Length; i++)
+                if (head is null)
+                    return null;
+                if (head.next is null)
+                    return head;
+                ListNode oddStart = new ListNode(-9);
+                ListNode evenStart = new ListNode(-6);
+                ListNode odd = oddStart;
+                ListNode even = evenStart;
+                var node = head;
+                while (node is not null)
                 {
-                    lSum += nums[i];
-                    rSum -= nums[i]; 
-                    ++l; --r;
-                    localMin = Math.Abs((lSum / l) - (rSum / (r == 0 ? 1 : r)));
-                    if (localMin < gMin)
+                    odd.next = new ListNode(node.val);
+                    if (node.next is not null)
+                        even.next = new ListNode(node.next.val);
+                    odd = odd.next;
+                    if (even is not null)
+                        even = even.next;
+                    if (node.next is null || node.next.next is null)
                     {
-                        gMin = localMin;
-                        idx = i;
+                        odd.next = evenStart.next;
+                        break;
                     }
+                    node = node.next.next;
                 }
 
-                return (int)idx;
+                return oddStart.next;
             }
         }
     }
