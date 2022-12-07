@@ -11,34 +11,29 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public ListNode OddEvenList(ListNode head)
+            public int RangeSumBST(TreeNode root, int low, int high)
             {
-                if (head is null)
-                    return null;
-                if (head.next is null)
-                    return head;
-                ListNode oddStart = new ListNode(-9);
-                ListNode evenStart = new ListNode(-6);
-                ListNode odd = oddStart;
-                ListNode even = evenStart;
-                var node = head;
-                while (node is not null)
+                long count = 0; ;
+                var nodes = new Queue<TreeNode>();
+                nodes.Enqueue(root);
+                while(nodes.Count > 0 )
                 {
-                    odd.next = new ListNode(node.val);
-                    if (node.next is not null)
-                        even.next = new ListNode(node.next.val);
-                    odd = odd.next;
-                    if (even is not null)
-                        even = even.next;
-                    if (node.next is null || node.next.next is null)
+                    var node = nodes.Dequeue();
+                    if (Check(low, high, node))
                     {
-                        odd.next = evenStart.next;
-                        break;
+                        count +=node.val;
                     }
-                    node = node.next.next;
+                    if (node.left is not null )
+                        nodes.Enqueue(node.left);
+                    if (node.right is not null )
+                        nodes.Enqueue(node.right);
                 }
+                return (int)count;
+            }
 
-                return oddStart.next;
+            private static bool Check(int low, int high, TreeNode node)
+            {
+                return node.val >= low && node.val <= high;
             }
         }
     }
