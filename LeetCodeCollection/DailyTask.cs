@@ -11,29 +11,30 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public int RangeSumBST(TreeNode root, int low, int high)
+            public int MaxAncestorDiff(TreeNode root)
             {
-                long count = 0; ;
-                var nodes = new Queue<TreeNode>();
-                nodes.Enqueue(root);
-                while(nodes.Count > 0 )
+                (int min, int max, int diff) f(TreeNode n)
                 {
-                    var node = nodes.Dequeue();
-                    if (Check(low, high, node))
+                    int val = n.val, min = val, max = val, diff = 0;
+                    if (n.left != null)
                     {
-                        count +=node.val;
+                        var l = f(n.left);
+                        min = Math.Min(min, l.min);
+                        max = Math.Max(max, l.max);
+                        diff = Math.Max(diff, l.diff);
                     }
-                    if (node.left is not null )
-                        nodes.Enqueue(node.left);
-                    if (node.right is not null )
-                        nodes.Enqueue(node.right);
+                    if (n.right != null)
+                    {
+                        var r = f(n.right);
+                        min = Math.Min(min, r.min);
+                        max = Math.Max(max, r.max);
+                        diff = Math.Max(diff, r.diff);
+                    }
+                    diff = Math.Max(diff, Math.Abs(val - min));
+                    diff = Math.Max(diff, Math.Abs(val - max));
+                    return (min, max, diff);
                 }
-                return (int)count;
-            }
-
-            private static bool Check(int low, int high, TreeNode node)
-            {
-                return node.val >= low && node.val <= high;
+                return f(root).diff;
             }
         }
     }
