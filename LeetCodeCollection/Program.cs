@@ -17,8 +17,8 @@ namespace LeetCodeCollection
 
 
             Assert.AreEqual(7,  task.MaxAncestorDiff(InputA));
-            Assert.AreEqual(3, task.MaxAncestorDiff(InputB));
-            Assert.AreEqual(3, task.MaxAncestorDiff(InputC));
+            Assert.AreEqual(2, task.MaxAncestorDiff(InputB));
+            Assert.AreEqual(2, task.MaxAncestorDiff(InputC));
 
             Console.WriteLine("Test complite");
             Console.ReadKey();
