@@ -10,13 +10,15 @@ namespace LeetCodeCollection
         {
             var task = new DailyTask.Solution();
             var defTree = new TreeNode();
-            var InputA = new[] { new[] { 1, 0, 0, 0 }, new[] { 0, 0, 0, 0 }, new[] { 0, 0, 2, -1 } };
-            var InputB = new[] { new[] { 1, 0, 0, 0 }, new[] { 0, 0, 0, 0 }, new[] { 0, 0, 0, 2 } };
-            var InputC = new[] { new[] { 0, 1 }, new[] { 2, 0 } };
+            var InputA = ("abba", "dog cat cat dog");
+            var InputB = ("abba", "dog cat cat fish");
+            var InputC = ("aaaa", "dog cat cat dog");
+            var InputD = ("abba", "dog dog dog dog");
 
-            Assert.AreEqual(2, task.UniquePathsIII(InputA));
-            Assert.AreEqual(4, task.UniquePathsIII(InputB));
-            Assert.AreEqual(0, task.UniquePathsIII(InputC));
+            Assert.True(task.WordPattern(InputA.Item1,InputA.Item2));
+            Assert.False(task.WordPattern(InputB.Item1, InputB.Item2));
+            Assert.False(task.WordPattern(InputC.Item1, InputC.Item2));
+            Assert.False(task.WordPattern(InputD.Item1, InputD.Item2));
 
             Console.WriteLine("Test complite");
             Console.ReadKey();
