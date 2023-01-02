@@ -12,34 +12,19 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public bool WordPattern(string pattern, string s)
+            public bool DetectCapitalUse(string word)
             {
-                var words = Regex.Split(s,@"\W+");
-                var patternAndWord = new Dictionary<char, string>();
-                var wordSet = new HashSet<string>();
-
-                var n = pattern.Length;
-                if (n != words.Length) return false;
-
-                for (int i = 0; i < pattern.Length; i++)
+                var count = 0;
+                var first = word[0] != word[0].ToString().ToLower()[0];
+                for (int i = 0; i < word.Length; i++)
                 {
-                    if (patternAndWord.ContainsKey(pattern[i]))
-                    {
-                        var curWord = patternAndWord[pattern[i]];
-                        if (words[i] != curWord)
-                        {
-                            return false;
-                        }
-                    }
-                    else
-                    {
-                        if (wordSet.Contains(words[i])) return false;
-                        patternAndWord[pattern[i]] = words[i];
-                        wordSet.Add(words[i]);
-                    }
-                }
+                    if (word[i] != word[i].ToString().ToLower()[0])
+                        count++;
 
-                return true;
+                }
+                if (count == word.Length || (first && count == 1) || count == 0)
+                    return true;
+                return false;
             }
         }
     }

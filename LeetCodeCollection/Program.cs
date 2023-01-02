@@ -10,15 +10,17 @@ namespace LeetCodeCollection
         {
             var task = new DailyTask.Solution();
             var defTree = new TreeNode();
-            var InputA = ("abba", "dog cat cat dog");
-            var InputB = ("abba", "dog cat cat fish");
-            var InputC = ("aaaa", "dog cat cat dog");
-            var InputD = ("abba", "dog dog dog dog");
+            var InputA = "USA";
+            var InputB = "leetcode";
+            var InputC = "Google";
+            var InputD = "FlaG";
+            var InputE = "mL";
 
-            Assert.True(task.WordPattern(InputA.Item1,InputA.Item2));
-            Assert.False(task.WordPattern(InputB.Item1, InputB.Item2));
-            Assert.False(task.WordPattern(InputC.Item1, InputC.Item2));
-            Assert.False(task.WordPattern(InputD.Item1, InputD.Item2));
+            Assert.True(task.DetectCapitalUse(InputA));
+            Assert.True(task.DetectCapitalUse(InputB));
+            Assert.True(task.DetectCapitalUse(InputC));
+            Assert.False(task.DetectCapitalUse(InputD));
+            Assert.False(task.DetectCapitalUse(InputE));
 
             Console.WriteLine("Test complite");
             Console.ReadKey();
