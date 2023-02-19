@@ -10,17 +10,15 @@ namespace LeetCodeCollection
         {
             var task = new DailyTask.Solution();
             var defTree = new TreeNode();
-            var InputA = "USA";
-            var InputB = "leetcode";
-            var InputC = "Google";
-            var InputD = "FlaG";
-            var InputE = "mL";
+            var InputA = defTree.BuildTree(new int?[] { 1 });
+            var InputB = defTree.BuildTree(new int?[] { 3, 9, 20, null, null, 15, 7 });
+            var InputC = defTree.BuildTree(new int?[] { 1, 2 });
+            var InputD = defTree.BuildTree(new int?[] { });
 
-            Assert.True(task.DetectCapitalUse(InputA));
-            Assert.True(task.DetectCapitalUse(InputB));
-            Assert.True(task.DetectCapitalUse(InputC));
-            Assert.False(task.DetectCapitalUse(InputD));
-            Assert.False(task.DetectCapitalUse(InputE));
+            Assert.AreEqual( new List<IList<int>>() {new [] { 1 }}, task.ZigzagLevelOrder(InputA));
+            Assert.AreEqual( new List<IList<int>>() { new[] { 3 }, new[] { 20, 9 }, new[] { 15, 7 } }, task.ZigzagLevelOrder(InputB));
+            Assert.AreEqual( new List<IList<int>>() { new[] { 1 }, new[] { 2 }}, task.ZigzagLevelOrder(InputC));
+            Assert.AreEqual( new List<IList<int>>(), task.ZigzagLevelOrder(InputD));
 
             Console.WriteLine("Test complite");
             Console.ReadKey();
