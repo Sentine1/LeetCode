@@ -10,15 +10,13 @@ namespace LeetCodeCollection
         {
             var task = new DailyTask.Solution();
             var defTree = new TreeNode();
-            var InputA = defTree.BuildTree(new int?[] { 1 });
-            var InputB = defTree.BuildTree(new int?[] { 3, 9, 20, null, null, 15, 7 });
-            var InputC = defTree.BuildTree(new int?[] { 1, 2 });
-            var InputD = defTree.BuildTree(new int?[] { });
+            var InputA = new int[] { 1, 1, 2, 3, 3, 4, 4, 8, 8 };
+            var InputB = new int[] { 3, 3, 7, 7, 10, 11, 11 };
 
-            Assert.AreEqual( new List<IList<int>>() {new [] { 1 }}, task.ZigzagLevelOrder(InputA));
-            Assert.AreEqual( new List<IList<int>>() { new[] { 3 }, new[] { 20, 9 }, new[] { 15, 7 } }, task.ZigzagLevelOrder(InputB));
-            Assert.AreEqual( new List<IList<int>>() { new[] { 1 }, new[] { 2 }}, task.ZigzagLevelOrder(InputC));
-            Assert.AreEqual( new List<IList<int>>(), task.ZigzagLevelOrder(InputD));
+
+            Assert.AreEqual(2, task.SingleNonDuplicate(InputA));
+            Assert.AreEqual(10, task.SingleNonDuplicate(InputB));
+
 
             Console.WriteLine("Test complite");
             Console.ReadKey();

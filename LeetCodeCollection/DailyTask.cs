@@ -12,36 +12,15 @@ namespace LeetCodeCollection
     {
         public class Solution
         {
-            public IList<IList<int>> ZigzagLevelOrder(TreeNode root)
+            public int SingleNonDuplicate(int[] nums)
             {
-                var queue = new Queue<(TreeNode, int)>();
-                var answer = new List<IList<int>>();
-                if (root is null)
-                    return answer;
-                queue.Enqueue((root, 1));
-                while (queue.Count > 0)
-                {
-                    var tuple = queue.Dequeue();
-                    var node = tuple.Item1;
-                    var level = tuple.Item2;
-                    if (node is null)
-                        continue;
-                    if (answer.Count >= level)
-                        answer[level - 1].Add(node.val);
-                    else answer.Add(new List<int>() { node.val });
+                var answer = 0;
 
-                    if (node.left is not null)
-                        queue.Enqueue((node.left, level + 1));
-                    if (node.right is not null)
-                        queue.Enqueue((node.right, level + 1));
-                }
-                for (int i = 0; i < answer.Count; i++)
+                foreach (var element in nums)
                 {
-                    if ((i + 1) % 2 == 0)
-                    {
-                        answer[i] = answer[i].Reverse().ToList();
-                    }
+                    answer ^= element;
                 }
+
                 return answer;
             }
         }
